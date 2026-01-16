@@ -65,11 +65,11 @@
                 <a class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                     href="../menu/index.html">Menu</a>
                 <a class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
-                    href="#">Locations</a>
+                    href="#locations">Locations</a>
                 <a class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
                     href="#">About</a>
                 <a class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
-                    href="#">Social</a>
+                    href="#social">Social</a>
             </nav>
             <div class="flex items-center gap-4">
                 <button
@@ -347,7 +347,7 @@
             </div>
         </section>
         <!-- Social Feed Section -->
-        <section class="py-24 relative overflow-hidden">
+        <section id="social" class="py-24 relative overflow-hidden">
             <!-- Decorative elements -->
             <div class="absolute top-10 right-10 text-primary/20 pointer-events-none">
                 <span class="material-symbols-outlined text-[120px]">favorite</span>
@@ -366,10 +366,11 @@
                     </a>
                 </div>
                 <!-- Feed Grid (Polaroid Style) -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div id="social-feed"
+                    class="flex flex-row gap-6 overflow-x-auto pb-8 snap-x snap-mandatory no-scrollbar md:pb-0 md:overflow-visible md:grid md:grid-cols-2 lg:grid-cols-4">
                     <!-- Post 1 -->
                     <div
-                        class="bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg transform rotate-1 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300">
+                        class="snap-center shrink-0 w-72 md:w-auto bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg md:transform md:rotate-1 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300">
                         <div class="aspect-square w-full bg-gray-200 mb-3 overflow-hidden">
                             <div class="w-full h-full bg-cover bg-center" data-alt="Girl eating dessert"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZZ_6ON48s8ZVBkz6iPknr_Y86BZmOyhdJjJXuyGPWNSCbG9o63OAUNEfKNopWLTy3l_FOsiLP0O03XSqUcBZ_pudjkduvHwq5woR5i2TTlK5KiXBx2SFVh-eWTVIPjnOVyZrwavnJgQydHgWrpqDmzoZJ7_zQ1rQWZOvC6SbpGuEf-M6Ore4vmprlKA43i62ZBYhalIVCNMgdWCVPfG_TE4Z-7tYHQBNKiF8FWFvlY833IsF0HQvFq5E2kCS9syPz8aDF2INpBA');">
@@ -390,7 +391,7 @@
                     </div>
                     <!-- Post 2 -->
                     <div
-                        class="bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg transform -rotate-2 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300 mt-8 lg:mt-0">
+                        class="snap-center shrink-0 w-72 md:w-auto bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg md:transform md:-rotate-2 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300 md:mt-8 lg:mt-0">
                         <div class="aspect-square w-full bg-gray-200 mb-3 overflow-hidden">
                             <div class="w-full h-full bg-cover bg-center" data-alt="Coffee and cake overhead shot"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAB7SKUcgab6tRBmwa6yGPSYclJKgt0PqNAazjLaQIUzaQKg5FHggb5lSZ_k9jJpYbXyowUYYjVud2IM__RckV0GGfX6HIo5m1jAw-UqfNxpaO_gMBRS9rYMYEPvSFFNB7J4WyVLKahZZGTWMO3XWvNjJZA0oyq3VAnGpOASGIYT1zdoP9y6MvjGqMwrCUtvnNatOT_D8dKSmduJKRzQJ1iGQMgt359moH9hDwiI7GiocCpBotef3FSfCHwk3UALe3xrjBenCD-Wg');">
@@ -408,7 +409,7 @@
                     </div>
                     <!-- Post 3 -->
                     <div
-                        class="bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg transform rotate-2 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300">
+                        class="snap-center shrink-0 w-72 md:w-auto bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg md:transform md:rotate-2 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300">
                         <div class="aspect-square w-full bg-gray-200 mb-3 overflow-hidden">
                             <div class="w-full h-full bg-cover bg-center" data-alt="Friends clinking glasses"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdN7MuPpbLkbZfVOmoXwWvq_cNM3h_MEOJ0mOdZQtiYUR1iKSd6mVpZQtpxYF6Nhqd0d-SWs-ea7IilcPzzOaiV3xYsgau3phdtHnMHW85h7Sj956zgjft1M19R-98A9QgfgS3YWsT-XHbEkKaGCOn-9K_Usly4otwpYaxWSsaTCrxrHDt4WWQu6b27xUteeTMAcGOkgkAZ5_XyCDxo4BvAX8OxE6SfMAz02zJ_7byKEvFlBHVMrOasPmfSgws9ml9yn9PycHMRw');">
@@ -426,7 +427,7 @@
                     </div>
                     <!-- Post 4 -->
                     <div
-                        class="bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg transform -rotate-1 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300 mt-8 lg:mt-0">
+                        class="snap-center shrink-0 w-72 md:w-auto bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg md:transform md:-rotate-1 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300 md:mt-8 lg:mt-0">
                         <div class="aspect-square w-full bg-gray-200 mb-3 overflow-hidden">
                             <div class="w-full h-full bg-cover bg-center" data-alt="Macro shot of chocolate dessert"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA9aBdCMLvh2ChnBCKkbLyh-v3DSF2LONJsZNnsFjzacGBAIYVJExtzXbnHK0p_9Z9IsOZUnC-Vh_bm2mL7ra-M31QjjNEOcXPeSIR9OCyS6N93e_oL4mmkNoyOCHG4742luWtLnxHRszGVn0o_zXY3e_lA_QFDb_4pdt0fcnYw0ekGCacKDHFZdKSC7Ord8ZDHDX8ySzC1jMssVJWpMxX6tp1x1bm8F4cENOiO7-lQS1LmTvorgDs6uFLjtZZ7RTzBYyJgpw-5Hg');">
@@ -450,72 +451,165 @@
             <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center reveal">
                 <h2 class="text-2xl font-bold mb-10 text-gray-900 dark:text-white uppercase tracking-wider">What our
                     guests say</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Testimonial 1 -->
-                    <div
-                        class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
-                        <div
-                            class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
-                            <span class="material-symbols-outlined text-lg">format_quote</span>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"The ambiance is unmatched. It's my
-                            go-to spot for client meetings and casual dates. The coffee is consistently perfect."</p>
-                        <div class="flex items-center justify-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
-                                data-alt="Portrait of Sarah Jenkins"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjSyVg7eyIlDKSDlIYaTJidf4dkat4Hnor_Xc4Luq-RnovZ6RrpC9tkeX-ITsStmw-X-WZ4rJ0xU1BIFJbZYaQT9n21gB8XCzkz6u79S7tGyybgUzyxsAZEYlYezYdQsTwpQH8qxP0AK7XEZE2Raxr1Zh3S76awCYgD03vxpYT9WANEsVIj1avkNnqGyzYQFP0nivJWROdHIbwydQAtgVbgXIvE1R-xnSgA7Cf3xtv82McGC8bRINglr0hMavEC_2TGd_14D3tKw');">
+                <div id="testimonial-container" class="relative min-h-[400px] md:min-h-0">
+                    <!-- Mobile View: Fade Transition Pages -->
+                    <div class="md:hidden relative h-full">
+                        <!-- Page 1 (Items 1 & 2) -->
+                        <div class="testimonial-page absolute inset-0 transition-opacity duration-1000 opacity-100 flex flex-col gap-6"
+                            data-index="0">
+                            <!-- Testimonial 1 -->
+                            <div
+                                class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
+                                <div
+                                    class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
+                                    <span class="material-symbols-outlined text-lg">format_quote</span>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"The ambiance is unmatched.
+                                    It's my go-to spot for client meetings and casual dates. The coffee is consistently
+                                    perfect."</p>
+                                <div class="flex items-center justify-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
+                                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjSyVg7eyIlDKSDlIYaTJidf4dkat4Hnor_Xc4Luq-RnovZ6RrpC9tkeX-ITsStmw-X-WZ4rJ0xU1BIFJbZYaQT9n21gB8XCzkz6u79S7tGyybgUzyxsAZEYlYezYdQsTwpQH8qxP0AK7XEZE2Raxr1Zh3S76awCYgD03vxpYT9WANEsVIj1avkNnqGyzYQFP0nivJWROdHIbwydQAtgVbgXIvE1R-xnSgA7Cf3xtv82McGC8bRINglr0hMavEC_2TGd_14D3tKw');">
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="text-sm font-bold text-gray-900 dark:text-white">Sarah Jenkins</p>
+                                        <p class="text-xs text-primary">Food Blogger</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-left">
-                                <p class="text-sm font-bold text-gray-900 dark:text-white">Sarah Jenkins</p>
-                                <p class="text-xs text-primary">Food Blogger</p>
+                            <!-- Testimonial 2 -->
+                            <div
+                                class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
+                                <div
+                                    class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
+                                    <span class="material-symbols-outlined text-lg">format_quote</span>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"I ordered a custom cake
+                                    for my wife's birthday and it was a masterpiece. Not just beautiful, but incredibly
+                                    delicious."</p>
+                                <div class="flex items-center justify-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
+                                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAwwZbhGftalK6ttiXPmwzg9uKGEabU8OIYm84Sp6fJgu8QakNTDIfhMaryr8rRp0kQ0h-EqjzLnpitcGqgWuD7F9Flk5pSzETw_3HTPpmQirBnLwpIQobXztlVsanjS4UghuiveUM8mg-rA1TqEMkf3WVEby1lgBl6qyEQV8ScpfZBYjspqiMUU9GWfMkJggft-7Bc6LeFigRENh3poloXj-H4RG5DgXR5BZavAoG2pvEaWniOmqQChMP5nwLR1ySLOBZXOyiWXg');">
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="text-sm font-bold text-gray-900 dark:text-white">Mark Davis</p>
+                                        <p class="text-xs text-primary">Loyal Customer</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Page 2 (Items 3 & 4 - Duplicated 1) -->
+                        <div class="testimonial-page absolute inset-0 transition-opacity duration-1000 opacity-0 flex flex-col gap-6"
+                            data-index="1">
+                            <!-- Testimonial 3 -->
+                            <div
+                                class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
+                                <div
+                                    class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
+                                    <span class="material-symbols-outlined text-lg">format_quote</span>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"Love the late night vibe.
+                                    Perfect place to unwind with a book and some petit fours after a long week."</p>
+                                <div class="flex items-center justify-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
+                                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD41RKQl9hXZGytUL6hnoxnDGWIBBWoV-lAXWB7pMK-ikMA49XmSwColXe20lEwxHawEDSJC2f8J7Kj_I2Muue-qUeC8KlkFDhxF93mCeAiwrVEpAHmEgQyNsBke0ZOk9Fj9snKimpSy1WFSIJ4BkEAwcXqnVMSrK3wtJUG1xESHgfT-jZYv6Y54RJrh7vqgdXPOhGiMSFk6OjVghVxOUDRmnwfS3qKiKeoLFbPXhojwGFV1ZcvJgo6YM-C2S18QQHnl7ZWqpXWcQ');">
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="text-sm font-bold text-gray-900 dark:text-white">Emily Chen</p>
+                                        <p class="text-xs text-primary">Designer</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Testimonial 4 (Duplicate of 1 for even pairing) -->
+                            <div
+                                class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
+                                <div
+                                    class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
+                                    <span class="material-symbols-outlined text-lg">format_quote</span>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"The ambiance is unmatched.
+                                    It's my go-to spot for client meetings and casual dates. The coffee is consistently
+                                    perfect."</p>
+                                <div class="flex items-center justify-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
+                                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjSyVg7eyIlDKSDlIYaTJidf4dkat4Hnor_Xc4Luq-RnovZ6RrpC9tkeX-ITsStmw-X-WZ4rJ0xU1BIFJbZYaQT9n21gB8XCzkz6u79S7tGyybgUzyxsAZEYlYezYdQsTwpQH8qxP0AK7XEZE2Raxr1Zh3S76awCYgD03vxpYT9WANEsVIj1avkNnqGyzYQFP0nivJWROdHIbwydQAtgVbgXIvE1R-xnSgA7Cf3xtv82McGC8bRINglr0hMavEC_2TGd_14D3tKw');">
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="text-sm font-bold text-gray-900 dark:text-white">Sarah Jenkins</p>
+                                        <p class="text-xs text-primary">Food Blogger</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Testimonial 2 -->
-                    <div
-                        class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
+
+                    <!-- Desktop View: Original Grid -->
+                    <div class="hidden md:grid md:grid-cols-3 gap-8">
+                        <!-- Testimonial 1 -->
                         <div
-                            class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
-                            <span class="material-symbols-outlined text-lg">format_quote</span>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"I ordered a custom cake for my
-                            wife's birthday and it was a masterpiece. Not just beautiful, but incredibly delicious."</p>
-                        <div class="flex items-center justify-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
-                                data-alt="Portrait of Mark Davis"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAwwZbhGftalK6ttiXPmwzg9uKGEabU8OIYm84Sp6fJgu8QakNTDIfhMaryr8rRp0kQ0h-EqjzLnpitcGqgWuD7F9Flk5pSzETw_3HTPpmQirBnLwpIQobXztlVsanjS4UghuiveUM8mg-rA1TqEMkf3WVEby1lgBl6qyEQV8ScpfZBYjspqiMUU9GWfMkJggft-7Bc6LeFigRENh3poloXj-H4RG5DgXR5BZavAoG2pvEaWniOmqQChMP5nwLR1ySLOBZXOyiWXg');">
+                            class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
+                            <div
+                                class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
+                                <span class="material-symbols-outlined text-lg">format_quote</span>
                             </div>
-                            <div class="text-left">
-                                <p class="text-sm font-bold text-gray-900 dark:text-white">Mark Davis</p>
-                                <p class="text-xs text-primary">Loyal Customer</p>
+                            <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"The ambiance is unmatched.
+                                It's my go-to spot for client meetings and casual dates. The coffee is consistently
+                                perfect."</p>
+                            <div class="flex items-center justify-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
+                                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjSyVg7eyIlDKSDlIYaTJidf4dkat4Hnor_Xc4Luq-RnovZ6RrpC9tkeX-ITsStmw-X-WZ4rJ0xU1BIFJbZYaQT9n21gB8XCzkz6u79S7tGyybgUzyxsAZEYlYezYdQsTwpQH8qxP0AK7XEZE2Raxr1Zh3S76awCYgD03vxpYT9WANEsVIj1avkNnqGyzYQFP0nivJWROdHIbwydQAtgVbgXIvE1R-xnSgA7Cf3xtv82McGC8bRINglr0hMavEC_2TGd_14D3tKw');">
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white">Sarah Jenkins</p>
+                                    <p class="text-xs text-primary">Food Blogger</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Testimonial 3 -->
-                    <div
-                        class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
+                        <!-- Testimonial 2 -->
                         <div
-                            class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
-                            <span class="material-symbols-outlined text-lg">format_quote</span>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"Love the late night vibe. Perfect
-                            place to unwind with a book and some petit fours after a long week."</p>
-                        <div class="flex items-center justify-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
-                                data-alt="Portrait of Emily Chen"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD41RKQl9hXZGytUL6hnoxnDGWIBBWoV-lAXWB7pMK-ikMA49XmSwColXe20lEwxHawEDSJC2f8J7Kj_I2Muue-qUeC8KlkFDhxF93mCeAiwrVEpAHmEgQyNsBke0ZOk9Fj9snKimpSy1WFSIJ4BkEAwcXqnVMSrK3wtJUG1xESHgfT-jZYv6Y54RJrh7vqgdXPOhGiMSFk6OjVghVxOUDRmnwfS3qKiKeoLFbPXhojwGFV1ZcvJgo6YM-C2S18QQHnl7ZWqpXWcQ');">
+                            class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
+                            <div
+                                class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
+                                <span class="material-symbols-outlined text-lg">format_quote</span>
                             </div>
-                            <div class="text-left">
-                                <p class="text-sm font-bold text-gray-900 dark:text-white">Emily Chen</p>
-                                <p class="text-xs text-primary">Designer</p>
+                            <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"I ordered a custom cake for my
+                                wife's birthday and it was a masterpiece. Not just beautiful, but incredibly delicious."
+                            </p>
+                            <div class="flex items-center justify-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
+                                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAwwZbhGftalK6ttiXPmwzg9uKGEabU8OIYm84Sp6fJgu8QakNTDIfhMaryr8rRp0kQ0h-EqjzLnpitcGqgWuD7F9Flk5pSzETw_3HTPpmQirBnLwpIQobXztlVsanjS4UghuiveUM8mg-rA1TqEMkf3WVEby1lgBl6qyEQV8ScpfZBYjspqiMUU9GWfMkJggft-7Bc6LeFigRENh3poloXj-H4RG5DgXR5BZavAoG2pvEaWniOmqQChMP5nwLR1ySLOBZXOyiWXg');">
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white">Mark Davis</p>
+                                    <p class="text-xs text-primary">Loyal Customer</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Testimonial 3 -->
+                        <div
+                            class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
+                            <div
+                                class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
+                                <span class="material-symbols-outlined text-lg">format_quote</span>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"Love the late night vibe.
+                                Perfect place to unwind with a book and some petit fours after a long week."</p>
+                            <div class="flex items-center justify-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
+                                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD41RKQl9hXZGytUL6hnoxnDGWIBBWoV-lAXWB7pMK-ikMA49XmSwColXe20lEwxHawEDSJC2f8J7Kj_I2Muue-qUeC8KlkFDhxF93mCeAiwrVEpAHmEgQyNsBke0ZOk9Fj9snKimpSy1WFSIJ4BkEAwcXqnVMSrK3wtJUG1xESHgfT-jZYv6Y54RJrh7vqgdXPOhGiMSFk6OjVghVxOUDRmnwfS3qKiKeoLFbPXhojwGFV1ZcvJgo6YM-C2S18QQHnl7ZWqpXWcQ');">
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white">Emily Chen</p>
+                                    <p class="text-xs text-primary">Designer</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
     </main>
-    <footer class="bg-black/90 text-white pt-16 pb-8 border-t border-white/10">
+    <footer id="locations" class="bg-black/90 text-white pt-16 pb-8 border-t border-white/10">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                 <!-- Brand & Newsletter -->
@@ -640,6 +734,7 @@
         }
     </style>
     <script>
+
         // Scroll Reveal Observer
         document.addEventListener('DOMContentLoaded', () => {
             const observerOptions = {
@@ -659,6 +754,68 @@
 
             const revealElements = document.querySelectorAll('.reveal');
             revealElements.forEach(el => observer.observe(el));
+
+            // Generic Auto-Scroll Function
+            const setupAutoScroll = (elementId, scrollAmount) => {
+                const container = document.getElementById(elementId);
+                if (!container) return;
+
+                let autoScrollInterval;
+
+                const startAutoScroll = () => {
+                    clearInterval(autoScrollInterval);
+                    autoScrollInterval = setInterval(() => {
+                        // Check if current view is mobile (horizontal scroll active)
+                        // Simple check: if container has horizontal scrollbar or overflow style suggests it
+                        const isScrollable = container.scrollWidth > container.clientWidth;
+
+                        if (isScrollable && window.innerWidth < 768) {
+                            if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
+                                // Loop back to start smooth
+                                container.scrollTo({ left: 0, behavior: 'smooth' });
+                            } else {
+                                // Scroll by specified amount
+                                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                            }
+                        }
+                    }, 3000); // 3 seconds per scroll
+                };
+
+                // Start on load
+                startAutoScroll();
+
+                // Pause on user interaction
+                container.addEventListener('touchstart', () => clearInterval(autoScrollInterval));
+                container.addEventListener('touchend', () => setTimeout(startAutoScroll, 3000));
+            };
+
+            // Setup Social Feed Auto-Scroll (approx card width 288px + 24px gap = 312px)
+            setupAutoScroll('social-feed', 312);
+
+            // Setup Testimonial Fade Animation (Mobile Only)
+            const testimonialPages = document.querySelectorAll('.testimonial-page');
+            if (testimonialPages.length > 0) {
+                let currentPage = 0;
+
+                setInterval(() => {
+                    // Only run on mobile
+                    if (window.innerWidth < 768) {
+                        // Fade out current
+                        testimonialPages[currentPage].classList.remove('opacity-100');
+                        testimonialPages[currentPage].classList.add('opacity-0');
+
+                        // Increment page index
+                        currentPage = (currentPage + 1) % testimonialPages.length;
+
+                        // Fade in new (small delay to allow fade out to start or just overlap)
+                        // For smooth crossfade, we just switch classes
+                        setTimeout(() => {
+                            testimonialPages[currentPage].classList.remove('opacity-0');
+                            testimonialPages[currentPage].classList.add('opacity-100');
+                        }, 50); // Tiny delay to ensure DOM update
+                    }
+                }, 4000); // Switch every 4 seconds
+            }
         });
     </script>
 </body>
