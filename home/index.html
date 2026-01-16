@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>dzerts - Sweetness is a Lifestyle</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d41132",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221013",
+                        "latte": "#E6C9A8",
+                        "caramel": "#C48A5A",
+                        "espresso": "#3E2723",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom scrollbar hiding for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-white font-display overflow-x-hidden selection:bg-primary selection:text-white">
+    <!-- Navbar -->
+    <header
+        class="sticky top-0 z-50 w-full border-b border-[#39282b] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md">
+        <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="flex h-8 w-8 items-center justify-center rounded bg-primary text-white">
+                    <span class="material-symbols-outlined text-xl">cookie</span>
+                </div>
+                <h1 class="text-2xl font-black tracking-tighter text-gray-900 dark:text-white">dzerts</h1>
+            </a>
+            <nav class="hidden md:flex items-center gap-10">
+                <a class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                    href="../menu/index.html">Menu</a>
+                <a class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                    href="#">Locations</a>
+                <a class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                    href="#">About</a>
+                <a class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                    href="#">Social</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <button
+                    class="flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-primary/25">
+                    Order Online
+                </button>
+                <button class="md:hidden p-2 text-gray-500 hover:text-white">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="flex flex-col">
+        <!-- Hero Section: Lifestyle Collage -->
+        <section class="relative w-full overflow-hidden py-16 lg:py-24">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Text Content -->
+                    <div class="relative z-10 flex flex-col gap-6 text-center lg:text-left">
+                        <span
+                            class="inline-flex items-center gap-2 self-center lg:self-start rounded-full bg-latte/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-caramel border border-caramel/20">
+                            <span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+                            New Season Menu
+                        </span>
+                        <h2 class="text-5xl font-black leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
+                            Sweetness is a <br />
+                            <span
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-latte to-caramel">Lifestyle</span>
+                        </h2>
+                        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto lg:mx-0 font-medium">
+                            Experience the chic side of dessert. Indulge in our premium selection in a setting that's as
+                            vibrant as the flavors.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                            <button
+                                class="flex items-center justify-center rounded-lg bg-primary h-12 px-8 text-base font-bold text-white shadow-xl shadow-primary/20 hover:bg-primary/90 transition-all">
+                                Order Now
+                            </button>
+                            <button onclick="window.location.href='../menu/index.html'"
+                                class="flex items-center justify-center rounded-lg border border-gray-700 bg-transparent h-12 px-8 text-base font-bold text-gray-900 dark:text-white hover:bg-white/5 transition-all">
+                                View Menu
+                            </button>
+                        </div>
+                        <!-- Trust badges -->
+                        <div
+                            class="mt-8 flex items-center justify-center lg:justify-start gap-6 text-sm font-medium text-gray-500">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary text-xl">star</span>
+                                <span>4.9/5 Rating</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary text-xl">timer</span>
+                                <span>30 min Delivery</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Collage Image Area -->
+                    <div class="relative h-[500px] w-full mt-8 lg:mt-0">
+                        <!-- Decorative Blob -->
+                        <div
+                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-primary/10 via-caramel/5 to-transparent rounded-full blur-3xl -z-10">
+                        </div>
+                        <!-- Main Image -->
+                        <div
+                            class="absolute top-0 right-4 w-3/5 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500 ease-out z-10 border-4 border-white dark:border-[#2a181b]">
+                            <div class="w-full h-full bg-gray-300 bg-cover bg-center"
+                                data-alt="Friends laughing and eating cake in a cafe"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBefbApLyARKGtAipkPp1tMU_7o6tTZespifNPwgmpp9hqNe4bYixpm2dNYN-EvX-sh1wfN9Bm2EpLBdCMGF_7pBJz6tpzYHDS6FOEMlb2uFBemk4JJwn0hSEqgrvroK2DkryLUrBoO1oXO-ZyXvolksB6Pb_y_KSRdO11sjo2Hywroveqhw46Xkns-2ZSRxbmvlAKQJaoTgXVGY7pfsfW33bFvHSbEJ1abGxtrrxu0Efcnxaesrvc_H58exf00tUsTKjW4xypfmA');">
+                            </div>
+                        </div>
+                        <!-- Secondary Image (Bottom Left) -->
+                        <div
+                            class="absolute bottom-4 left-4 w-2/5 aspect-square rounded-2xl overflow-hidden shadow-2xl -rotate-6 hover:rotate-0 transition-transform duration-500 ease-out z-20 border-4 border-white dark:border-[#2a181b]">
+                            <div class="w-full h-full bg-gray-300 bg-cover bg-center"
+                                data-alt="Close up of a spoon breaking into a chocolate lava cake"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWy_LKfYrTfvhiEOzq9pZhNL53zLvNfQykOPWd9zh4ehuccbIBqDazPLhxbIgvTAT_WIqoMBShxpd-jL78LWACHSaB1Ricz7eeAH3nlWNAp9e5jlrJsDdpv58DOVKQjdIObEa4FQOe48KuHbrSovRGwWzO9qn0v3K76KZWGHmjwXmRJkQNZlYU5Y9Mh6ecTc8J_ifoDZlev3Tres1UtL7tOSFFvvVg8I0shs1kAbIkOpVZjTKAV0TwK_4c8ikC3nl20OEcI9U2PQ');">
+                            </div>
+                        </div>
+                        <!-- Small Accent Image (Top Left) -->
+                        <div
+                            class="absolute top-12 left-0 w-1/4 aspect-square rounded-full overflow-hidden shadow-xl shadow-caramel/20 z-0 border-4 border-caramel/30">
+                            <div class="w-full h-full bg-gray-300 bg-cover bg-center" data-alt="Latte art coffee cup"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBgTTa5ZhxHfiRl99vcgigznvcTWzmKDLOega3dNNvF5Od6_GS97FSnVTEQfo6DT7Q_ueXQjUOXkdiLyB4DKw5Hz-URa43HRkENeCxZX5YWjNklpuTB24dtlE-zMbvcy_9-YdCEx8XwLc1i0WSI7zNnY0o3jg13r4k3EdOqjkZqXCDD1P_0kjiU8UxbFI7DLxeqTCQx7FHsKQoWc7ZFLKHF9hbChPCLVajoRS2OP-uQfynch8IMEkkNA_6Ow2V82nIhOaV1W9KYIQ');">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Marquee / Ticker -->
+        <div class="w-full bg-primary/10 border-y border-primary/20 overflow-hidden py-3">
+            <div class="flex gap-12 animate-marquee whitespace-nowrap min-w-full">
+                <div class="flex gap-12 items-center text-primary font-bold uppercase tracking-widest text-sm">
+                    <span>Fresh Ingredients</span> <span class="material-symbols-outlined text-xs">circle</span>
+                    <span>Artisan Bakers</span> <span class="material-symbols-outlined text-xs">circle</span>
+                    <span>Late Night Cravings</span> <span class="material-symbols-outlined text-xs">circle</span>
+                    <span>Premium Coffee</span> <span class="material-symbols-outlined text-xs">circle</span>
+                    <span>Fresh Ingredients</span> <span class="material-symbols-outlined text-xs">circle</span>
+                    <span>Artisan Bakers</span> <span class="material-symbols-outlined text-xs">circle</span>
+                    <span>Late Night Cravings</span> <span class="material-symbols-outlined text-xs">circle</span>
+                    <span>Premium Coffee</span> <span class="material-symbols-outlined text-xs">circle</span>
+                    <span>Fresh Ingredients</span> <span class="material-symbols-outlined text-xs">circle</span>
+                    <span>Artisan Bakers</span> <span class="material-symbols-outlined text-xs">circle</span>
+                    <span>Late Night Cravings</span> <span class="material-symbols-outlined text-xs">circle</span>
+                    <span>Premium Coffee</span> <span class="material-symbols-outlined text-xs">circle</span>
+                </div>
+            </div>
+        </div>
+        <!-- Variety Section: Circular Categories -->
+        <section class="py-20 relative bg-gradient-to-b from-transparent to-black/20">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-black text-white mb-2">Pick Your Pleasure</h2>
+                        <p class="text-gray-400">Curated categories for every craving.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button
+                            class="h-10 w-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-colors">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                        </button>
+                        <button
+                            class="h-10 w-10 rounded-full bg-white text-black flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex gap-8 overflow-x-auto no-scrollbar pb-8 snap-x">
+                    <!-- Category 1 -->
+                    <div class="snap-center shrink-0 group cursor-pointer text-center">
+                        <div
+                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-white/10 ring-offset-4 ring-offset-background-dark">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10">
+                            </div>
+                            <div class="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Petit Fours assorted mini desserts"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB9nRWIO7M9X1ID35H3DNkG9WO7myXfnyhFEcG226IhE5zDf8pebJ5u8mbET05Tl5eviXB_1rfO9k3TaheQPbmL2AoaX8PSPkU8uu9EnvFfewfr1NvIrrdxZhVeC2LOXLEi4r3xlD7B_HloUct37MzuhDshieRGWp9Nw8iJoqTH1tw6krN0tYymG21Hx4m5bgy7xzbm4ZjIkaoqIEUHMAfwcVUzM1y59JXdv3S-AdfFEoG66XCjUfPrvTuXYgQIWXSW4djdC1F2-Q');">
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Petit Fours
+                        </h3>
+                        <p class="text-sm text-gray-500 mt-1">Bite-sized luxury</p>
+                    </div>
+                    <!-- Category 2 -->
+                    <div class="snap-center shrink-0 group cursor-pointer text-center">
+                        <div
+                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-white/10 ring-offset-4 ring-offset-background-dark">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10">
+                            </div>
+                            <div class="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Custom decorated layered cake"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBHBfU8mkdzEYGml3cicArPPMrwiUGRwTpvEo26rj_GJwcP7zqSk__SYB92ELAZKFBkAWUlLLUJmaS0C1yF5MU_5PKT8vr2eP4nrdCGG88_rUgsY5H592hk3jXMOmVhVU69Hg86ylZn8xEa2F-S2GErr5ETjuNnlKn4PX7FQWR4hFSLuQ5qLnpcX4SnJKv6S4eo4kTBz6wCnwXHQEVQ1YspWR3H4B86BeqQJMDfCK8oCBFOL2S6Cd0-RMD9Vo6kJzf-jS4kn-eAWw');">
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Custom Cakes
+                        </h3>
+                        <p class="text-sm text-gray-500 mt-1">Made to celebrate</p>
+                    </div>
+                    <!-- Category 3 -->
+                    <div class="snap-center shrink-0 group cursor-pointer text-center">
+                        <div
+                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-white/10 ring-offset-4 ring-offset-background-dark">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10">
+                            </div>
+                            <div class="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Iced cupcake with sprinkles"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDdJmRs9IQHgxO0wHXRATYmoVhNQXBkV45VUFE-x-bClI8AFk8WFPOeZQCpfaKaPD0NJLPt2jwKPyay3ljzg6Gn-k6CgvrNRYwjOHmebqb62KExesJ28cOkKlWeyHyZViqceGXEtzrVjZgIBIuC0N0Wm1BpiMiTOpJXQ9QNmZTrHpjeeqT0u8dMCG3KMRGs5HUWF3SR3p4YxSqy3Dr5bBTThS2yqximT2Q_mF0r_L50EcWtF91H9FdZKVoF5_op_McdncUTCHwZFg');">
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Iced
+                            Delights</h3>
+                        <p class="text-sm text-gray-500 mt-1">Sweet &amp; creamy</p>
+                    </div>
+                    <!-- Category 4 -->
+                    <div class="snap-center shrink-0 group cursor-pointer text-center">
+                        <div
+                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-white/10 ring-offset-4 ring-offset-background-dark">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10">
+                            </div>
+                            <div class="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Gourmet coffee latte with heart art"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAfpzyQkzGMBS9dBrdHEadiRx-yU22EOyYGvB4PA9D5B5_6q1m5ou988E6HF1HQKIkb1xKdE8xWRMBGr1fLdaH8vkbULx_JXKGEGyNOC8ktYiB21cGj6SjCPLQd1wywsXbJcnzvWv6ARcfdYwgfcPbsO1VebulgvXn8JO4mOe4hTNhxFj8bX-K9XneK5sE3uhdx_bxOpAw4lskAJRPDPXiMvFjv5VYTE54j_dZ4wA9QYaLVFRHTL4C2m0vArLlGgD93ydZ-paJE6Q');">
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Coffee Bar
+                        </h3>
+                        <p class="text-sm text-gray-500 mt-1">The perfect pair</p>
+                    </div>
+                    <!-- Category 5 -->
+                    <div class="snap-center shrink-0 group cursor-pointer text-center">
+                        <div
+                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-white/10 ring-offset-4 ring-offset-background-dark">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10">
+                            </div>
+                            <div class="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Box of assorted macarons"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUxzOC3sxJ8riW6Xo2Da_912Sbb7u4wAA89Gax1tltBxbwjiqnw7IoEsABigqUtFBG4mex0ps98CNqCTY9UnFiUjP3yMNY7wKj1-G_HRETODjiFF6d4DkodpCMoPczKZ89zWXpkmr9QwPICnhqmLIGQjI0NoaytKr3pVC5SoScD4bU9DkbB2956SOw6t1mOJCcx1ASIQ7Zd0-01a0rQk1LFXdUkYOne2v9UqUkFCI4Nlp-BoEetlzj0QtjwaV6ACYpng1wbRo1Bw');">
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Gift Boxes
+                        </h3>
+                        <p class="text-sm text-gray-500 mt-1">Share the love</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- The Vibe Section: Masonry-ish Layout -->
+        <section class="py-20 bg-background-light dark:bg-[#1a0d0f]">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row gap-8 items-start mb-12">
+                    <div class="flex-1">
+                        <span class="text-primary font-bold tracking-widest uppercase text-sm">Atmosphere</span>
+                        <h2 class="text-4xl md:text-5xl font-black mt-2 text-gray-900 dark:text-white">The Vibe</h2>
+                    </div>
+                    <div class="flex-1 text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+                        A place to disconnect and indulge. Warm lighting, cozy corners, and the smell of freshly baked
+                        pastries. Whether it's a date night or a solo treat, we've set the mood for you.
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[300px]">
+                    <!-- Large Block -->
+                    <div class="md:col-span-8 row-span-1 md:row-span-2 relative rounded-2xl overflow-hidden group">
+                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors z-10"></div>
+                        <div class="absolute bottom-6 left-6 z-20">
+                            <span
+                                class="bg-white text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Interiors</span>
+                            <h3 class="text-2xl font-bold text-white">Chic &amp; Modern</h3>
+                        </div>
+                        <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                            data-alt="Modern cafe interior with warm lighting"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCrpzhmbMC8pBfAfCh4QiEUs0UQ3mmyNEGere5crJF8pbqJV8MUCzIU_daeh3JlDf0lsvjH_v0FTA7hdnaE8uy2XOudD8XpM8JcGRpJ2NN1B1UqPE-EAKXdKuKv-7luRpgOv6xqNB9zqbQzcVLh17mOqBAyzHFcFRG4eHWMaMMLlfStljdjJBkBZOuaIX2jdH6-wQEZfLMOxmtDMgnxD0mH2k7j-oZqMWZOd7sVwyBCsKwWukTiLIgRo5d-vfo7hOuMEjmIN2lMPA');">
+                        </div>
+                    </div>
+                    <!-- Tall Block -->
+                    <div class="md:col-span-4 row-span-1 md:row-span-2 relative rounded-2xl overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+                        <div class="absolute bottom-6 left-6 z-20">
+                            <span
+                                class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Events</span>
+                            <h3 class="text-2xl font-bold text-white">Live Jazz Nights</h3>
+                            <p class="text-gray-300 text-sm mt-1">Every Friday 8 PM</p>
+                        </div>
+                        <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                            data-alt="Cocktails and desserts on a table in dim light"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDIWdzhu-GDe4vs-exMJT54TkkBYf4DboULmBSdEKEV_WLi__ffwgQIF9SKDnOsZC4Amxb9pgpw3862tixklrreWfjlFnWMtLN8WdnkHuUwqhDQx72uUcz6UVrHVNYu09g69eAwAWuqWTQXYy4_6QUOWCIY2Qzp6LNd2s0k3E7ZU5bUl4HMagpLC8Sn00PkxUD6DwIO_Xr8zFYMDg914Cf_bvKBdNp1tXka2FyM5JkYD4jeRcg-Up8KQdeF3dehnrYnH9HbLYAfdw');">
+                        </div>
+                    </div>
+                    <!-- Wide Small Block -->
+                    <div
+                        class="md:col-span-6 relative rounded-2xl overflow-hidden group bg-caramel/10 flex items-center p-8">
+                        <div class="flex-1 pr-4">
+                            <span class="text-primary font-bold text-lg mb-2 block">Working Remotely?</span>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">High Speed WiFi &amp;
+                                Power Plugs</h3>
+                            <a class="text-gray-600 dark:text-gray-300 underline decoration-primary decoration-2 underline-offset-4 hover:text-primary transition-colors"
+                                href="#">Find a spot</a>
+                        </div>
+                        <div class="w-32 h-32 bg-gray-300 rounded-xl bg-cover bg-center shrink-0 rotate-3 group-hover:-rotate-2 transition-transform"
+                            data-alt="Laptop and coffee on a wooden table"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBNwcy5B0-5Gc1lL-iMyqcla5Os8NyY6swL0CQvEAfItQCxgfvebtHWLtqFzVhmCbY4z8FhSe_5Qs1g4_nr2Akg6QTZnR_LmfAj8ncvDUe9QgSTx4eSRSEkOcBMqTpoqeFXV-33u9g4iS0qW1KAVX-lRwFwldHYsesfV7PjV5e5_DhvgUtMdaeD5P7wMdIdol429Nmbji5mVsT8BXaIZHPeu35eGCOTf7hH8UW7XDP0_GVybVpAr72MUhXtnT5befobVaom7z-9lg');">
+                        </div>
+                    </div>
+                    <!-- Image Block -->
+                    <div class="md:col-span-6 relative rounded-2xl overflow-hidden group">
+                        <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                            data-alt="Barista pouring latte art"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDe9F0KuqApgX8rOSPH0Rp22zZg_j0k7XNO7VvdYpv__97-QkNB2yMzu4ALPQyuuRQ39n_JyWh4buZpJREqYIga4b5RJ1rAF3GfKPa5wmTynzxyFKbMt2Q3250knzGU1dro-_6kt7qxAePXSGtB4bp5TJKkVTZo-2x4A8VaBq89R7ElWHLZnwQWHf-FxNrqLuETxXYvaYMXohRjzq96rzNmhj-kufjwwT-UhJOnXae7MBNPln-3rozhw1n8VEdFdqOMog9bLAJV_A');">
+                        </div>
+                        <div
+                            class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="bg-white text-black px-6 py-2 rounded-full font-bold">View Gallery</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Social Feed Section -->
+        <section class="py-24 relative overflow-hidden">
+            <!-- Decorative elements -->
+            <div class="absolute top-10 right-10 text-primary/20 pointer-events-none">
+                <span class="material-symbols-outlined text-[120px]">favorite</span>
+            </div>
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
+                <div class="flex flex-col sm:flex-row items-center justify-between mb-12 text-center sm:text-left">
+                    <div>
+                        <h2 class="text-3xl md:text-5xl font-black text-gray-900 dark:text-white">Spotted at #dzerts
+                        </h2>
+                        <p class="text-gray-500 mt-2">Join our community. Tag us to be featured.</p>
+                    </div>
+                    <a class="mt-4 sm:mt-0 flex items-center gap-2 text-primary font-bold hover:text-white transition-colors border border-primary/30 px-4 py-2 rounded-full hover:bg-primary"
+                        href="https://www.instagram.com/dzerts.in" target="_blank">
+                        <span class="material-symbols-outlined text-xl">photo_camera</span>
+                        @dzerts.in
+                    </a>
+                </div>
+                <!-- Feed Grid (Polaroid Style) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Post 1 -->
+                    <div
+                        class="bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg transform rotate-1 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300">
+                        <div class="aspect-square w-full bg-gray-200 mb-3 overflow-hidden">
+                            <div class="w-full h-full bg-cover bg-center" data-alt="Girl eating dessert"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZZ_6ON48s8ZVBkz6iPknr_Y86BZmOyhdJjJXuyGPWNSCbG9o63OAUNEfKNopWLTy3l_FOsiLP0O03XSqUcBZ_pudjkduvHwq5woR5i2TTlK5KiXBx2SFVh-eWTVIPjnOVyZrwavnJgQydHgWrpqDmzoZJ7_zQ1rQWZOvC6SbpGuEf-M6Ore4vmprlKA43i62ZBYhalIVCNMgdWCVPfG_TE4Z-7tYHQBNKiF8FWFvlY833IsF0HQvFq5E2kCS9syPz8aDF2INpBA');">
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between px-1">
+                            <div class="flex text-yellow-500 text-xs">
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="material-symbols-outlined text-sm">star</span>
+                            </div>
+                            <span class="text-xs text-gray-400">2h ago</span>
+                        </div>
+                        <p class="text-gray-800 dark:text-gray-200 text-sm mt-2 font-medium leading-tight">"Best
+                            cheesecake in town! 😍"</p>
+                    </div>
+                    <!-- Post 2 -->
+                    <div
+                        class="bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg transform -rotate-2 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300 mt-8 lg:mt-0">
+                        <div class="aspect-square w-full bg-gray-200 mb-3 overflow-hidden">
+                            <div class="w-full h-full bg-cover bg-center" data-alt="Coffee and cake overhead shot"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAB7SKUcgab6tRBmwa6yGPSYclJKgt0PqNAazjLaQIUzaQKg5FHggb5lSZ_k9jJpYbXyowUYYjVud2IM__RckV0GGfX6HIo5m1jAw-UqfNxpaO_gMBRS9rYMYEPvSFFNB7J4WyVLKahZZGTWMO3XWvNjJZA0oyq3VAnGpOASGIYT1zdoP9y6MvjGqMwrCUtvnNatOT_D8dKSmduJKRzQJ1iGQMgt359moH9hDwiI7GiocCpBotef3FSfCHwk3UALe3xrjBenCD-Wg');">
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between px-1">
+                            <div class="flex items-center gap-1 text-primary">
+                                <span class="material-symbols-outlined text-sm">favorite</span>
+                                <span class="text-xs font-bold">124</span>
+                            </div>
+                            <span class="text-xs text-gray-400">5h ago</span>
+                        </div>
+                        <p class="text-gray-800 dark:text-gray-200 text-sm mt-2 font-medium leading-tight">"Coffee art
+                            on point ☕️"</p>
+                    </div>
+                    <!-- Post 3 -->
+                    <div
+                        class="bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg transform rotate-2 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300">
+                        <div class="aspect-square w-full bg-gray-200 mb-3 overflow-hidden">
+                            <div class="w-full h-full bg-cover bg-center" data-alt="Friends clinking glasses"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdN7MuPpbLkbZfVOmoXwWvq_cNM3h_MEOJ0mOdZQtiYUR1iKSd6mVpZQtpxYF6Nhqd0d-SWs-ea7IilcPzzOaiV3xYsgau3phdtHnMHW85h7Sj956zgjft1M19R-98A9QgfgS3YWsT-XHbEkKaGCOn-9K_Usly4otwpYaxWSsaTCrxrHDt4WWQu6b27xUteeTMAcGOkgkAZ5_XyCDxo4BvAX8OxE6SfMAz02zJ_7byKEvFlBHVMrOasPmfSgws9ml9yn9PycHMRw');">
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between px-1">
+                            <div class="flex items-center gap-1 text-primary">
+                                <span class="material-symbols-outlined text-sm">favorite</span>
+                                <span class="text-xs font-bold">89</span>
+                            </div>
+                            <span class="text-xs text-gray-400">1d ago</span>
+                        </div>
+                        <p class="text-gray-800 dark:text-gray-200 text-sm mt-2 font-medium leading-tight">"Weekend
+                            vibes with the squad"</p>
+                    </div>
+                    <!-- Post 4 -->
+                    <div
+                        class="bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg transform -rotate-1 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300 mt-8 lg:mt-0">
+                        <div class="aspect-square w-full bg-gray-200 mb-3 overflow-hidden">
+                            <div class="w-full h-full bg-cover bg-center" data-alt="Macro shot of chocolate dessert"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA9aBdCMLvh2ChnBCKkbLyh-v3DSF2LONJsZNnsFjzacGBAIYVJExtzXbnHK0p_9Z9IsOZUnC-Vh_bm2mL7ra-M31QjjNEOcXPeSIR9OCyS6N93e_oL4mmkNoyOCHG4742luWtLnxHRszGVn0o_zXY3e_lA_QFDb_4pdt0fcnYw0ekGCacKDHFZdKSC7Ord8ZDHDX8ySzC1jMssVJWpMxX6tp1x1bm8F4cENOiO7-lQS1LmTvorgDs6uFLjtZZ7RTzBYyJgpw-5Hg');">
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between px-1">
+                            <div class="flex items-center gap-1 text-primary">
+                                <span class="material-symbols-outlined text-sm">favorite</span>
+                                <span class="text-xs font-bold">205</span>
+                            </div>
+                            <span class="text-xs text-gray-400">2d ago</span>
+                        </div>
+                        <p class="text-gray-800 dark:text-gray-200 text-sm mt-2 font-medium leading-tight">"Can't get
+                            enough of this chocolate!"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Testimonials Slider Section -->
+        <section class="py-20 bg-latte/10 dark:bg-espresso/20 border-y border-white/5">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center">
+                <h2 class="text-2xl font-bold mb-10 text-gray-900 dark:text-white uppercase tracking-wider">What our
+                    guests say</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div
+                        class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
+                        <div
+                            class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
+                            <span class="material-symbols-outlined text-lg">format_quote</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"The ambiance is unmatched. It's my
+                            go-to spot for client meetings and casual dates. The coffee is consistently perfect."</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
+                                data-alt="Portrait of Sarah Jenkins"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjSyVg7eyIlDKSDlIYaTJidf4dkat4Hnor_Xc4Luq-RnovZ6RrpC9tkeX-ITsStmw-X-WZ4rJ0xU1BIFJbZYaQT9n21gB8XCzkz6u79S7tGyybgUzyxsAZEYlYezYdQsTwpQH8qxP0AK7XEZE2Raxr1Zh3S76awCYgD03vxpYT9WANEsVIj1avkNnqGyzYQFP0nivJWROdHIbwydQAtgVbgXIvE1R-xnSgA7Cf3xtv82McGC8bRINglr0hMavEC_2TGd_14D3tKw');">
+                            </div>
+                            <div class="text-left">
+                                <p class="text-sm font-bold text-gray-900 dark:text-white">Sarah Jenkins</p>
+                                <p class="text-xs text-primary">Food Blogger</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div
+                        class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
+                        <div
+                            class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
+                            <span class="material-symbols-outlined text-lg">format_quote</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"I ordered a custom cake for my
+                            wife's birthday and it was a masterpiece. Not just beautiful, but incredibly delicious."</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
+                                data-alt="Portrait of Mark Davis"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAwwZbhGftalK6ttiXPmwzg9uKGEabU8OIYm84Sp6fJgu8QakNTDIfhMaryr8rRp0kQ0h-EqjzLnpitcGqgWuD7F9Flk5pSzETw_3HTPpmQirBnLwpIQobXztlVsanjS4UghuiveUM8mg-rA1TqEMkf3WVEby1lgBl6qyEQV8ScpfZBYjspqiMUU9GWfMkJggft-7Bc6LeFigRENh3poloXj-H4RG5DgXR5BZavAoG2pvEaWniOmqQChMP5nwLR1ySLOBZXOyiWXg');">
+                            </div>
+                            <div class="text-left">
+                                <p class="text-sm font-bold text-gray-900 dark:text-white">Mark Davis</p>
+                                <p class="text-xs text-primary">Loyal Customer</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div
+                        class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
+                        <div
+                            class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
+                            <span class="material-symbols-outlined text-lg">format_quote</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"Love the late night vibe. Perfect
+                            place to unwind with a book and some petit fours after a long week."</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
+                                data-alt="Portrait of Emily Chen"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD41RKQl9hXZGytUL6hnoxnDGWIBBWoV-lAXWB7pMK-ikMA49XmSwColXe20lEwxHawEDSJC2f8J7Kj_I2Muue-qUeC8KlkFDhxF93mCeAiwrVEpAHmEgQyNsBke0ZOk9Fj9snKimpSy1WFSIJ4BkEAwcXqnVMSrK3wtJUG1xESHgfT-jZYv6Y54RJrh7vqgdXPOhGiMSFk6OjVghVxOUDRmnwfS3qKiKeoLFbPXhojwGFV1ZcvJgo6YM-C2S18QQHnl7ZWqpXWcQ');">
+                            </div>
+                            <div class="text-left">
+                                <p class="text-sm font-bold text-gray-900 dark:text-white">Emily Chen</p>
+                                <p class="text-xs text-primary">Designer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-black/90 text-white pt-16 pb-8 border-t border-white/10">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Brand & Newsletter -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="flex h-6 w-6 items-center justify-center rounded bg-primary text-white">
+                            <span class="material-symbols-outlined text-sm">cookie</span>
+                        </div>
+                        <h2 class="text-xl font-bold">dzerts</h2>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">Join the Sweet Club for exclusive offers and events.</p>
+                    <div class="flex gap-2">
+                        <input
+                            class="bg-white/10 border-none rounded px-3 py-2 text-sm w-full focus:ring-1 focus:ring-primary text-white placeholder-gray-500"
+                            placeholder="Your email" type="email" />
+                        <button
+                            class="bg-primary hover:bg-primary/90 px-3 py-2 rounded text-white text-sm font-bold">Join</button>
+                    </div>
+                </div>
+                <!-- Links -->
+                <div>
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-primary mb-4">Explore</h3>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li><a class="hover:text-white transition-colors" href="#">Our Menu</a></li>
+                        <li><a class="hover:text-white transition-colors" href="#">Locations</a></li>
+                        <li><a class="hover:text-white transition-colors" href="#">Catering</a></li>
+                        <li><a class="hover:text-white transition-colors" href="#">Gift Cards</a></li>
+                    </ul>
+                </div>
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-primary mb-4">Visit Us</h3>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-base mt-0.5">location_on</span>
+                            <span>123 Sugar Lane,<br />Dessert District, NY 10012</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-base">call</span>
+                            <span>(555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-base">mail</span>
+                            <span>hello@dzerts.com</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Hours -->
+                <div>
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-primary mb-4">Hours</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex justify-between"><span>Mon - Thu</span> <span>8am - 10pm</span></li>
+                        <li class="flex justify-between text-white font-medium"><span>Fri - Sat</span> <span>8am -
+                                11pm</span></li>
+                        <li class="flex justify-between"><span>Sunday</span> <span>9am - 9pm</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-500">© 2023 dzerts Inc. All rights reserved.</p>
+                <div class="flex gap-6 text-gray-400">
+                    <a class="hover:text-white" href="https://www.instagram.com/dzerts.in" target="_blank"><i
+                            class="text-lg fab fa-instagram"></i> Instagram</a>
+                    <a class="hover:text-white" href="https://www.facebook.com/Dzerts" target="_blank">Facebook</a>
+                    <a class="hover:text-white" href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Sticky Bottom CTA for Mobile -->
+    <div class="fixed bottom-4 left-4 right-4 z-40 md:hidden">
+        <button
+            class="w-full bg-primary text-white font-bold py-3 px-6 rounded-lg shadow-xl flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined">shopping_bag</span>
+            Order Now
+        </button>
+    </div>
+    <!-- Tailwind Config to allow custom animations -->
+    <script>
+        // Adding marquee animation dynamically to config isn't possible directly in script tag for tailwind cdn 
+        // using standard style tag for the animation keyframes
+    </script>
+    <style>
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-marquee {
+            animation: marquee 30s linear infinite;
+        }
+    </style>
+</body>
+
+</html>

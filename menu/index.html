@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>dzerts Full Menu Catalog</title>
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d41132",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#181112",
+                        "surface-dark": "#221013",
+                        "surface-highlight": "#2d1a1d",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #181112;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #39282b;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d41132;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-display transition-colors duration-200 antialiased overflow-hidden">
+    <div class="flex h-screen w-full overflow-hidden">
+        <!-- Sidebar -->
+        <aside
+            class="hidden md:flex w-72 flex-col justify-between border-r border-[#39282b] bg-background-dark p-8 overflow-y-auto">
+            <div class="flex flex-col gap-10">
+                <!-- Brand & Back -->
+                <div class="flex flex-col gap-6">
+                    <div>
+                        <a class="group flex items-center gap-2 text-[#b99da1] hover:text-white transition-colors text-sm font-medium"
+                            href="../home/index.html">
+                            <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+                            Back to Home
+                        </a>
+                    </div>
+                    <h1 class="text-white text-4xl font-black tracking-tighter lowercase">dzerts<span
+                            class="text-primary">.</span></h1>
+                </div>
+                <!-- Navigation -->
+                <nav class="flex flex-col gap-2">
+                    <p class="text-[#b99da1] text-xs font-bold uppercase tracking-widest mb-2 opacity-60">Menu
+                        Categories</p>
+                    <a class="group flex items-center justify-between rounded-lg bg-primary/10 px-4 py-3 border-l-4 border-primary"
+                        href="#">
+                        <span class="text-white text-base font-medium">Artisanal Cakes</span>
+                        <span class="material-symbols-outlined text-primary text-[20px]">cake</span>
+                    </a>
+                    <a class="group flex items-center justify-between rounded-lg px-4 py-3 text-[#b99da1] hover:bg-[#2d1a1d] hover:text-white transition-all"
+                        href="#">
+                        <span class="text-base font-medium">Handcrafted Macarons</span>
+                        <span
+                            class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity text-[20px]">cookie</span>
+                    </a>
+                    <a class="group flex items-center justify-between rounded-lg px-4 py-3 text-[#b99da1] hover:bg-[#2d1a1d] hover:text-white transition-all"
+                        href="#">
+                        <span class="text-base font-medium">Gourmet Pastries</span>
+                        <span
+                            class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity text-[20px]">bakery_dining</span>
+                    </a>
+                    <a class="group flex items-center justify-between rounded-lg px-4 py-3 text-[#b99da1] hover:bg-[#2d1a1d] hover:text-white transition-all"
+                        href="#">
+                        <span class="text-base font-medium">Iced Delights</span>
+                        <span
+                            class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity text-[20px]">icecream</span>
+                    </a>
+                </nav>
+            </div>
+            <!-- Socials -->
+            <div class="flex flex-col gap-4 pt-8 border-t border-[#39282b]">
+                <p class="text-[#b99da1] text-xs font-normal">Follow our journey</p>
+                <div class="flex gap-4">
+                    <a class="text-white hover:text-primary transition-colors"
+                        href="https://www.instagram.com/dzerts.in" target="_blank">
+                        <svg aria-hidden="true" class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.79-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a class="text-white hover:text-primary transition-colors" href="#">
+                        <svg aria-hidden="true" class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+                            <path
+                                d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84">
+                            </path>
+                        </svg>
+                    </a>
+                    <a class="text-white hover:text-primary transition-colors" href="https://www.facebook.com/Dzerts"
+                        target="_blank">
+                        <svg aria-hidden="true" class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+                            <path clip-rule="evenodd"
+                                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                                fill-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </aside>
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col h-full overflow-y-auto bg-background-dark scroll-smooth">
+            <div class="max-w-7xl mx-auto w-full p-4 md:p-10 lg:p-16">
+                <!-- Page Header -->
+                <header class="flex flex-col gap-6 mb-12">
+                    <!-- Mobile Logo/Nav Trigger -->
+                    <div class="md:hidden flex items-center justify-between mb-4">
+                        <h1 class="text-white text-2xl font-black lowercase">dzerts<span class="text-primary">.</span>
+                        </h1>
+                        <button class="text-white p-2">
+                            <span class="material-symbols-outlined">menu</span>
+                        </button>
+                    </div>
+                    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                        <div class="flex flex-col gap-2">
+                            <p class="text-primary font-bold tracking-widest uppercase text-sm">Full Menu Catalog</p>
+                            <h2 class="text-white text-4xl md:text-6xl font-black leading-tight tracking-tight">Our
+                                Collections</h2>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button
+                                class="flex items-center gap-2 h-10 px-4 rounded-lg bg-surface-highlight border border-[#39282b] hover:border-primary/50 text-white text-sm font-medium transition-all group">
+                                <span>Filter by</span>
+                                <span
+                                    class="material-symbols-outlined text-[18px] group-hover:text-primary">filter_list</span>
+                            </button>
+                            <button
+                                class="flex items-center gap-2 h-10 px-4 rounded-lg bg-primary text-white text-sm font-medium shadow-[0_0_15px_rgba(212,17,50,0.3)] hover:shadow-[0_0_20px_rgba(212,17,50,0.5)] transition-all">
+                                <span>Sort by Price</span>
+                                <span class="material-symbols-outlined text-[18px]">expand_more</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Quick Filters -->
+                    <div class="flex flex-wrap gap-3 mt-2">
+                        <button
+                            class="flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#39282b] bg-transparent hover:bg-surface-highlight text-[#b99da1] text-sm transition-colors">
+                            Gluten-Free
+                        </button>
+                        <button
+                            class="flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#39282b] bg-transparent hover:bg-surface-highlight text-[#b99da1] text-sm transition-colors">
+                            Nut-Free
+                        </button>
+                        <button
+                            class="flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#39282b] bg-transparent hover:bg-surface-highlight text-[#b99da1] text-sm transition-colors">
+                            Vegan
+                        </button>
+                        <button
+                            class="flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-sm transition-colors">
+                            Best Sellers
+                        </button>
+                    </div>
+                </header>
+                <!-- Menu Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Card 1 -->
+                    <div
+                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                        <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                data-alt="Dark chocolate cake slice with rich ganache"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBUBsvfj05Y72qZFdz8soTwor5L5uHIz62wgaHUOpxG7sYdQx_FtYcj8UFZo7w1CgJJLRbvslNnUHHposvK6Q03K0VoFBIoTJB__PGV8GORZB-aSpTu5s6DE6xnZAVQOObhuSb6_x5hdso1QDLOZE3nsUXnWkMfdpREMH1u3tTXu0-v61WmOeDQNHJueN3RCW9alwpMA2slv6i6UaOSkv1sFq6jtPTydwb9Rlx8mjfC8WB_sNG-eLR0LoD9F0_gVcgwYI0JdwuUdg");'>
+                            </div>
+                            <div class="absolute top-2 left-2">
+                                <span
+                                    class="inline-flex items-center px-2 py-1 rounded bg-black/60 backdrop-blur-sm text-[10px] font-bold text-white uppercase tracking-wider border border-white/10">GF</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col justify-between p-6 flex-1">
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between items-start gap-4">
+                                    <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                        Dark Chocolate Truffle</h3>
+                                    <span class="text-primary font-bold text-lg">$9.50</span>
+                                </div>
+                                <p class="text-[#b99da1] font-light text-sm leading-relaxed">Velvety dark chocolate
+                                    ganache with a hint of sea salt, served on a gluten-free cocoa base.</p>
+                            </div>
+                            <div class="flex items-end justify-between mt-6">
+                                <div class="flex gap-2 text-xs text-[#b99da1]">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-[14px]">star</span> 4.9</span>
+                                    <span>•</span>
+                                    <span>380 kcal</span>
+                                </div>
+                                <button
+                                    class="h-9 px-4 rounded-lg bg-white text-black hover:bg-primary hover:text-white text-sm font-bold transition-colors flex items-center gap-2">
+                                    Add <span class="material-symbols-outlined text-[16px]">add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div
+                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                        <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                data-alt="Pink macarons stacked on a dark plate"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyUMY_5VuXkFZbvDsxlF9C_lscc2IyVeqz7oFGnoJKOY1GJ6DSfhbKq3IjaIPcLPOLuo7v7Q_khZcaM2UnOoLjlW2sZ8IsqUyUsrvj4sVcZvsvlJAmG5kd8IQietXoNjHpbhF_It6xX-KJYcJXQSul3Duz-V8p7wmg7H7T2-ZxXD1YQnu0_4Evsr7km9_AIOoU2igm5wVMn1WJqg5BwikWstpW_HJ1gV_-H-DoYV17tnDdPGhIhz6OxHDJ_A4CL2PHVinj8GYoyA");'>
+                            </div>
+                            <div class="absolute top-2 left-2">
+                                <span
+                                    class="inline-flex items-center px-2 py-1 rounded bg-black/60 backdrop-blur-sm text-[10px] font-bold text-white uppercase tracking-wider border border-white/10">GF</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col justify-between p-6 flex-1">
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between items-start gap-4">
+                                    <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                        Raspberry Rose Macarons</h3>
+                                    <span class="text-primary font-bold text-lg">$12.00</span>
+                                </div>
+                                <p class="text-[#b99da1] font-light text-sm leading-relaxed">Delicate almond shells
+                                    filled with rose-infused raspberry cream. A box of six jewels.</p>
+                            </div>
+                            <div class="flex items-end justify-between mt-6">
+                                <div class="flex gap-2 text-xs text-[#b99da1]">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-[14px]">star</span> 4.8</span>
+                                    <span>•</span>
+                                    <span>6 pc</span>
+                                </div>
+                                <button
+                                    class="h-9 px-4 rounded-lg bg-white text-black hover:bg-primary hover:text-white text-sm font-bold transition-colors flex items-center gap-2">
+                                    Add <span class="material-symbols-outlined text-[16px]">add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div
+                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                        <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                data-alt="Cannoli with pistachio dusting"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCevbLR9_L7_FgcbSBpq0PHJx9-GMyj2aNF6I0-9cL1zq93kyfUjMhyQsI-xLJC2bS1sptUKbHrcMRauD9j2lLdFHgV4E9KFPZyDqFmpzRE6ft1V_uApVgzhhR4ldn6yig1v_VjgrJ9wTAhXnaWCtXZzYSO3g4_SJolPptbAl0g-Tj6YJaBwtySfryT0O4GYNzneygNKNbkDBClcgpt5CKNLfl5_aI1tkaYiibIuPchUmEX7LWPmQ4P6RiBdtpooSDRFiJVuzVShw");'>
+                            </div>
+                        </div>
+                        <div class="flex flex-col justify-between p-6 flex-1">
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between items-start gap-4">
+                                    <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                        Sicilian Pistachio Cannoli</h3>
+                                    <span class="text-primary font-bold text-lg">$7.00</span>
+                                </div>
+                                <p class="text-[#b99da1] font-light text-sm leading-relaxed">Crisp pastry shells filled
+                                    with sweet ricotta and crushed emerald pistachios from Bronte.</p>
+                            </div>
+                            <div class="flex items-end justify-between mt-6">
+                                <div class="flex gap-2 text-xs text-[#b99da1]">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-[14px]">star</span> 4.7</span>
+                                    <span>•</span>
+                                    <span>2 pc</span>
+                                </div>
+                                <button
+                                    class="h-9 px-4 rounded-lg bg-white text-black hover:bg-primary hover:text-white text-sm font-bold transition-colors flex items-center gap-2">
+                                    Add <span class="material-symbols-outlined text-[16px]">add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div
+                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                        <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                data-alt="Lemon tart with basil garnish"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD6kUI9eLXiSzkHY5Ofu_gZLbmSsosa-mhUgnwdJQFtZbsVIHB6Os1EDs_TeBJhRZ76W1FjZ_hK3rHJU3WceIUnmJbUmt7X6-0m_3EP96DJ3slPTDQRjft_89dKHpVqAFgjYBnFWRvmMq_Bmzc_2swlcsm3ucKc2vse2ZyVh9dCS1X-tpjw6i5Zi5AISpyKKebdQxmLhNM93FFUKtYmafhNoqvqHIFybKQjhmzC17nXBv1hZGVofzR3nU8Vze7kLYkDXQa23v8fBw");'>
+                            </div>
+                            <div class="absolute top-2 left-2">
+                                <span
+                                    class="inline-flex items-center px-2 py-1 rounded bg-black/60 backdrop-blur-sm text-[10px] font-bold text-white uppercase tracking-wider border border-white/10">Nut-Free</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col justify-between p-6 flex-1">
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between items-start gap-4">
+                                    <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                        Lemon Basil Tart</h3>
+                                    <span class="text-primary font-bold text-lg">$8.50</span>
+                                </div>
+                                <p class="text-[#b99da1] font-light text-sm leading-relaxed">Zesty lemon curd nestled in
+                                    a buttery shortbread crust, finished with fresh basil and meringue.</p>
+                            </div>
+                            <div class="flex items-end justify-between mt-6">
+                                <div class="flex gap-2 text-xs text-[#b99da1]">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-[14px]">star</span> 5.0</span>
+                                </div>
+                                <button
+                                    class="h-9 px-4 rounded-lg bg-white text-black hover:bg-primary hover:text-white text-sm font-bold transition-colors flex items-center gap-2">
+                                    Add <span class="material-symbols-outlined text-[16px]">add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 5 -->
+                    <div
+                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                        <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                data-alt="Tiramisu with cocoa powder dusting"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBqsPhvYITqrh85uhQLH8fYhaGjxVLRixjjasITxBLEAjVGdsbNULJkyRG4Ay1l4AfB_XJUvYRSqptPPsxGxgB-4dzxdtQlQfMJNMG7l3mkOs3U4YazdmkPHH6UOR8CJbLy7IIufJTHAu51pC6AtwbUQwfSoMQMGzR5UHNUWI4cpftITrtMG0yMlT4kvjvIDgnyn05IygVcP2KpnKIk1kdi7we4nNKDZWDgv7qK9_1BDDp8r7NZ0UgtCKsZByoM2ZolfJFuszItPw");'>
+                            </div>
+                        </div>
+                        <div class="flex flex-col justify-between p-6 flex-1">
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between items-start gap-4">
+                                    <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                        Cold Brew Tiramisu</h3>
+                                    <span class="text-primary font-bold text-lg">$10.00</span>
+                                </div>
+                                <p class="text-[#b99da1] font-light text-sm leading-relaxed">Layers of espresso-soaked
+                                    ladyfingers and mascarpone cream dusted with dutch cocoa.</p>
+                            </div>
+                            <div class="flex items-end justify-between mt-6">
+                                <div class="flex gap-2 text-xs text-[#b99da1]">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-[14px]">star</span> 4.8</span>
+                                    <span>•</span>
+                                    <span>Coffee</span>
+                                </div>
+                                <button
+                                    class="h-9 px-4 rounded-lg bg-white text-black hover:bg-primary hover:text-white text-sm font-bold transition-colors flex items-center gap-2">
+                                    Add <span class="material-symbols-outlined text-[16px]">add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 6 -->
+                    <div
+                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                        <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                data-alt="Cheesecake slice with honey drip"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDIr1rIR7vq-3WPBE3fBpOeqhxw9pNiGOYntSvV7iD5uZieIjC-sYbAd5l67b5SPweBCOZecSm79PcwWizjcKn-vShUdu4dLCfomWIvID9G-YMWRaYaSGRn4vzvwOJ9RC1aE5EcBGEaZpB_YGccMuYrRFH0Q3NhJoiS3ZIr760ZEHl8i8wWer8VGH3DJtv81U7cQ1hck-RS9mgQzE3sM1nRb3EM8YPSZcVgM_8ql0JOOEMveSGjX4IIzKi4_gM8po0Wno1KqVn3Og");'>
+                            </div>
+                            <div class="absolute top-2 left-2">
+                                <span
+                                    class="inline-flex items-center px-2 py-1 rounded bg-black/60 backdrop-blur-sm text-[10px] font-bold text-white uppercase tracking-wider border border-white/10">New</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col justify-between p-6 flex-1">
+                            <div class="flex flex-col gap-2">
+                                <div class="flex justify-between items-start gap-4">
+                                    <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                        Lavender Honey Cheesecake</h3>
+                                    <span class="text-primary font-bold text-lg">$11.00</span>
+                                </div>
+                                <p class="text-[#b99da1] font-light text-sm leading-relaxed">Creamy cheesecake infused
+                                    with floral lavender buds and drizzled with wild mountain honey.</p>
+                            </div>
+                            <div class="flex items-end justify-between mt-6">
+                                <div class="flex gap-2 text-xs text-[#b99da1]">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-[14px]">star</span> 4.6</span>
+                                </div>
+                                <button
+                                    class="h-9 px-4 rounded-lg bg-white text-black hover:bg-primary hover:text-white text-sm font-bold transition-colors flex items-center gap-2">
+                                    Add <span class="material-symbols-outlined text-[16px]">add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer / Load More -->
+                <div class="mt-12 flex justify-center pb-8">
+                    <button
+                        class="text-white hover:text-primary transition-colors font-medium text-sm flex items-center gap-2 border-b border-transparent hover:border-primary pb-1">
+                        View All Collections <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
