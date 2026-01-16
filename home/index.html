@@ -88,7 +88,7 @@
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <!-- Text Content -->
-                    <div class="relative z-10 flex flex-col gap-6 text-center lg:text-left">
+                    <div class="relative z-10 flex flex-col gap-6 text-center lg:text-left reveal">
                         <span
                             class="inline-flex items-center gap-2 self-center lg:self-start rounded-full bg-latte/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-caramel border border-caramel/20">
                             <span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                     <!-- Collage Image Area -->
-                    <div class="relative h-[500px] w-full mt-8 lg:mt-0">
+                    <div class="relative h-[500px] w-full mt-8 lg:mt-0 reveal reveal-delay-200">
                         <!-- Decorative Blob -->
                         <div
                             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-primary/10 via-caramel/5 to-transparent rounded-full blur-3xl -z-10">
@@ -160,7 +160,7 @@
             </div>
         </section>
         <!-- Marquee / Ticker -->
-        <div class="w-full bg-primary/10 border-y border-primary/20 overflow-hidden py-3">
+        <div class="w-full bg-primary/10 border-y border-primary/20 overflow-hidden py-3 reveal">
             <div class="flex gap-12 animate-marquee whitespace-nowrap min-w-full">
                 <div class="flex gap-12 items-center text-primary font-bold uppercase tracking-widest text-sm">
                     <span>Fresh Ingredients</span> <span class="material-symbols-outlined text-xs">circle</span>
@@ -180,7 +180,7 @@
         </div>
         <!-- Variety Section: Circular Categories -->
         <section class="py-20 relative bg-gradient-to-b from-transparent to-black/20">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 reveal">
                 <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                     <div>
                         <h2 class="text-3xl md:text-4xl font-black text-white mb-2">Pick Your Pleasure</h2>
@@ -278,7 +278,7 @@
         </section>
         <!-- The Vibe Section: Masonry-ish Layout -->
         <section class="py-20 bg-background-light dark:bg-[#1a0d0f]">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 reveal">
                 <div class="flex flex-col md:flex-row gap-8 items-start mb-12">
                     <div class="flex-1">
                         <span class="text-primary font-bold tracking-widest uppercase text-sm">Atmosphere</span>
@@ -352,7 +352,7 @@
             <div class="absolute top-10 right-10 text-primary/20 pointer-events-none">
                 <span class="material-symbols-outlined text-[120px]">favorite</span>
             </div>
-            <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 reveal">
                 <div class="flex flex-col sm:flex-row items-center justify-between mb-12 text-center sm:text-left">
                     <div>
                         <h2 class="text-3xl md:text-5xl font-black text-gray-900 dark:text-white">Spotted at #dzerts
@@ -447,7 +447,7 @@
         </section>
         <!-- Testimonials Slider Section -->
         <section class="py-20 bg-latte/10 dark:bg-espresso/20 border-y border-white/5">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center reveal">
                 <h2 class="text-2xl font-bold mb-10 text-gray-900 dark:text-white uppercase tracking-wider">What our
                     guests say</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -599,6 +599,7 @@
         // using standard style tag for the animation keyframes
     </script>
     <style>
+        /* Marquee Animation */
         @keyframes marquee {
             0% {
                 transform: translateX(0);
@@ -612,7 +613,54 @@
         .animate-marquee {
             animation: marquee 30s linear infinite;
         }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        .reveal.reveal-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered delays for children if needed */
+        .reveal-delay-100 {
+            transition-delay: 100ms;
+        }
+
+        .reveal-delay-200 {
+            transition-delay: 200ms;
+        }
+
+        .reveal-delay-300 {
+            transition-delay: 300ms;
+        }
     </style>
+    <script>
+        // Scroll Reveal Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('reveal-active');
+                        observer.unobserve(entry.target); // Animate only once
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 
 </html>

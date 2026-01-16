@@ -153,7 +153,7 @@
         <main class="flex-1 flex flex-col h-full overflow-y-auto bg-background-dark scroll-smooth">
             <div class="max-w-7xl mx-auto w-full p-4 md:p-10 lg:p-16">
                 <!-- Page Header -->
-                <header class="flex flex-col gap-6 mb-12">
+                <header class="flex flex-col gap-6 mb-12 reveal">
                     <!-- Mobile Logo/Nav Trigger -->
                     <div class="md:hidden flex items-center justify-between mb-4">
                         <h1 class="text-white text-2xl font-black lowercase">dzerts<span class="text-primary">.</span>
@@ -206,7 +206,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Card 1 -->
                     <div
-                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl reveal">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                 data-alt="Dark chocolate cake slice with rich ganache"
@@ -243,7 +243,7 @@
                     </div>
                     <!-- Card 2 -->
                     <div
-                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl reveal">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                 data-alt="Pink macarons stacked on a dark plate"
@@ -280,7 +280,7 @@
                     </div>
                     <!-- Card 3 -->
                     <div
-                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl reveal">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                 data-alt="Cannoli with pistachio dusting"
@@ -313,7 +313,7 @@
                     </div>
                     <!-- Card 4 -->
                     <div
-                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl reveal">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                 data-alt="Lemon tart with basil garnish"
@@ -348,7 +348,7 @@
                     </div>
                     <!-- Card 5 -->
                     <div
-                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl reveal">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                 data-alt="Tiramisu with cocoa powder dusting"
@@ -381,7 +381,7 @@
                     </div>
                     <!-- Card 6 -->
                     <div
-                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                        class="group relative flex flex-col sm:flex-row rounded-xl bg-surface-dark border border-[#39282b] hover:border-primary/30 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl reveal">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                 data-alt="Cheesecake slice with honey drip"
@@ -425,6 +425,49 @@
             </div>
         </main>
     </div>
+    <style>
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.reveal-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered delays for children if needed */
+        .reveal-delay-100 {
+            transition-delay: 100ms;
+        }
+
+        .reveal-delay-200 {
+            transition-delay: 200ms;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('reveal-active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 
 </html>
