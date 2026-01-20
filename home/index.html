@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html class="dark scroll-smooth" lang="en">
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -11,22 +10,73 @@
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&amp;display=swap"
         rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        :root {
+            /* Light Theme (Ivory & Espresso) - DEFAULT */
+            --bg-main: #F9F5F1;
+            /* Ivory */
+            --bg-card: #ffffff;
+            /* White */
+            --bg-footer: #4A2C2A;
+            /* Espresso */
+
+            --text-main: #4A2C2A;
+            /* Espresso */
+            --text-body: #2D2D2D;
+            /* Charcoal */
+            --text-muted: #6B5B55;
+
+            --primary: #4A2C2A;
+            /* Primary in Light Mode is Espresso/Brown */
+
+            --color-cream: #F5EFE1;
+            /* Borders */
+            --color-latte: #D4B996;
+            --color-caramel: #D4A373;
+        }
+
+        .dark {
+            /* Dark Theme (Red & Dark Latte) - V1 MATCH */
+            --bg-main: #221013;
+            /* Live Site Body BG */
+            --bg-card: #2a1d1f;
+            /* Dark Card BG */
+            --bg-footer: #000000;
+            /* Live Site Footer (approx) */
+
+            --text-main: #ffffff;
+            /* White Headings */
+            --text-body: #e5e5e5;
+            /* Light Gray Body */
+            --text-muted: #E6C9A8;
+
+            --primary: #d41132;
+            /* Live Site Primary Red */
+
+            --color-cream: #39282b;
+            /* Dark Borders */
+            --color-latte: #E6C9A8;
+            --color-caramel: #C48A5A;
+        }
+    </style>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#d41132",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#221013",
-                        "latte": "#E6C9A8",
-                        "caramel": "#C48A5A",
-                        "espresso": "#3E2723",
+                        "primary": "var(--primary)",
+                        "ivory": "var(--bg-main)",
+                        "cream": "var(--color-cream)", // Accents/Borders
+                        "espresso": "var(--text-main)", // Mapped to TEXT color
+                        "charcoal": "var(--text-body)",
+                        "latte": "var(--color-latte)",
+                        "caramel": "var(--color-caramel)",
+
+                        // Semantic Extensions
+                        "footer-bg": "var(--bg-footer)",
+                        "card-bg": "var(--bg-card)",
                     },
                     fontFamily: {
                         "display": ["Work Sans", "sans-serif"]
@@ -36,70 +86,84 @@
             },
         }
     </script>
-    <style>
-        /* Custom scrollbar hiding for clean UI */
-        .no-scrollbar::-webkit-scrollbar {
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .no-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 30s linear infinite;
+        }
+        #social-feed-scroller::-webkit-scrollbar {
             display: none;
         }
-
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        #social-feed-scroller {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
         }
     </style>
 </head>
 
-<body
-    class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-white font-display overflow-x-hidden selection:bg-primary selection:text-white">
-    <!-- Navbar -->
-    <header
-        class="sticky top-0 z-50 w-full border-b border-[#39282b] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md">
+<body class="bg-ivory text-charcoal font-display overflow-x-hidden selection:bg-primary selection:text-white">
+    <header class="sticky top-0 z-50 w-full border-b border-cream bg-ivory/95 backdrop-blur-md">
         <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
-            <a href="index.html" class="flex items-center gap-2">
+            <div class="flex items-center gap-2">
                 <div class="flex h-8 w-8 items-center justify-center rounded bg-primary text-white">
                     <span class="material-symbols-outlined text-xl">cookie</span>
                 </div>
-                <h1 class="text-2xl font-black tracking-tighter text-gray-900 dark:text-white">dzerts</h1>
-            </a>
+                <h1 class="text-2xl font-black tracking-tighter text-espresso">dzerts</h1>
+            </div>
             <nav class="hidden md:flex items-center gap-10">
-                <a class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                <a class="text-sm font-semibold text-charcoal/70 hover:text-primary transition-colors"
                     href="../menu/index.html">Menu</a>
-                <a class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
-                    href="#locations">Locations</a>
-                <a class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+                <a class="text-sm font-semibold text-charcoal/70 hover:text-primary transition-colors"
+                    href="#">Locations</a>
+                <a class="text-sm font-semibold text-charcoal/70 hover:text-primary transition-colors"
                     href="#">About</a>
-                <a class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
-                    href="#social">Social</a>
+                <a class="text-sm font-semibold text-charcoal/70 hover:text-primary transition-colors"
+                    href="#">Social</a>
             </nav>
             <div class="flex items-center gap-4">
                 <button
-                    class="flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-primary/25">
+                    class="flex items-center justify-center rounded-lg bg-primary px-3 py-2 md:px-5 md:py-2.5 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-primary/20">
                     Order Online
                 </button>
-                <button class="md:hidden p-2 text-gray-500 hover:text-white">
-                    <span class="material-symbols-outlined">menu</span>
+                <button id="theme-toggle"
+                    class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-charcoal dark:text-white"
+                    aria-label="Toggle Theme">
+                    <span class="material-symbols-outlined dark:hidden">light_mode</span>
+                    <span class="material-symbols-outlined hidden dark:block">dark_mode</span>
                 </button>
+
             </div>
         </div>
     </header>
     <main class="flex flex-col">
-        <!-- Hero Section: Lifestyle Collage -->
         <section class="relative w-full overflow-hidden py-16 lg:py-24">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <!-- Text Content -->
-                    <div class="relative z-10 flex flex-col gap-6 text-center lg:text-left reveal">
+                    <div class="relative z-10 flex flex-col gap-6 text-center lg:text-left">
                         <span
-                            class="inline-flex items-center gap-2 self-center lg:self-start rounded-full bg-latte/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-caramel border border-caramel/20">
-                            <span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+                            class="inline-flex items-center gap-2 self-center lg:self-start rounded-full bg-cream dark:bg-white/5 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-caramel dark:text-gray-400 border border-caramel/20 dark:border-white/10">
+                            <span class="h-2 w-2 rounded-full bg-primary"></span>
                             New Season Menu
                         </span>
-                        <h2 class="text-5xl font-black leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
+                        <h2
+                            class="text-5xl font-black leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl text-espresso dark:text-white">
                             Sweetness is a <br />
                             <span
-                                class="text-transparent bg-clip-text bg-gradient-to-r from-latte to-caramel">Lifestyle</span>
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-caramel to-primary dark:from-[#C48A5A] dark:to-[#E6C9A8]">Lifestyle</span>
                         </h2>
-                        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto lg:mx-0 font-medium">
+                        <p class="text-lg text-charcoal/70 dark:text-gray-400 max-w-xl mx-auto lg:mx-0 font-medium">
                             Experience the chic side of dessert. Indulge in our premium selection in a setting that's as
                             vibrant as the flavors.
                         </p>
@@ -108,14 +172,13 @@
                                 class="flex items-center justify-center rounded-lg bg-primary h-12 px-8 text-base font-bold text-white shadow-xl shadow-primary/20 hover:bg-primary/90 transition-all">
                                 Order Now
                             </button>
-                            <button onclick="window.location.href='../menu/index.html'"
-                                class="flex items-center justify-center rounded-lg border border-gray-700 bg-transparent h-12 px-8 text-base font-bold text-gray-900 dark:text-white hover:bg-white/5 transition-all">
+                            <a href="../menu/index.html"
+                                class="flex items-center justify-center rounded-lg border border-charcoal/20 dark:border-white/20 bg-transparent h-12 px-8 text-base font-bold text-espresso dark:text-white hover:bg-cream dark:hover:bg-white/5 transition-all">
                                 View Menu
-                            </button>
+                            </a>
                         </div>
-                        <!-- Trust badges -->
                         <div
-                            class="mt-8 flex items-center justify-center lg:justify-start gap-6 text-sm font-medium text-gray-500">
+                            class="mt-8 flex items-center justify-center lg:justify-start gap-6 text-sm font-medium text-charcoal/50 dark:text-gray-500">
                             <div class="flex items-center gap-2">
                                 <span class="material-symbols-outlined text-primary text-xl">star</span>
                                 <span>4.9/5 Rating</span>
@@ -126,32 +189,25 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Collage Image Area -->
-                    <div class="relative h-[500px] w-full mt-8 lg:mt-0 reveal reveal-delay-200">
-                        <!-- Decorative Blob -->
+                    <div class="relative h-[500px] w-full mt-8 lg:mt-0">
                         <div
-                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-primary/10 via-caramel/5 to-transparent rounded-full blur-3xl -z-10">
+                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-cream via-white to-transparent rounded-full blur-3xl -z-10">
                         </div>
-                        <!-- Main Image -->
                         <div
-                            class="absolute top-0 right-4 w-3/5 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500 ease-out z-10 border-4 border-white dark:border-[#2a181b]">
-                            <div class="w-full h-full bg-gray-300 bg-cover bg-center"
-                                data-alt="Friends laughing and eating cake in a cafe"
+                            class="absolute top-0 right-4 w-3/5 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500 ease-out z-10 border-4 border-white">
+                            <div class="w-full h-full bg-gray-200 bg-cover bg-center"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBefbApLyARKGtAipkPp1tMU_7o6tTZespifNPwgmpp9hqNe4bYixpm2dNYN-EvX-sh1wfN9Bm2EpLBdCMGF_7pBJz6tpzYHDS6FOEMlb2uFBemk4JJwn0hSEqgrvroK2DkryLUrBoO1oXO-ZyXvolksB6Pb_y_KSRdO11sjo2Hywroveqhw46Xkns-2ZSRxbmvlAKQJaoTgXVGY7pfsfW33bFvHSbEJ1abGxtrrxu0Efcnxaesrvc_H58exf00tUsTKjW4xypfmA');">
                             </div>
                         </div>
-                        <!-- Secondary Image (Bottom Left) -->
                         <div
-                            class="absolute bottom-4 left-4 w-2/5 aspect-square rounded-2xl overflow-hidden shadow-2xl -rotate-6 hover:rotate-0 transition-transform duration-500 ease-out z-20 border-4 border-white dark:border-[#2a181b]">
-                            <div class="w-full h-full bg-gray-300 bg-cover bg-center"
-                                data-alt="Close up of a spoon breaking into a chocolate lava cake"
+                            class="absolute bottom-4 left-4 w-2/5 aspect-square rounded-2xl overflow-hidden shadow-2xl -rotate-6 hover:rotate-0 transition-transform duration-500 ease-out z-20 border-4 border-white">
+                            <div class="w-full h-full bg-gray-200 bg-cover bg-center"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWy_LKfYrTfvhiEOzq9pZhNL53zLvNfQykOPWd9zh4ehuccbIBqDazPLhxbIgvTAT_WIqoMBShxpd-jL78LWACHSaB1Ricz7eeAH3nlWNAp9e5jlrJsDdpv58DOVKQjdIObEa4FQOe48KuHbrSovRGwWzO9qn0v3K76KZWGHmjwXmRJkQNZlYU5Y9Mh6ecTc8J_ifoDZlev3Tres1UtL7tOSFFvvVg8I0shs1kAbIkOpVZjTKAV0TwK_4c8ikC3nl20OEcI9U2PQ');">
                             </div>
                         </div>
-                        <!-- Small Accent Image (Top Left) -->
                         <div
-                            class="absolute top-12 left-0 w-1/4 aspect-square rounded-full overflow-hidden shadow-xl shadow-caramel/20 z-0 border-4 border-caramel/30">
-                            <div class="w-full h-full bg-gray-300 bg-cover bg-center" data-alt="Latte art coffee cup"
+                            class="absolute top-12 left-0 w-1/4 aspect-square rounded-full overflow-hidden shadow-xl shadow-caramel/20 z-0 border-4 border-cream">
+                            <div class="w-full h-full bg-gray-200 bg-cover bg-center"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBgTTa5ZhxHfiRl99vcgigznvcTWzmKDLOega3dNNvF5Od6_GS97FSnVTEQfo6DT7Q_ueXQjUOXkdiLyB4DKw5Hz-URa43HRkENeCxZX5YWjNklpuTB24dtlE-zMbvcy_9-YdCEx8XwLc1i0WSI7zNnY0o3jg13r4k3EdOqjkZqXCDD1P_0kjiU8UxbFI7DLxeqTCQx7FHsKQoWc7ZFLKHF9hbChPCLVajoRS2OP-uQfynch8IMEkkNA_6Ow2V82nIhOaV1W9KYIQ');">
                             </div>
                         </div>
@@ -159,14 +215,9 @@
                 </div>
             </div>
         </section>
-        <!-- Marquee / Ticker -->
-        <div class="w-full bg-primary/10 border-y border-primary/20 overflow-hidden py-3 reveal">
+        <div class="w-full bg-cream/50 border-y border-cream overflow-hidden py-3">
             <div class="flex gap-12 animate-marquee whitespace-nowrap min-w-full">
                 <div class="flex gap-12 items-center text-primary font-bold uppercase tracking-widest text-sm">
-                    <span>Fresh Ingredients</span> <span class="material-symbols-outlined text-xs">circle</span>
-                    <span>Artisan Bakers</span> <span class="material-symbols-outlined text-xs">circle</span>
-                    <span>Late Night Cravings</span> <span class="material-symbols-outlined text-xs">circle</span>
-                    <span>Premium Coffee</span> <span class="material-symbols-outlined text-xs">circle</span>
                     <span>Fresh Ingredients</span> <span class="material-symbols-outlined text-xs">circle</span>
                     <span>Artisan Bakers</span> <span class="material-symbols-outlined text-xs">circle</span>
                     <span>Late Night Cravings</span> <span class="material-symbols-outlined text-xs">circle</span>
@@ -178,202 +229,185 @@
                 </div>
             </div>
         </div>
-        <!-- Variety Section: Circular Categories -->
-        <section class="py-20 relative bg-gradient-to-b from-transparent to-black/20">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8 reveal">
+        <section class="py-20 relative bg-gradient-to-b from-ivory to-cream/30">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                     <div>
-                        <h2 class="text-3xl md:text-4xl font-black text-white mb-2">Pick Your Pleasure</h2>
-                        <p class="text-gray-400">Curated categories for every craving.</p>
+                        <h2 class="text-3xl md:text-4xl font-black text-espresso mb-2">Pick Your Pleasure</h2>
+                        <p class="text-charcoal/60">Curated categories for every craving.</p>
                     </div>
                     <div class="flex gap-2">
                         <button
-                            class="h-10 w-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-colors">
+                            class="h-10 w-10 rounded-full border border-cream bg-white flex items-center justify-center hover:bg-cream text-espresso transition-colors">
                             <span class="material-symbols-outlined">arrow_back</span>
                         </button>
                         <button
-                            class="h-10 w-10 rounded-full bg-white text-black flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                            class="h-10 w-10 rounded-full bg-footer-bg text-white flex items-center justify-center hover:bg-primary transition-colors">
                             <span class="material-symbols-outlined">arrow_forward</span>
                         </button>
                     </div>
                 </div>
                 <div class="flex gap-8 overflow-x-auto no-scrollbar pb-8 snap-x">
-                    <!-- Category 1 -->
                     <div class="snap-center shrink-0 group cursor-pointer text-center">
                         <div
-                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-white/10 ring-offset-4 ring-offset-background-dark">
-                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10">
+                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-cream ring-offset-4 ring-offset-ivory">
+                            <div
+                                class="absolute inset-0 bg-espresso/5 group-hover:bg-transparent transition-colors z-10">
                             </div>
                             <div class="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-500"
-                                data-alt="Petit Fours assorted mini desserts"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB9nRWIO7M9X1ID35H3DNkG9WO7myXfnyhFEcG226IhE5zDf8pebJ5u8mbET05Tl5eviXB_1rfO9k3TaheQPbmL2AoaX8PSPkU8uu9EnvFfewfr1NvIrrdxZhVeC2LOXLEi4r3xlD7B_HloUct37MzuhDshieRGWp9Nw8iJoqTH1tw6krN0tYymG21Hx4m5bgy7xzbm4ZjIkaoqIEUHMAfwcVUzM1y59JXdv3S-AdfFEoG66XCjUfPrvTuXYgQIWXSW4djdC1F2-Q');">
                             </div>
                         </div>
-                        <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Petit Fours
-                        </h3>
-                        <p class="text-sm text-gray-500 mt-1">Bite-sized luxury</p>
+                        <h3 class="text-xl font-bold text-espresso group-hover:text-primary transition-colors">Petit
+                            Fours</h3>
+                        <p class="text-sm text-charcoal/50 mt-1">Bite-sized luxury</p>
                     </div>
-                    <!-- Category 2 -->
                     <div class="snap-center shrink-0 group cursor-pointer text-center">
                         <div
-                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-white/10 ring-offset-4 ring-offset-background-dark">
-                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10">
+                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-cream ring-offset-4 ring-offset-ivory">
+                            <div
+                                class="absolute inset-0 bg-espresso/5 group-hover:bg-transparent transition-colors z-10">
                             </div>
                             <div class="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-500"
-                                data-alt="Custom decorated layered cake"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBHBfU8mkdzEYGml3cicArPPMrwiUGRwTpvEo26rj_GJwcP7zqSk__SYB92ELAZKFBkAWUlLLUJmaS0C1yF5MU_5PKT8vr2eP4nrdCGG88_rUgsY5H592hk3jXMOmVhVU69Hg86ylZn8xEa2F-S2GErr5ETjuNnlKn4PX7FQWR4hFSLuQ5qLnpcX4SnJKv6S4eo4kTBz6wCnwXHQEVQ1YspWR3H4B86BeqQJMDfCK8oCBFOL2S6Cd0-RMD9Vo6kJzf-jS4kn-eAWw');">
                             </div>
                         </div>
-                        <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Custom Cakes
-                        </h3>
-                        <p class="text-sm text-gray-500 mt-1">Made to celebrate</p>
+                        <h3 class="text-xl font-bold text-espresso group-hover:text-primary transition-colors">Custom
+                            Cakes</h3>
+                        <p class="text-sm text-charcoal/50 mt-1">Made to celebrate</p>
                     </div>
-                    <!-- Category 3 -->
                     <div class="snap-center shrink-0 group cursor-pointer text-center">
                         <div
-                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-white/10 ring-offset-4 ring-offset-background-dark">
-                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10">
+                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-cream ring-offset-4 ring-offset-ivory">
+                            <div
+                                class="absolute inset-0 bg-espresso/5 group-hover:bg-transparent transition-colors z-10">
                             </div>
                             <div class="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-500"
-                                data-alt="Iced cupcake with sprinkles"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDdJmRs9IQHgxO0wHXRATYmoVhNQXBkV45VUFE-x-bClI8AFk8WFPOeZQCpfaKaPD0NJLPt2jwKPyay3ljzg6Gn-k6CgvrNRYwjOHmebqb62KExesJ28cOkKlWeyHyZViqceGXEtzrVjZgIBIuC0N0Wm1BpiMiTOpJXQ9QNmZTrHpjeeqT0u8dMCG3KMRGs5HUWF3SR3p4YxSqy3Dr5bBTThS2yqximT2Q_mF0r_L50EcWtF91H9FdZKVoF5_op_McdncUTCHwZFg');">
                             </div>
                         </div>
-                        <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Iced
+                        <h3 class="text-xl font-bold text-espresso group-hover:text-primary transition-colors">Iced
                             Delights</h3>
-                        <p class="text-sm text-gray-500 mt-1">Sweet &amp; creamy</p>
+                        <p class="text-sm text-charcoal/50 mt-1">Sweet &amp; creamy</p>
                     </div>
-                    <!-- Category 4 -->
                     <div class="snap-center shrink-0 group cursor-pointer text-center">
                         <div
-                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-white/10 ring-offset-4 ring-offset-background-dark">
-                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10">
+                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-cream ring-offset-4 ring-offset-ivory">
+                            <div
+                                class="absolute inset-0 bg-espresso/5 group-hover:bg-transparent transition-colors z-10">
                             </div>
                             <div class="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-500"
-                                data-alt="Gourmet coffee latte with heart art"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAfpzyQkzGMBS9dBrdHEadiRx-yU22EOyYGvB4PA9D5B5_6q1m5ou988E6HF1HQKIkb1xKdE8xWRMBGr1fLdaH8vkbULx_JXKGEGyNOC8ktYiB21cGj6SjCPLQd1wywsXbJcnzvWv6ARcfdYwgfcPbsO1VebulgvXn8JO4mOe4hTNhxFj8bX-K9XneK5sE3uhdx_bxOpAw4lskAJRPDPXiMvFjv5VYTE54j_dZ4wA9QYaLVFRHTL4C2m0vArLlGgD93ydZ-paJE6Q');">
                             </div>
                         </div>
-                        <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Coffee Bar
-                        </h3>
-                        <p class="text-sm text-gray-500 mt-1">The perfect pair</p>
+                        <h3 class="text-xl font-bold text-espresso group-hover:text-primary transition-colors">Coffee
+                            Bar</h3>
+                        <p class="text-sm text-charcoal/50 mt-1">The perfect pair</p>
                     </div>
-                    <!-- Category 5 -->
                     <div class="snap-center shrink-0 group cursor-pointer text-center">
                         <div
-                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-white/10 ring-offset-4 ring-offset-background-dark">
-                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10">
+                            class="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 mx-auto mb-4 ring-2 ring-cream ring-offset-4 ring-offset-ivory">
+                            <div
+                                class="absolute inset-0 bg-espresso/5 group-hover:bg-transparent transition-colors z-10">
                             </div>
                             <div class="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-500"
-                                data-alt="Box of assorted macarons"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUxzOC3sxJ8riW6Xo2Da_912Sbb7u4wAA89Gax1tltBxbwjiqnw7IoEsABigqUtFBG4mex0ps98CNqCTY9UnFiUjP3yMNY7wKj1-G_HRETODjiFF6d4DkodpCMoPczKZ89zWXpkmr9QwPICnhqmLIGQjI0NoaytKr3pVC5SoScD4bU9DkbB2956SOw6t1mOJCcx1ASIQ7Zd0-01a0rQk1LFXdUkYOne2v9UqUkFCI4Nlp-BoEetlzj0QtjwaV6ACYpng1wbRo1Bw');">
                             </div>
                         </div>
-                        <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Gift Boxes
-                        </h3>
-                        <p class="text-sm text-gray-500 mt-1">Share the love</p>
+                        <h3 class="text-xl font-bold text-espresso group-hover:text-primary transition-colors">Gift
+                            Boxes</h3>
+                        <p class="text-sm text-charcoal/50 mt-1">Share the love</p>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- The Vibe Section: Masonry-ish Layout -->
-        <section class="py-20 bg-background-light dark:bg-[#1a0d0f]">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8 reveal">
+        <section class="py-20 bg-cream/20">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row gap-8 items-start mb-12">
                     <div class="flex-1">
                         <span class="text-primary font-bold tracking-widest uppercase text-sm">Atmosphere</span>
-                        <h2 class="text-4xl md:text-5xl font-black mt-2 text-gray-900 dark:text-white">The Vibe</h2>
+                        <h2 class="text-4xl md:text-5xl font-black mt-2 text-espresso">The Vibe</h2>
                     </div>
-                    <div class="flex-1 text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+                    <div class="flex-1 text-charcoal/70 text-lg leading-relaxed">
                         A place to disconnect and indulge. Warm lighting, cozy corners, and the smell of freshly baked
                         pastries. Whether it's a date night or a solo treat, we've set the mood for you.
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[300px]">
-                    <!-- Large Block -->
                     <div class="md:col-span-8 row-span-1 md:row-span-2 relative rounded-2xl overflow-hidden group">
-                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors z-10"></div>
+                        <div class="absolute inset-0 bg-espresso/20 group-hover:bg-espresso/10 transition-colors z-10">
+                        </div>
                         <div class="absolute bottom-6 left-6 z-20">
                             <span
-                                class="bg-white text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Interiors</span>
+                                class="bg-white text-espresso text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Interiors</span>
                             <h3 class="text-2xl font-bold text-white">Chic &amp; Modern</h3>
                         </div>
                         <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                            data-alt="Modern cafe interior with warm lighting"
                             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCrpzhmbMC8pBfAfCh4QiEUs0UQ3mmyNEGere5crJF8pbqJV8MUCzIU_daeh3JlDf0lsvjH_v0FTA7hdnaE8uy2XOudD8XpM8JcGRpJ2NN1B1UqPE-EAKXdKuKv-7luRpgOv6xqNB9zqbQzcVLh17mOqBAyzHFcFRG4eHWMaMMLlfStljdjJBkBZOuaIX2jdH6-wQEZfLMOxmtDMgnxD0mH2k7j-oZqMWZOd7sVwyBCsKwWukTiLIgRo5d-vfo7hOuMEjmIN2lMPA');">
                         </div>
                     </div>
-                    <!-- Tall Block -->
                     <div class="md:col-span-4 row-span-1 md:row-span-2 relative rounded-2xl overflow-hidden group">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-espresso/80 to-transparent z-10"></div>
                         <div class="absolute bottom-6 left-6 z-20">
                             <span
                                 class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Events</span>
                             <h3 class="text-2xl font-bold text-white">Live Jazz Nights</h3>
-                            <p class="text-gray-300 text-sm mt-1">Every Friday 8 PM</p>
+                            <p class="text-white/80 text-sm mt-1">Every Friday 8 PM</p>
                         </div>
                         <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                            data-alt="Cocktails and desserts on a table in dim light"
                             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDIWdzhu-GDe4vs-exMJT54TkkBYf4DboULmBSdEKEV_WLi__ffwgQIF9SKDnOsZC4Amxb9pgpw3862tixklrreWfjlFnWMtLN8WdnkHuUwqhDQx72uUcz6UVrHVNYu09g69eAwAWuqWTQXYy4_6QUOWCIY2Qzp6LNd2s0k3E7ZU5bUl4HMagpLC8Sn00PkxUD6DwIO_Xr8zFYMDg914Cf_bvKBdNp1tXka2FyM5JkYD4jeRcg-Up8KQdeF3dehnrYnH9HbLYAfdw');">
                         </div>
                     </div>
-                    <!-- Wide Small Block -->
                     <div
-                        class="md:col-span-6 relative rounded-2xl overflow-hidden group bg-caramel/10 flex items-center p-8">
+                        class="md:col-span-6 relative rounded-2xl overflow-hidden group bg-cream flex items-center p-8">
                         <div class="flex-1 pr-4">
                             <span class="text-primary font-bold text-lg mb-2 block">Working Remotely?</span>
-                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">High Speed WiFi &amp;
-                                Power Plugs</h3>
-                            <a class="text-gray-600 dark:text-gray-300 underline decoration-primary decoration-2 underline-offset-4 hover:text-primary transition-colors"
+                            <h3 class="text-2xl font-bold text-espresso mb-4">High Speed WiFi &amp; Power Plugs</h3>
+                            <a class="text-charcoal/70 underline decoration-primary decoration-2 underline-offset-4 hover:text-primary transition-colors font-medium"
                                 href="#">Find a spot</a>
                         </div>
-                        <div class="w-32 h-32 bg-gray-300 rounded-xl bg-cover bg-center shrink-0 rotate-3 group-hover:-rotate-2 transition-transform"
-                            data-alt="Laptop and coffee on a wooden table"
+                        <div class="w-32 h-32 bg-gray-200 rounded-xl bg-cover bg-center shrink-0 rotate-3 group-hover:-rotate-2 transition-transform"
                             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBNwcy5B0-5Gc1lL-iMyqcla5Os8NyY6swL0CQvEAfItQCxgfvebtHWLtqFzVhmCbY4z8FhSe_5Qs1g4_nr2Akg6QTZnR_LmfAj8ncvDUe9QgSTx4eSRSEkOcBMqTpoqeFXV-33u9g4iS0qW1KAVX-lRwFwldHYsesfV7PjV5e5_DhvgUtMdaeD5P7wMdIdol429Nmbji5mVsT8BXaIZHPeu35eGCOTf7hH8UW7XDP0_GVybVpAr72MUhXtnT5befobVaom7z-9lg');">
                         </div>
                     </div>
-                    <!-- Image Block -->
                     <div class="md:col-span-6 relative rounded-2xl overflow-hidden group">
                         <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                            data-alt="Barista pouring latte art"
                             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDe9F0KuqApgX8rOSPH0Rp22zZg_j0k7XNO7VvdYpv__97-QkNB2yMzu4ALPQyuuRQ39n_JyWh4buZpJREqYIga4b5RJ1rAF3GfKPa5wmTynzxyFKbMt2Q3250knzGU1dro-_6kt7qxAePXSGtB4bp5TJKkVTZo-2x4A8VaBq89R7ElWHLZnwQWHf-FxNrqLuETxXYvaYMXohRjzq96rzNmhj-kufjwwT-UhJOnXae7MBNPln-3rozhw1n8VEdFdqOMog9bLAJV_A');">
                         </div>
                         <div
-                            class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button class="bg-white text-black px-6 py-2 rounded-full font-bold">View Gallery</button>
+                            class="absolute inset-0 flex items-center justify-center bg-espresso/40 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="bg-white text-espresso px-6 py-2 rounded-full font-bold">View
+                                Gallery</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- Social Feed Section -->
-        <section id="social" class="py-24 relative overflow-hidden">
-            <!-- Decorative elements -->
-            <div class="absolute top-10 right-10 text-primary/20 pointer-events-none">
+        <section class="py-24 relative overflow-hidden bg-ivory dark:bg-bg-main">
+            <div class="absolute top-10 right-10 text-primary/10 pointer-events-none">
                 <span class="material-symbols-outlined text-[120px]">favorite</span>
             </div>
-            <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 reveal">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
                 <div class="flex flex-col sm:flex-row items-center justify-between mb-12 text-center sm:text-left">
                     <div>
-                        <h2 class="text-3xl md:text-5xl font-black text-gray-900 dark:text-white">Spotted at #dzerts
+                        <h2 class="text-3xl md:text-5xl font-black text-espresso dark:text-white">Spotted at #dzerts
                         </h2>
-                        <p class="text-gray-500 mt-2">Join our community. Tag us to be featured.</p>
+                        <p class="text-charcoal/50 dark:text-gray-400 mt-2">Join our community. Tag us to be featured.
+                        </p>
                     </div>
-                    <a class="mt-4 sm:mt-0 flex items-center gap-2 text-primary font-bold hover:text-white transition-colors border border-primary/30 px-4 py-2 rounded-full hover:bg-primary"
-                        href="https://www.instagram.com/dzerts.in" target="_blank">
+                    <a class="mt-4 sm:mt-0 flex items-center gap-2 text-primary font-bold hover:text-white transition-colors border border-primary/30 dark:border-primary px-4 py-2 rounded-full hover:bg-primary"
+                        href="#">
                         <span class="material-symbols-outlined text-xl">photo_camera</span>
                         @dzerts.in
                     </a>
                 </div>
-                <!-- Feed Grid (Polaroid Style) -->
-                <div id="social-feed"
-                    class="flex flex-row gap-6 overflow-x-auto pb-8 snap-x snap-mandatory no-scrollbar md:pb-0 md:overflow-visible md:grid md:grid-cols-2 lg:grid-cols-4">
-                    <!-- Post 1 -->
+                <div id="social-feed-scroller"
+                    class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 -mx-4 px-4 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:pb-0 sm:mx-0 sm:px-0 scrollbar-hide">
                     <div
-                        class="snap-center shrink-0 w-72 md:w-auto bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg md:transform md:rotate-1 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300">
-                        <div class="aspect-square w-full bg-gray-200 mb-3 overflow-hidden">
-                            <div class="w-full h-full bg-cover bg-center" data-alt="Girl eating dessert"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZZ_6ON48s8ZVBkz6iPknr_Y86BZmOyhdJjJXuyGPWNSCbG9o63OAUNEfKNopWLTy3l_FOsiLP0O03XSqUcBZ_pudjkduvHwq5woR5i2TTlK5KiXBx2SFVh-eWTVIPjnOVyZrwavnJgQydHgWrpqDmzoZJ7_zQ1rQWZOvC6SbpGuEf-M6Ore4vmprlKA43i62ZBYhalIVCNMgdWCVPfG_TE4Z-7tYHQBNKiF8FWFvlY833IsF0HQvFq5E2kCS9syPz8aDF2INpBA');">
+                        class="min-w-[280px] snap-center flex-shrink-0 bg-white dark:bg-[#150a0b] p-3 pb-8 rounded shadow-lg transform rotate-1 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300">
+                        <div class="aspect-square w-full bg-gray-100 mb-3 overflow-hidden">
+                            <div class="w-full h-full bg-cover bg-center"
+                                style="background-image: url('https://images.unsplash.com/photo-1533134242443-d4fd215305ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                             </div>
                         </div>
                         <div class="flex items-center justify-between px-1">
@@ -384,16 +418,16 @@
                                 <span class="material-symbols-outlined text-sm">star</span>
                                 <span class="material-symbols-outlined text-sm">star</span>
                             </div>
-                            <span class="text-xs text-gray-400">2h ago</span>
+                            <span class="text-xs text-charcoal/40 dark:text-gray-500">2h ago</span>
                         </div>
-                        <p class="text-gray-800 dark:text-gray-200 text-sm mt-2 font-medium leading-tight">"Best
-                            cheesecake in town! 😍"</p>
+                        <p class="text-charcoal dark:text-white text-sm mt-2 font-medium leading-tight">"Best cheesecake
+                            in town! 😍"
+                        </p>
                     </div>
-                    <!-- Post 2 -->
                     <div
-                        class="snap-center shrink-0 w-72 md:w-auto bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg md:transform md:-rotate-2 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300 md:mt-8 lg:mt-0">
-                        <div class="aspect-square w-full bg-gray-200 mb-3 overflow-hidden">
-                            <div class="w-full h-full bg-cover bg-center" data-alt="Coffee and cake overhead shot"
+                        class="min-w-[280px] snap-center flex-shrink-0 bg-white dark:bg-[#150a0b] p-3 pb-8 rounded shadow-lg transform -rotate-2 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300 mt-0 lg:mt-0">
+                        <div class="aspect-square w-full bg-gray-100 mb-3 overflow-hidden">
+                            <div class="w-full h-full bg-cover bg-center"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAB7SKUcgab6tRBmwa6yGPSYclJKgt0PqNAazjLaQIUzaQKg5FHggb5lSZ_k9jJpYbXyowUYYjVud2IM__RckV0GGfX6HIo5m1jAw-UqfNxpaO_gMBRS9rYMYEPvSFFNB7J4WyVLKahZZGTWMO3XWvNjJZA0oyq3VAnGpOASGIYT1zdoP9y6MvjGqMwrCUtvnNatOT_D8dKSmduJKRzQJ1iGQMgt359moH9hDwiI7GiocCpBotef3FSfCHwk3UALe3xrjBenCD-Wg');">
                             </div>
                         </div>
@@ -402,16 +436,15 @@
                                 <span class="material-symbols-outlined text-sm">favorite</span>
                                 <span class="text-xs font-bold">124</span>
                             </div>
-                            <span class="text-xs text-gray-400">5h ago</span>
+                            <span class="text-xs text-charcoal/40 dark:text-gray-500">5h ago</span>
                         </div>
-                        <p class="text-gray-800 dark:text-gray-200 text-sm mt-2 font-medium leading-tight">"Coffee art
-                            on point ☕️"</p>
+                        <p class="text-charcoal dark:text-white text-sm mt-2 font-medium leading-tight">"Coffee art on
+                            point ☕️"</p>
                     </div>
-                    <!-- Post 3 -->
                     <div
-                        class="snap-center shrink-0 w-72 md:w-auto bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg md:transform md:rotate-2 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300">
-                        <div class="aspect-square w-full bg-gray-200 mb-3 overflow-hidden">
-                            <div class="w-full h-full bg-cover bg-center" data-alt="Friends clinking glasses"
+                        class="min-w-[280px] snap-center flex-shrink-0 bg-white dark:bg-[#150a0b] p-3 pb-8 rounded shadow-lg transform rotate-2 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300">
+                        <div class="aspect-square w-full bg-gray-100 mb-3 overflow-hidden">
+                            <div class="w-full h-full bg-cover bg-center"
                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdN7MuPpbLkbZfVOmoXwWvq_cNM3h_MEOJ0mOdZQtiYUR1iKSd6mVpZQtpxYF6Nhqd0d-SWs-ea7IilcPzzOaiV3xYsgau3phdtHnMHW85h7Sj956zgjft1M19R-98A9QgfgS3YWsT-XHbEkKaGCOn-9K_Usly4otwpYaxWSsaTCrxrHDt4WWQu6b27xUteeTMAcGOkgkAZ5_XyCDxo4BvAX8OxE6SfMAz02zJ_7byKEvFlBHVMrOasPmfSgws9ml9yn9PycHMRw');">
                             </div>
                         </div>
@@ -420,17 +453,17 @@
                                 <span class="material-symbols-outlined text-sm">favorite</span>
                                 <span class="text-xs font-bold">89</span>
                             </div>
-                            <span class="text-xs text-gray-400">1d ago</span>
+                            <span class="text-xs text-charcoal/40 dark:text-gray-500">1d ago</span>
                         </div>
-                        <p class="text-gray-800 dark:text-gray-200 text-sm mt-2 font-medium leading-tight">"Weekend
-                            vibes with the squad"</p>
+                        <p class="text-charcoal dark:text-white text-sm mt-2 font-medium leading-tight">"Weekend vibes
+                            with the squad"
+                        </p>
                     </div>
-                    <!-- Post 4 -->
                     <div
-                        class="snap-center shrink-0 w-72 md:w-auto bg-white dark:bg-[#2a1d1f] p-3 pb-8 rounded shadow-lg md:transform md:-rotate-1 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300 md:mt-8 lg:mt-0">
-                        <div class="aspect-square w-full bg-gray-200 mb-3 overflow-hidden">
-                            <div class="w-full h-full bg-cover bg-center" data-alt="Macro shot of chocolate dessert"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA9aBdCMLvh2ChnBCKkbLyh-v3DSF2LONJsZNnsFjzacGBAIYVJExtzXbnHK0p_9Z9IsOZUnC-Vh_bm2mL7ra-M31QjjNEOcXPeSIR9OCyS6N93e_oL4mmkNoyOCHG4742luWtLnxHRszGVn0o_zXY3e_lA_QFDb_4pdt0fcnYw0ekGCacKDHFZdKSC7Ord8ZDHDX8ySzC1jMssVJWpMxX6tp1x1bm8F4cENOiO7-lQS1LmTvorgDs6uFLjtZZ7RTzBYyJgpw-5Hg');">
+                        class="min-w-[280px] snap-center flex-shrink-0 bg-white dark:bg-[#150a0b] p-3 pb-8 rounded shadow-lg transform -rotate-1 hover:rotate-0 hover:z-10 hover:scale-105 transition-all duration-300 mt-0 lg:mt-0">
+                        <div class="aspect-square w-full bg-gray-100 mb-3 overflow-hidden">
+                            <div class="w-full h-full bg-cover bg-center"
+                                style="background-image: url('https://images.unsplash.com/photo-1624353365286-3f8d62daad51?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                             </div>
                         </div>
                         <div class="flex items-center justify-between px-1">
@@ -438,211 +471,293 @@
                                 <span class="material-symbols-outlined text-sm">favorite</span>
                                 <span class="text-xs font-bold">205</span>
                             </div>
-                            <span class="text-xs text-gray-400">2d ago</span>
+                            <span class="text-xs text-charcoal/40 dark:text-gray-500">2d ago</span>
                         </div>
-                        <p class="text-gray-800 dark:text-gray-200 text-sm mt-2 font-medium leading-tight">"Can't get
-                            enough of this chocolate!"</p>
+                        <p class="text-charcoal dark:text-white text-sm mt-2 font-medium leading-tight">"Can't get
+                            enough of this
+                            chocolate!"</p>
                     </div>
                 </div>
+                <script>
+                    const header = document.querySelector('header');
+                    const heroSection = document.querySelector('section');
+                    const orderButton = document.getElementById('order-now-btn');
+
+                    const observerOptions = {
+                        root: null,
+                        threshold: 0,
+                        rootMargin: "-100px 0px 0px 0px"
+                    };
+
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (!entry.isIntersecting) {
+                                header.classList.add('bg-white/80', 'dark:bg-[#1a0d0f]/80', 'backdrop-blur-md', 'shadow-sm');
+                                header.classList.remove('bg-transparent');
+                            } else {
+                                header.classList.remove('bg-white/80', 'dark:bg-[#1a0d0f]/80', 'backdrop-blur-md', 'shadow-sm');
+                                header.classList.add('bg-transparent');
+                            }
+                        });
+                    }, observerOptions);
+
+                    observer.observe(heroSection);
+
+                    // Auto Scroll Logic for Social Feed
+                    const feedContainer = document.getElementById('social-feed-scroller');
+                    let scrollInterval;
+                    let isPaused = false;
+
+                    const startAutoScroll = () => {
+                        if (!feedContainer) return;
+                        // Only auto-scroll on mobile views where flex layout is active (check clientWidth vs scrollWidth usually implies overflow, 
+                        // or check if grid class is active. But simpler: check window width)
+                        if (window.innerWidth >= 640) return; // Stop on desktop (sm breakpoint)
+
+                        scrollInterval = setInterval(() => {
+                            if (!isPaused) {
+                                // Scroll by one card width (approx 300px with gap)
+                                const itemWidth = 300;
+                                const maxScroll = feedContainer.scrollWidth - feedContainer.clientWidth;
+
+                                if (feedContainer.scrollLeft >= maxScroll - 10) {
+                                    // Reset to start smoothly
+                                    feedContainer.scrollTo({ left: 0, behavior: 'smooth' });
+                                } else {
+                                    feedContainer.scrollBy({ left: itemWidth, behavior: 'smooth' });
+                                }
+                            }
+                        }, 3000); // 3 seconds interval
+                    };
+
+                    const stopAutoScroll = () => {
+                        clearInterval(scrollInterval);
+                    };
+
+                    if (feedContainer) {
+                        // Pause on touch/hover
+                        feedContainer.addEventListener('touchstart', () => { isPaused = true; });
+                        feedContainer.addEventListener('touchend', () => {
+                            setTimeout(() => { isPaused = false; }, 5000); // Resume after 5s
+                        });
+                        feedContainer.addEventListener('mouseenter', () => { isPaused = true; });
+                        feedContainer.addEventListener('mouseleave', () => { isPaused = false; });
+
+                        // Start
+                        startAutoScroll();
+
+                        // Handle Resize
+                        window.addEventListener('resize', () => {
+                            stopAutoScroll();
+                            startAutoScroll();
+                        });
+                    }
+                </script>
             </div>
         </section>
-        <!-- Testimonials Slider Section -->
-        <section class="py-20 bg-latte/10 dark:bg-espresso/20 border-y border-white/5">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center reveal">
-                <h2 class="text-2xl font-bold mb-10 text-gray-900 dark:text-white uppercase tracking-wider">What our
+        <section class="py-20 bg-cream/40 dark:bg-[#3E2723] border-y border-cream dark:border-white/5">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center">
+                <h2 class="text-2xl font-bold mb-10 text-espresso dark:text-white uppercase tracking-wider">What our
                     guests say</h2>
-                <div id="testimonial-container" class="relative min-h-[400px] md:min-h-0">
-                    <!-- Mobile View: Fade Transition Pages -->
-                    <div class="md:hidden relative h-full">
-                        <!-- Page 1 (Items 1 & 2) -->
-                        <div class="testimonial-page absolute inset-0 transition-opacity duration-1000 opacity-100 flex flex-col gap-6"
-                            data-index="0">
-                            <!-- Testimonial 1 -->
-                            <div
-                                class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
-                                <div
-                                    class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
-                                    <span class="material-symbols-outlined text-lg">format_quote</span>
-                                </div>
-                                <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"The ambiance is unmatched.
-                                    It's my go-to spot for client meetings and casual dates. The coffee is consistently
-                                    perfect."</p>
-                                <div class="flex items-center justify-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
-                                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjSyVg7eyIlDKSDlIYaTJidf4dkat4Hnor_Xc4Luq-RnovZ6RrpC9tkeX-ITsStmw-X-WZ4rJ0xU1BIFJbZYaQT9n21gB8XCzkz6u79S7tGyybgUzyxsAZEYlYezYdQsTwpQH8qxP0AK7XEZE2Raxr1Zh3S76awCYgD03vxpYT9WANEsVIj1avkNnqGyzYQFP0nivJWROdHIbwydQAtgVbgXIvE1R-xnSgA7Cf3xtv82McGC8bRINglr0hMavEC_2TGd_14D3tKw');">
-                                    </div>
-                                    <div class="text-left">
-                                        <p class="text-sm font-bold text-gray-900 dark:text-white">Sarah Jenkins</p>
-                                        <p class="text-xs text-primary">Food Blogger</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Testimonial 2 -->
-                            <div
-                                class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
-                                <div
-                                    class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
-                                    <span class="material-symbols-outlined text-lg">format_quote</span>
-                                </div>
-                                <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"I ordered a custom cake
-                                    for my wife's birthday and it was a masterpiece. Not just beautiful, but incredibly
-                                    delicious."</p>
-                                <div class="flex items-center justify-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
-                                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAwwZbhGftalK6ttiXPmwzg9uKGEabU8OIYm84Sp6fJgu8QakNTDIfhMaryr8rRp0kQ0h-EqjzLnpitcGqgWuD7F9Flk5pSzETw_3HTPpmQirBnLwpIQobXztlVsanjS4UghuiveUM8mg-rA1TqEMkf3WVEby1lgBl6qyEQV8ScpfZBYjspqiMUU9GWfMkJggft-7Bc6LeFigRENh3poloXj-H4RG5DgXR5BZavAoG2pvEaWniOmqQChMP5nwLR1ySLOBZXOyiWXg');">
-                                    </div>
-                                    <div class="text-left">
-                                        <p class="text-sm font-bold text-gray-900 dark:text-white">Mark Davis</p>
-                                        <p class="text-xs text-primary">Loyal Customer</p>
-                                    </div>
-                                </div>
-                            </div>
+                <div id="testimonials-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div
+                        class="bg-white dark:bg-[#221013] p-6 rounded-xl border border-cream dark:border-white/5 relative shadow-sm">
+                        <div
+                            class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-[#D41132] text-white rounded-full flex items-center justify-center border-4 border-ivory dark:border-[#3E2723]">
+                            <span class="material-symbols-outlined text-lg">format_quote</span>
                         </div>
-
-                        <!-- Page 2 (Items 3 & 4 - Duplicated 1) -->
-                        <div class="testimonial-page absolute inset-0 transition-opacity duration-1000 opacity-0 flex flex-col gap-6"
-                            data-index="1">
-                            <!-- Testimonial 3 -->
-                            <div
-                                class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
-                                <div
-                                    class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
-                                    <span class="material-symbols-outlined text-lg">format_quote</span>
-                                </div>
-                                <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"Love the late night vibe.
-                                    Perfect place to unwind with a book and some petit fours after a long week."</p>
-                                <div class="flex items-center justify-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
-                                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD41RKQl9hXZGytUL6hnoxnDGWIBBWoV-lAXWB7pMK-ikMA49XmSwColXe20lEwxHawEDSJC2f8J7Kj_I2Muue-qUeC8KlkFDhxF93mCeAiwrVEpAHmEgQyNsBke0ZOk9Fj9snKimpSy1WFSIJ4BkEAwcXqnVMSrK3wtJUG1xESHgfT-jZYv6Y54RJrh7vqgdXPOhGiMSFk6OjVghVxOUDRmnwfS3qKiKeoLFbPXhojwGFV1ZcvJgo6YM-C2S18QQHnl7ZWqpXWcQ');">
-                                    </div>
-                                    <div class="text-left">
-                                        <p class="text-sm font-bold text-gray-900 dark:text-white">Emily Chen</p>
-                                        <p class="text-xs text-primary">Designer</p>
-                                    </div>
-                                </div>
+                        <p class="text-charcoal/70 dark:text-[#D1D5DB] mt-4 mb-4 italic">"The ambiance is unmatched.
+                            It's
+                            my go-to spot for
+                            client meetings and casual dates. The coffee is consistently perfect."</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 bg-cover bg-center"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjSyVg7eyIlDKSDlIYaTJidf4dkat4Hnor_Xc4Luq-RnovZ6RrpC9tkeX-ITsStmw-X-WZ4rJ0xU1BIFJbZYaQT9n21gB8XCzkz6u79S7tGyybgUzyxsAZEYlYezYdQsTwpQH8qxP0AK7XEZE2Raxr1Zh3S76awCYgD03vxpYT9WANEsVIj1avkNnqGyzYQFP0nivJWROdHIbwydQAtgVbgXIvE1R-xnSgA7Cf3xtv82McGC8bRINglr0hMavEC_2TGd_14D3tKw');">
                             </div>
-                            <!-- Testimonial 4 (Duplicate of 1 for even pairing) -->
-                            <div
-                                class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
-                                <div
-                                    class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
-                                    <span class="material-symbols-outlined text-lg">format_quote</span>
-                                </div>
-                                <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"The ambiance is unmatched.
-                                    It's my go-to spot for client meetings and casual dates. The coffee is consistently
-                                    perfect."</p>
-                                <div class="flex items-center justify-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
-                                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjSyVg7eyIlDKSDlIYaTJidf4dkat4Hnor_Xc4Luq-RnovZ6RrpC9tkeX-ITsStmw-X-WZ4rJ0xU1BIFJbZYaQT9n21gB8XCzkz6u79S7tGyybgUzyxsAZEYlYezYdQsTwpQH8qxP0AK7XEZE2Raxr1Zh3S76awCYgD03vxpYT9WANEsVIj1avkNnqGyzYQFP0nivJWROdHIbwydQAtgVbgXIvE1R-xnSgA7Cf3xtv82McGC8bRINglr0hMavEC_2TGd_14D3tKw');">
-                                    </div>
-                                    <div class="text-left">
-                                        <p class="text-sm font-bold text-gray-900 dark:text-white">Sarah Jenkins</p>
-                                        <p class="text-xs text-primary">Food Blogger</p>
-                                    </div>
-                                </div>
+                            <div class="text-left">
+                                <p class="text-sm font-bold text-espresso dark:text-white">Sarah Jenkins</p>
+                                <p class="text-xs text-[#D41132] font-bold">Food Blogger</p>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Desktop View: Original Grid -->
-                    <div class="hidden md:grid md:grid-cols-3 gap-8">
-                        <!-- Testimonial 1 -->
+                    <div
+                        class="bg-white dark:bg-[#221013] p-6 rounded-xl border border-cream dark:border-white/5 relative shadow-sm">
                         <div
-                            class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
-                            <div
-                                class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
-                                <span class="material-symbols-outlined text-lg">format_quote</span>
+                            class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-[#D41132] text-white rounded-full flex items-center justify-center border-4 border-ivory dark:border-[#3E2723]">
+                            <span class="material-symbols-outlined text-lg">format_quote</span>
+                        </div>
+                        <p class="text-charcoal/70 dark:text-[#D1D5DB] mt-4 mb-4 italic">"I ordered a custom cake for my
+                            wife's birthday and
+                            it was a masterpiece. Not just beautiful, but incredibly delicious."</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 bg-cover bg-center"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAwwZbhGftalK6ttiXPmwzg9uKGEabU8OIYm84Sp6fJgu8QakNTDIfhMaryr8rRp0kQ0h-EqjzLnpitcGqgWuD7F9Flk5pSzETw_3HTPpmQirBnLwpIQobXztlVsanjS4UghuiveUM8mg-rA1TqEMkf3WVEby1lgBl6qyEQV8ScpfZBYjspqiMUU9GWfMkJggft-7Bc6LeFigRENh3poloXj-H4RG5DgXR5BZavAoG2pvEaWniOmqQChMP5nwLR1ySLOBZXOyiWXg');">
                             </div>
-                            <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"The ambiance is unmatched.
-                                It's my go-to spot for client meetings and casual dates. The coffee is consistently
-                                perfect."</p>
-                            <div class="flex items-center justify-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
-                                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjSyVg7eyIlDKSDlIYaTJidf4dkat4Hnor_Xc4Luq-RnovZ6RrpC9tkeX-ITsStmw-X-WZ4rJ0xU1BIFJbZYaQT9n21gB8XCzkz6u79S7tGyybgUzyxsAZEYlYezYdQsTwpQH8qxP0AK7XEZE2Raxr1Zh3S76awCYgD03vxpYT9WANEsVIj1avkNnqGyzYQFP0nivJWROdHIbwydQAtgVbgXIvE1R-xnSgA7Cf3xtv82McGC8bRINglr0hMavEC_2TGd_14D3tKw');">
-                                </div>
-                                <div class="text-left">
-                                    <p class="text-sm font-bold text-gray-900 dark:text-white">Sarah Jenkins</p>
-                                    <p class="text-xs text-primary">Food Blogger</p>
-                                </div>
+                            <div class="text-left">
+                                <p class="text-sm font-bold text-espresso dark:text-white">Mark Davis</p>
+                                <p class="text-xs text-primary font-bold">Loyal Customer</p>
                             </div>
                         </div>
-                        <!-- Testimonial 2 -->
+                    </div>
+                    <div
+                        class="bg-white dark:bg-[#221013] p-6 rounded-xl border border-cream dark:border-white/5 relative shadow-sm">
                         <div
-                            class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
-                            <div
-                                class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
-                                <span class="material-symbols-outlined text-lg">format_quote</span>
+                            class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-[#D41132] text-white rounded-full flex items-center justify-center border-4 border-ivory dark:border-[#3E2723]">
+                            <span class="material-symbols-outlined text-lg">format_quote</span>
+                        </div>
+                        <p class="text-charcoal/70 dark:text-[#D1D5DB] mt-4 mb-4 italic">"Love the late night vibe.
+                            Perfect place to unwind
+                            with a book and some petit fours after a long week."</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 bg-cover bg-center"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD41RKQl9hXZGytUL6hnoxnDGWIBBWoV-lAXWB7pMK-ikMA49XmSwColXe20lEwxHawEDSJC2f8J7Kj_I2Muue-qUeC8KlkFDhxF93mCeAiwrVEpAHmEgQyNsBke0ZOk9Fj9snKimpSy1WFSIJ4BkEAwcXqnVMSrK3wtJUG1xESHgfT-jZYv6Y54RJrh7vqgdXPOhGiMSFk6OjVghVxOUDRmnwfS3qKiKeoLFbPXhojwGFV1ZcvJgo6YM-C2S18QQHnl7ZWqpXWcQ');">
                             </div>
-                            <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"I ordered a custom cake for my
-                                wife's birthday and it was a masterpiece. Not just beautiful, but incredibly delicious."
-                            </p>
-                            <div class="flex items-center justify-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
-                                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAwwZbhGftalK6ttiXPmwzg9uKGEabU8OIYm84Sp6fJgu8QakNTDIfhMaryr8rRp0kQ0h-EqjzLnpitcGqgWuD7F9Flk5pSzETw_3HTPpmQirBnLwpIQobXztlVsanjS4UghuiveUM8mg-rA1TqEMkf3WVEby1lgBl6qyEQV8ScpfZBYjspqiMUU9GWfMkJggft-7Bc6LeFigRENh3poloXj-H4RG5DgXR5BZavAoG2pvEaWniOmqQChMP5nwLR1ySLOBZXOyiWXg');">
-                                </div>
-                                <div class="text-left">
-                                    <p class="text-sm font-bold text-gray-900 dark:text-white">Mark Davis</p>
-                                    <p class="text-xs text-primary">Loyal Customer</p>
-                                </div>
+                            <div class="text-left">
+                                <p class="text-sm font-bold text-espresso dark:text-white">Emily Chen</p>
+                                <p class="text-xs text-[#D41132] font-bold">Designer</p>
                             </div>
                         </div>
-                        <!-- Testimonial 3 -->
+                    </div>
+                    <!-- 4th Testimonial -->
+                    <div
+                        class="bg-white dark:bg-[#221013] p-6 rounded-xl border border-cream dark:border-white/5 relative shadow-sm">
                         <div
-                            class="bg-background-light dark:bg-background-dark p-6 rounded-xl border border-gray-200 dark:border-white/5 relative">
-                            <div
-                                class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-background-light dark:border-background-dark">
-                                <span class="material-symbols-outlined text-lg">format_quote</span>
+                            class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-[#D41132] text-white rounded-full flex items-center justify-center border-4 border-ivory dark:border-[#3E2723]">
+                            <span class="material-symbols-outlined text-lg">format_quote</span>
+                        </div>
+                        <p class="text-charcoal/70 dark:text-[#D1D5DB] mt-4 mb-4 italic">"The vegan options are
+                            incredible. Finally a place where dietary restrictions don't feel like a compromise."</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 bg-cover bg-center"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD6kUI9eLXiSzkHY5Ofu_gZLbmSsosa-mhUgnwdJQFtZbsVIHB6Os1EDs_TeBJhRZ76W1FjZ_hK3rHJU3WceIUnmJbUmt7X6-0m_3EP96DJ3slPTDQRjft_89dKHpVqAFgjYBnFWRvmMq_Bmzc_2swlcsm3ucKc2vse2ZyVh9dCS1X-tpjw6i5Zi5AISpyKKebdQxmLhNM93FFUKtYmafhNoqvqHIFybKQjhmzC17nXBv1hZGVofzR3nU8Vze7kLYkDXQa23v8fBw');">
                             </div>
-                            <p class="text-gray-600 dark:text-gray-300 mt-4 mb-4 italic">"Love the late night vibe.
-                                Perfect place to unwind with a book and some petit fours after a long week."</p>
-                            <div class="flex items-center justify-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-gray-300 bg-cover bg-center"
-                                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD41RKQl9hXZGytUL6hnoxnDGWIBBWoV-lAXWB7pMK-ikMA49XmSwColXe20lEwxHawEDSJC2f8J7Kj_I2Muue-qUeC8KlkFDhxF93mCeAiwrVEpAHmEgQyNsBke0ZOk9Fj9snKimpSy1WFSIJ4BkEAwcXqnVMSrK3wtJUG1xESHgfT-jZYv6Y54RJrh7vqgdXPOhGiMSFk6OjVghVxOUDRmnwfS3qKiKeoLFbPXhojwGFV1ZcvJgo6YM-C2S18QQHnl7ZWqpXWcQ');">
-                                </div>
-                                <div class="text-left">
-                                    <p class="text-sm font-bold text-gray-900 dark:text-white">Emily Chen</p>
-                                    <p class="text-xs text-primary">Designer</p>
-                                </div>
+                            <div class="text-left">
+                                <p class="text-sm font-bold text-espresso dark:text-white">James Wilson</p>
+                                <p class="text-xs text-[#D41132] font-bold">Health Enthusiast</p>
                             </div>
                         </div>
                     </div>
                 </div>
+                <script>
+                    const testimonialsGrid = document.getElementById('testimonials-grid');
+                    if (testimonialsGrid) {
+                        // Get only direct children divs (testimonial cards)
+                        const cards = Array.from(testimonialsGrid.children).filter(child => child.tagName === 'DIV');
+                        let page = 0;
+                        const pageSize = 2; // Show 2 at a time on mobile
+                        const totalPages = Math.ceil(cards.length / pageSize);
+                        let testimonialInterval;
+
+                        const showTestimonials = (pageIndex) => {
+                            // Only run on mobile
+                            if (window.innerWidth >= 768) {
+                                cards.forEach(card => {
+                                    card.style.display = 'block';
+                                    card.style.opacity = '1';
+                                    card.style.transform = 'translateY(0)';
+                                });
+                                return;
+                            }
+
+                            // Calculate start/end indices
+                            const start = pageIndex * pageSize;
+                            const end = start + pageSize;
+
+                            // fade out current
+                            cards.forEach((card, index) => {
+                                card.style.opacity = '0';
+                                card.style.transform = 'translateY(10px)'; // Slide down slightly on exit
+                            });
+
+                            // Wait for fade out, then swap
+                            setTimeout(() => {
+                                cards.forEach((card, index) => {
+                                    if (index >= start && index < end) {
+                                        card.style.display = 'block';
+
+                                        // Prepare for animation
+                                        card.style.transition = 'none'; // Disable transition for setup
+                                        card.style.opacity = '0';
+                                        card.style.transform = 'translateY(20px)'; // Start from below
+
+                                        // Trigger reflow
+                                        void card.offsetWidth;
+
+                                        // Animate in
+                                        card.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+                                        card.style.opacity = '1';
+                                        card.style.transform = 'translateY(0)';
+                                    } else {
+                                        card.style.display = 'none';
+                                    }
+                                });
+                            }, 500); // 500ms fade transition
+                        };
+
+                        const startTestimonialSlider = () => {
+                            clearInterval(testimonialInterval);
+                            // Initial Setup
+                            if (window.innerWidth < 768) {
+                                showTestimonials(0); // Show page 0
+
+                                testimonialInterval = setInterval(() => {
+                                    page = (page + 1) % totalPages;
+                                    showTestimonials(page);
+                                }, 3500); // Slightly longer to allow for 800ms transition + reading
+                            } else {
+                                // Reset for desktop
+                                cards.forEach(card => {
+                                    card.style.display = 'block';
+                                    card.style.opacity = '1';
+                                    card.style.transform = 'translateY(0)';
+                                });
+                            }
+                        };
+
+                        // Ensure transitions are set initially
+                        cards.forEach(card => {
+                            card.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+                        });
+
+                        startTestimonialSlider();
+                        window.addEventListener('resize', startTestimonialSlider);
+                    }
+                </script>
         </section>
     </main>
-    <footer id="locations" class="bg-black/90 text-white pt-16 pb-24 md:pb-8 border-t border-white/10">
+    <footer
+        class="bg-footer-bg dark:bg-black text-ivory dark:text-gray-400 pt-16 pb-28 md:pb-8 border-t border-cream/10 dark:border-white/10">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                <!-- Brand & Newsletter -->
                 <div class="lg:col-span-1">
                     <div class="flex items-center gap-2 mb-6">
                         <div class="flex h-6 w-6 items-center justify-center rounded bg-primary text-white">
                             <span class="material-symbols-outlined text-sm">cookie</span>
                         </div>
-                        <h2 class="text-xl font-bold">dzerts</h2>
+                        <h2 class="text-xl font-bold dark:text-white">dzerts</h2>
                     </div>
-                    <p class="text-gray-400 text-sm mb-6">Join the Sweet Club for exclusive offers and events.</p>
+                    <p class="text-ivory/60 dark:text-gray-400 text-sm mb-6">Join the Sweet Club for exclusive offers
+                        and events.</p>
                     <div class="flex gap-2">
                         <input
-                            class="bg-white/10 border-none rounded px-3 py-2 text-sm w-full focus:ring-1 focus:ring-primary text-white placeholder-gray-500"
+                            class="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm w-full focus:ring-1 focus:ring-primary text-white placeholder-ivory/30 dark:placeholder-white/30"
                             placeholder="Your email" type="email" />
                         <button
-                            class="bg-primary hover:bg-primary/90 px-3 py-2 rounded text-white text-sm font-bold">Join</button>
+                            class="bg-primary hover:bg-primary/90 px-3 py-2 rounded text-white text-sm font-bold transition-colors">Join</button>
                     </div>
                 </div>
-                <!-- Links -->
                 <div>
                     <h3 class="text-sm font-bold uppercase tracking-widest text-primary mb-4">Explore</h3>
-                    <ul class="space-y-3 text-sm text-gray-400">
+                    <ul class="space-y-3 text-sm text-ivory/60 dark:text-gray-400">
                         <li><a class="hover:text-white transition-colors" href="../menu/index.html">Our Menu</a></li>
                         <li><a class="hover:text-white transition-colors" href="#">Locations</a></li>
                         <li><a class="hover:text-white transition-colors" href="#">Catering</a></li>
                         <li><a class="hover:text-white transition-colors" href="#">Gift Cards</a></li>
                     </ul>
                 </div>
-                <!-- Contact -->
                 <div>
                     <h3 class="text-sm font-bold uppercase tracking-widest text-primary mb-4">Visit Us</h3>
-                    <ul class="space-y-3 text-sm text-gray-400">
+                    <ul class="space-y-3 text-sm text-ivory/60 dark:text-gray-400">
                         <li class="flex items-start gap-2">
                             <span class="material-symbols-outlined text-base mt-0.5">location_on</span>
                             <span>123 Sugar Lane,<br />Dessert District, NY 10012</span>
@@ -657,30 +772,29 @@
                         </li>
                     </ul>
                 </div>
-                <!-- Hours -->
                 <div>
                     <h3 class="text-sm font-bold uppercase tracking-widest text-primary mb-4">Hours</h3>
-                    <ul class="space-y-2 text-sm text-gray-400">
+                    <ul class="space-y-2 text-sm text-ivory/60 dark:text-gray-400">
                         <li class="flex justify-between"><span>Mon - Thu</span> <span>8am - 10pm</span></li>
-                        <li class="flex justify-between text-white font-medium"><span>Fri - Sat</span> <span>8am -
-                                11pm</span></li>
+                        <li class="flex justify-between text-white dark:text-white font-medium"><span>Fri - Sat</span>
+                            <span>8am -
+                                11pm</span>
+                        </li>
                         <li class="flex justify-between"><span>Sunday</span> <span>9am - 9pm</span></li>
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex gap-6 text-gray-400">
-                    <a class="hover:text-white" href="https://www.instagram.com/dzerts.in" target="_blank"><i
-                            class="text-lg fab fa-instagram"></i> Instagram</a>
-                    <a class="hover:text-white" href="https://www.facebook.com/share/17zCjgRVxx/"
-                        target="_blank">Facebook</a>
+            <div
+                class="border-t border-white/5 pt-8 flex flex-col-reverse md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-ivory/40 dark:text-gray-600">© 2023 dzerts Inc. All rights reserved.</p>
+                <div class="flex gap-6 text-ivory/60 dark:text-gray-400 text-sm">
+                    <a class="hover:text-white" href="#">Instagram</a>
+                    <a class="hover:text-white" href="https://www.facebook.com/share/17zCjgRVxx/">Facebook</a>
                     <a class="hover:text-white" href="#">Twitter</a>
                 </div>
-                <p class="text-xs text-gray-500">© 2023 dzerts Inc. All rights reserved.</p>
             </div>
         </div>
     </footer>
-    <!-- Sticky Bottom CTA for Mobile -->
     <div class="fixed bottom-4 left-4 right-4 z-40 md:hidden">
         <button
             class="w-full bg-primary text-white font-bold py-3 px-6 rounded-lg shadow-xl flex items-center justify-center gap-2">
@@ -688,134 +802,51 @@
             Order Now
         </button>
     </div>
-    <!-- Tailwind Config to allow custom animations -->
-    <script>
-        // Adding marquee animation dynamically to config isn't possible directly in script tag for tailwind cdn 
-        // using standard style tag for the animation keyframes
-    </script>
+
     <style>
-        /* Marquee Animation */
-        @keyframes marquee {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        .animate-marquee {
-            animation: marquee 30s linear infinite;
-        }
-
-        /* Scroll Reveal Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
-        }
-
-        .reveal.reveal-active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Staggered delays for children if needed */
-        .reveal-delay-100 {
-            transition-delay: 100ms;
-        }
-
-        .reveal-delay-200 {
-            transition-delay: 200ms;
-        }
-
-        .reveal-delay-300 {
-            transition-delay: 300ms;
+        /* Smooth Theme Transition Class - Applied only during toggle */
+        .theme-transition,
+        .theme-transition *,
+        .theme-transition *::before,
+        .theme-transition *::after {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            transition-delay: 0s !important;
         }
     </style>
     <script>
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
 
-        // Scroll Reveal Observer
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
+        // Sync function with transition
+        const enableThemeTransition = () => {
+            htmlElement.classList.add('theme-transition');
+            // Remove class after transition completes
+            setTimeout(() => {
+                htmlElement.classList.remove('theme-transition');
+            }, 500); // Match CSS duration
+        };
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('reveal-active');
-                        observer.unobserve(entry.target); // Animate only once
-                    }
-                });
-            }, observerOptions);
+        // Check local storage. Default to light if not set.
+        if (localStorage.theme === 'dark') {
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+            // If not set, explicitly set to light to persist it (optional, or just leave as default)
+            if (!('theme' in localStorage)) {
+                localStorage.theme = 'light';
+            }
+        }
 
-            const revealElements = document.querySelectorAll('.reveal');
-            revealElements.forEach(el => observer.observe(el));
+        themeToggleBtn.addEventListener('click', () => {
+            enableThemeTransition(); // Turn on transitions
 
-            // Generic Auto-Scroll Function
-            const setupAutoScroll = (elementId, scrollAmount) => {
-                const container = document.getElementById(elementId);
-                if (!container) return;
-
-                let autoScrollInterval;
-
-                const startAutoScroll = () => {
-                    clearInterval(autoScrollInterval);
-                    autoScrollInterval = setInterval(() => {
-                        // Check if current view is mobile (horizontal scroll active)
-                        // Simple check: if container has horizontal scrollbar or overflow style suggests it
-                        const isScrollable = container.scrollWidth > container.clientWidth;
-
-                        if (isScrollable && window.innerWidth < 768) {
-                            if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
-                                // Loop back to start smooth
-                                container.scrollTo({ left: 0, behavior: 'smooth' });
-                            } else {
-                                // Scroll by specified amount
-                                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-                            }
-                        }
-                    }, 3000); // 3 seconds per scroll
-                };
-
-                // Start on load
-                startAutoScroll();
-
-                // Pause on user interaction
-                container.addEventListener('touchstart', () => clearInterval(autoScrollInterval));
-                container.addEventListener('touchend', () => setTimeout(startAutoScroll, 3000));
-            };
-
-            // Setup Social Feed Auto-Scroll (approx card width 288px + 24px gap = 312px)
-            setupAutoScroll('social-feed', 312);
-
-            // Setup Testimonial Fade Animation (Mobile Only)
-            const testimonialPages = document.querySelectorAll('.testimonial-page');
-            if (testimonialPages.length > 0) {
-                let currentPage = 0;
-
-                setInterval(() => {
-                    // Only run on mobile
-                    if (window.innerWidth < 768) {
-                        // Fade out current
-                        testimonialPages[currentPage].classList.remove('opacity-100');
-                        testimonialPages[currentPage].classList.add('opacity-0');
-
-                        // Increment page index
-                        currentPage = (currentPage + 1) % testimonialPages.length;
-
-                        // Fade in new (small delay to allow fade out to start or just overlap)
-                        // For smooth crossfade, we just switch classes
-                        setTimeout(() => {
-                            testimonialPages[currentPage].classList.remove('opacity-0');
-                            testimonialPages[currentPage].classList.add('opacity-100');
-                        }, 50); // Tiny delay to ensure DOM update
-                    }
-                }, 4000); // Switch every 4 seconds
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.theme = 'dark';
             }
         });
     </script>
