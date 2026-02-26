@@ -131,10 +131,36 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     prefill: {
                         name: pendingOrder.customer.name,
-                        contact: pendingOrder.customer.phone === 'N/A' ? '' : pendingOrder.customer.phone
+                        contact: pendingOrder.customer.phone === 'N/A' || !pendingOrder.customer.phone ? '9999999999' : pendingOrder.customer.phone
                     },
                     theme: {
                         color: "#d41132" // Primary brand color
+                    },
+                    config: {
+                        display: {
+                            blocks: {
+                                upi: {
+                                    name: "Pay via UPI",
+                                    instruments: [
+                                        {
+                                            method: "upi"
+                                        }
+                                    ]
+                                },
+                                other: {
+                                    name: "Other Payment Methods",
+                                    instruments: [
+                                        { method: "card" },
+                                        { method: "netbanking" },
+                                        { method: "wallet" }
+                                    ]
+                                }
+                            },
+                            sequence: ["block.upi", "block.other"],
+                            preferences: {
+                                show_default_blocks: true
+                            }
+                        }
                     }
                 };
 

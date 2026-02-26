@@ -116,92 +116,8 @@
 
         <div class="lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start">
 
-            <!-- Left Column: Forms -->
-            <div class="lg:col-span-7">
-                <!-- Customer Info -->
-                <section
-                    class="bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 rounded-2xl p-6 md:p-8 mb-8 shadow-sm">
-                    <h2 class="text-xl font-bold text-espresso dark:text-white mb-6 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary">person</span> Your Details
-                    </h2>
-
-                    <div
-                        class="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 p-4 rounded-lg flex gap-3 text-sm mb-6 border border-blue-200 dark:border-blue-800/30">
-                        <span class="material-symbols-outlined">info</span>
-                        <p>Place your order here and pay at the counter when your token number is called.</p>
-                    </div>
-
-                    <form id="checkout-form" class="space-y-6">
-                        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
-                            <div class="sm:col-span-2">
-                                <label for="name"
-                                    class="block text-sm font-medium text-espresso dark:text-gray-300">Name</label>
-                                <div class="mt-1">
-                                    <input type="text" id="name" name="name" required
-                                        class="block w-full rounded-md border-border-cream dark:border-white/10 dark:bg-black/50 shadow-sm focus:border-primary focus:ring-primary sm:text-sm dark:text-white p-3">
-                                </div>
-                            </div>
-
-                            <div class="sm:col-span-2">
-                                <label for="phone"
-                                    class="block text-sm font-medium text-espresso dark:text-gray-300">Phone number
-                                    (Optional)</label>
-                                <div class="mt-1">
-                                    <input type="tel" name="phone" id="phone"
-                                        class="block w-full rounded-md border-border-cream dark:border-white/10 dark:bg-black/50 shadow-sm focus:border-primary focus:ring-primary sm:text-sm dark:text-white p-3">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </section>
-
-                <!-- Payment Info (UPI) -->
-                <section
-                    class="bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 rounded-2xl p-6 md:p-8 shadow-sm">
-                    <h2 class="text-xl font-bold text-espresso dark:text-white mb-6 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary">qr_code_scanner</span> UPI Payment
-                    </h2>
-
-                    <div
-                        class="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 p-4 rounded-lg flex gap-3 text-sm mb-6 border border-blue-200 dark:border-blue-800/30">
-                        <span class="material-symbols-outlined">info</span>
-                        <p>This is a demo application. Please scan the QR code and click "Confirm Payment" to simulate a
-                            successful transaction.</p>
-                    </div>
-
-                    <div class="flex flex-col items-center justify-center space-y-6 py-4">
-                        <div
-                            class="bg-white p-4 rounded-xl shadow-sm border border-border-cream dark:border-white/10 inline-block">
-                            <!-- Dummy QR Code -->
-                            <div
-                                class="w-48 h-48 bg-gray-100 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded flex flex-col items-center justify-center relative overflow-hidden">
-                                <span
-                                    class="material-symbols-outlined text-4xl text-gray-400 dark:text-gray-500 mb-2">qr_code_2</span>
-                                <span class="text-xs text-gray-400 font-medium">Scan to Pay</span>
-                                <!-- A simple CSS animation passing over to simulate a scanner -->
-                                <div
-                                    class="absolute top-0 left-0 w-full h-[2px] bg-primary/50 animate-[scan_2s_ease-in-out_infinite]">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="text-center">
-                            <p class="text-sm font-medium text-espresso dark:text-white mb-1">Payable Amount:</p>
-                            <p class="text-2xl font-black text-primary" id="upi-amount">$0.00</p>
-                        </div>
-
-                        <form id="payment-form" class="w-full mt-4">
-                            <button type="submit"
-                                class="w-full rounded-xl bg-green-600 px-4 py-4 text-base font-bold text-white shadow-sm hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex justify-center items-center gap-2">
-                                Confirm Payment <span class="material-symbols-outlined">check_circle</span>
-                            </button>
-                        </form>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Right Column: Order Summary -->
-            <div class="mt-10 lg:mt-0 lg:col-span-5">
+            <!-- Complete Screen: Centered Order Summary -->
+            <div class="lg:col-span-8 lg:col-start-3">
                 <section aria-labelledby="summary-heading"
                     class="bg-sidebar-cream dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 rounded-2xl p-6 md:p-8 shadow-sm sticky top-24">
                     <h2 id="summary-heading" class="text-xl font-bold text-espresso dark:text-white mb-6">Order Summary
@@ -230,7 +146,18 @@
                         </div>
                     </div>
 
-                    <!-- Payment Button moved into UPI section to clean up layout -->
+                    <div class="mt-8">
+                        <div class="text-center mb-4">
+                            <p class="text-sm font-medium text-espresso dark:text-white mb-1">Payable Amount:</p>
+                            <p class="text-3xl font-black text-primary" id="upi-amount">$0.00</p>
+                        </div>
+                        <form id="payment-form" class="w-full">
+                            <button type="submit"
+                                class="w-full rounded-xl bg-green-600 px-4 py-4 text-base font-bold text-white shadow-sm hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex justify-center items-center gap-2">
+                                Confirm Payment <span class="material-symbols-outlined">check_circle</span>
+                            </button>
+                        </form>
+                    </div>
                 </section>
             </div>
         </div>
