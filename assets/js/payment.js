@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // Step 1: Create Order on Backend
-                const response = await fetch('http://localhost:3000/create-order', {
+                const response = await fetch('https://dzerts.onrender.com/create-order', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     handler: async function (response) {
                         try {
                             // Step 3: Verify Signature on Backend
-                            const verifyRes = await fetch('http://localhost:3000/verify-payment', {
+                            const verifyRes = await fetch('https://dzerts.onrender.com/verify-payment', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             } catch (error) {
                 console.error("Checkout Error:", error);
-                alert("Could not initialize payment wrapper. Ensure the backend server is running on localhost:3000.");
+                alert("Could not initialize payment wrapper. Ensure the backend server is running on https://dzerts.onrender.com.");
                 submitBtn.innerHTML = originalBtnText;
                 submitBtn.disabled = false;
             }
