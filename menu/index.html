@@ -94,7 +94,7 @@
         !function (f, b, e, v, n, t, s) {
             if (f.fbq) return; n = f.fbq = function () {
                 n.callMethod ?
-                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
             };
             if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
             n.queue = []; t = b.createElement(e); t.async = !0;
@@ -108,6 +108,8 @@
     <noscript><img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=4129169604002277&ev=PageView&noscript=1" /></noscript>
     <!-- End Meta Pixel Code -->
+    <!-- Cart Logic -->
+    <script src="../assets/js/cart.js"></script>
 </head>
 
 <body class="bg-cream-bg text-charcoal font-display transition-colors duration-200 antialiased overflow-hidden">
@@ -192,12 +194,20 @@
                         <h1 class="text-espresso dark:text-white text-2xl font-black lowercase">dzerts<span
                                 class="text-primary">.</span></h1>
                         <div class="flex items-center gap-2">
+                            <div class="relative">
+                                <button onclick="openCartSidebar()"
+                                    class="p-2 border border-transparent dark:border-white/10 rounded-full dark:bg-white/5 text-charcoal dark:text-white flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                                    aria-label="View Cart">
+                                    <span class="material-symbols-outlined text-2xl">local_mall</span>
+                                    <span
+                                        class="cart-badge hidden absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                                </button>
+                            </div>
                             <button id="theme-toggle-mobile"
                                 class="text-espresso dark:text-white p-2 border border-transparent dark:border-white/10 rounded-full dark:bg-white/5">
                                 <span class="material-symbols-outlined dark:hidden">light_mode</span>
                                 <span class="material-symbols-outlined hidden dark:block">dark_mode</span>
                             </button>
-
                         </div>
                     </div>
                     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -209,12 +219,25 @@
                                 Collections</h2>
                         </div>
                         <div class="flex flex-col items-start md:items-end gap-10">
-                            <button id="theme-toggle-main"
-                                class="hidden md:flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/10 hover:border-primary/50 text-espresso dark:text-white transition-all shadow-sm group"
-                                aria-label="Toggle Theme">
-                                <span class="material-symbols-outlined dark:hidden">light_mode</span>
-                                <span class="material-symbols-outlined hidden dark:block">dark_mode</span>
-                            </button>
+                            <div class="hidden md:flex items-center gap-4">
+                                <div class="relative">
+                                    <button onclick="openCartSidebar()"
+                                        class="h-10 w-10 flex items-center justify-center rounded-full bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/10 hover:border-primary/50 text-espresso dark:text-white transition-all shadow-sm group"
+                                        aria-label="View Cart">
+                                        <span
+                                            class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">local_mall</span>
+                                        <span
+                                            class="cart-badge hidden absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                                    </button>
+                                </div>
+                                <button id="theme-toggle-main"
+                                    class="h-10 w-10 flex items-center justify-center rounded-full bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/10 hover:border-primary/50 text-espresso dark:text-white transition-all shadow-sm group"
+                                    aria-label="Toggle Theme">
+                                    <span class="material-symbols-outlined dark:hidden text-[20px]">light_mode</span>
+                                    <span
+                                        class="material-symbols-outlined hidden dark:block text-[20px]">dark_mode</span>
+                                </button>
+                            </div>
                             <div class="flex flex-wrap gap-2 md:justify-end">
                                 <button
                                     class="flex items-center gap-2 h-10 px-4 rounded-lg bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/10 hover:border-primary/50 text-espresso dark:text-white text-sm font-medium transition-all group shadow-sm">
@@ -281,6 +304,7 @@
                                     <span>380 kcal</span>
                                 </div>
                                 <button
+                                    onclick="addToCart({id: 'prd_01', name: 'Dark Chocolate Truffle', price: 9.50, image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBUBsvfj05Y72qZFdz8soTwor5L5uHIz62wgaHUOpxG7sYdQx_FtYcj8UFZo7w1CgJJLRbvslNnUHHposvK6Q03K0VoFBIoTJB__PGV8GORZB-aSpTu5s6DE6xnZAVQOObhuSb6_x5hdso1QDLOZE3nsUXnWkMfdpREMH1u3tTXu0-v61WmOeDQNHJueN3RCW9alwpMA2slv6i6UaOSkv1sFq6jtPTydwb9Rlx8mjfC8WB_sNG-eLR0LoD9F0_gVcgwYI0JdwuUdg'})"
                                     class="h-9 px-4 rounded-lg bg-espresso dark:bg-white text-white dark:text-black hover:bg-primary transition-colors flex items-center gap-2 text-sm font-bold">
                                     Add <span class="material-symbols-outlined text-[16px]">add</span>
                                 </button>
@@ -318,6 +342,7 @@
                                     <span>6 pc</span>
                                 </div>
                                 <button
+                                    onclick="addToCart({id: 'prd_02', name: 'Raspberry Rose Macarons', price: 12.00, image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDyUMY_5VuXkFZbvDsxlF9C_lscc2IyVeqz7oFGnoJKOY1GJ6DSfhbKq3IjaIPcLPOLuo7v7Q_khZcaM2UnOoLjlW2sZ8IsqUyUsrvj4sVcZvsvlJAmG5kd8IQietXoNjHpbhF_It6xX-KJYcJXQSul3Duz-V8p7wmg7H7T2-ZxXD1YQnu0_4Evsr7km9_AIOoU2igm5wVMn1WJqg5BwikWstpW_HJ1gV_-H-DoYV17tnDdPGhIhz6OxHDJ_A4CL2PHVinj8GYoyA'})"
                                     class="h-9 px-4 rounded-lg bg-espresso dark:bg-white text-white dark:text-black hover:bg-primary transition-colors flex items-center gap-2 text-sm font-bold">
                                     Add <span class="material-symbols-outlined text-[16px]">add</span>
                                 </button>
@@ -351,6 +376,7 @@
                                     <span>2 pc</span>
                                 </div>
                                 <button
+                                    onclick="addToCart({id: 'prd_03', name: 'Sicilian Pistachio Cannoli', price: 7.00, image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCevbLR9_L7_FgcbSBpq0PHJx9-GMyj2aNF6I0-9cL1zq93kyfUjMhyQsI-xLJC2bS1sptUKbHrcMRauD9j2lLdFHgV4E9KFPZyDqFmpzRE6ft1V_uApVgzhhR4ldn6yig1v_VjgrJ9wTAhXnaWCtXZzYSO3g4_SJolPptbAl0g-Tj6YJaBwtySfryT0O4GYNzneygNKNbkDBClcgpt5CKNLfl5_aI1tkaYiibIuPchUmEX7LWPmQ4P6RiBdtpooSDRFiJVuzVShw'})"
                                     class="h-9 px-4 rounded-lg bg-espresso dark:bg-white text-white dark:text-black hover:bg-primary transition-colors flex items-center gap-2 text-sm font-bold">
                                     Add <span class="material-symbols-outlined text-[16px]">add</span>
                                 </button>
@@ -386,6 +412,7 @@
                                             class="material-symbols-outlined text-[14px]">star</span> 5.0</span>
                                 </div>
                                 <button
+                                    onclick="addToCart({id: 'prd_04', name: 'Lemon Basil Tart', price: 8.50, image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD6kUI9eLXiSzkHY5Ofu_gZLbmSsosa-mhUgnwdJQFtZbsVIHB6Os1EDs_TeBJhRZ76W1FjZ_hK3rHJU3WceIUnmJbUmt7X6-0m_3EP96DJ3slPTDQRjft_89dKHpVqAFgjYBnFWRvmMq_Bmzc_2swlcsm3ucKc2vse2ZyVh9dCS1X-tpjw6i5Zi5AISpyKKebdQxmLhNM93FFUKtYmafhNoqvqHIFybKQjhmzC17nXBv1hZGVofzR3nU8Vze7kLYkDXQa23v8fBw'})"
                                     class="h-9 px-4 rounded-lg bg-espresso dark:bg-white text-white dark:text-black hover:bg-primary transition-colors flex items-center gap-2 text-sm font-bold">
                                     Add <span class="material-symbols-outlined text-[16px]">add</span>
                                 </button>
@@ -419,6 +446,7 @@
                                     <span>Coffee</span>
                                 </div>
                                 <button
+                                    onclick="addToCart({id: 'prd_05', name: 'Cold Brew Tiramisu', price: 10.00, image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBqsPhvYITqrh85uhQLH8fYhaGjxVLRixjjasITxBLEAjVGdsbNULJkyRG4Ay1l4AfB_XJUvYRSqptPPsxGxgB-4dzxdtQlQfMJNMG7l3mkOs3U4YazdmkPHH6UOR8CJbLy7IIufJTHAu51pC6AtwbUQwfSoMQMGzR5UHNUWI4cpftITrtMG0yMlT4kvjvIDgnyn05IygVcP2KpnKIk1kdi7we4nNKDZWDgv7qK9_1BDDp8r7NZ0UgtCKsZByoM2ZolfJFuszItPw'})"
                                     class="h-9 px-4 rounded-lg bg-espresso dark:bg-white text-white dark:text-black hover:bg-primary transition-colors flex items-center gap-2 text-sm font-bold">
                                     Add <span class="material-symbols-outlined text-[16px]">add</span>
                                 </button>
@@ -454,6 +482,7 @@
                                             class="material-symbols-outlined text-[14px]">star</span> 4.6</span>
                                 </div>
                                 <button
+                                    onclick="addToCart({id: 'prd_06', name: 'Lavender Honey Cheesecake', price: 11.00, image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDIr1rIR7vq-3WPBE3fBpOeqhxw9pNiGOYntSvV7iD5uZieIjC-sYbAd5l67b5SPweBCOZecSm79PcwWizjcKn-vShUdu4dLCfomWIvID9G-YMWRaYaSGRn4vzvwOJ9RC1aE5EcBGEaZpB_YGccMuYrRFH0Q3NhJoiS3ZIr760ZEHl8i8wWer8VGH3DJtv81U7cQ1hck-RS9mgQzE3sM1nRb3EM8YPSZcVgM_8ql0JOOEMveSGjX4IIzKi4_gM8po0Wno1KqVn3Og'})"
                                     class="h-9 px-4 rounded-lg bg-espresso dark:bg-white text-white dark:text-black hover:bg-primary transition-colors flex items-center gap-2 text-sm font-bold">
                                     Add <span class="material-symbols-outlined text-[16px]">add</span>
                                 </button>

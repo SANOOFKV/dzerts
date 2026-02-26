@@ -116,7 +116,7 @@
         !function (f, b, e, v, n, t, s) {
             if (f.fbq) return; n = f.fbq = function () {
                 n.callMethod ?
-                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
             };
             if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
             n.queue = []; t = b.createElement(e); t.async = !0;
@@ -130,6 +130,8 @@
     <noscript><img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=4129169604002277&ev=PageView&noscript=1" /></noscript>
     <!-- End Meta Pixel Code -->
+    <!-- Cart Logic -->
+    <script src="../assets/js/cart.js"></script>
 </head>
 
 <body class="bg-ivory text-charcoal font-display overflow-x-hidden selection:bg-primary selection:text-white">
@@ -156,6 +158,15 @@
                     class="flex items-center justify-center rounded-lg bg-primary px-3 py-2 md:px-5 md:py-2.5 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-primary/20">
                     Order Online
                 </button>
+                <div class="relative ml-2">
+                    <button onclick="openCartSidebar()"
+                        class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-charcoal dark:text-white flex items-center justify-center"
+                        aria-label="View Cart">
+                        <span class="material-symbols-outlined text-2xl">local_mall</span>
+                        <span
+                            class="cart-badge hidden absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                </div>
                 <button id="theme-toggle"
                     class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-charcoal dark:text-white"
                     aria-label="Toggle Theme">

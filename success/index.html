@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>dzerts - Order Success</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        :root {
+            --primary: #d41132;
+            --bg-main: #FDFBF7;
+            --bg-sidebar: #F5F1E9;
+            --text-main: #2C1810;
+            --text-body: #333333;
+            --text-muted: #6B5B55;
+            --border-color: #E8E1D5;
+        }
+
+        .dark {
+            --primary: #d41132;
+            --bg-main: #221013;
+            --bg-sidebar: #1a0d0f;
+            --text-main: #ffffff;
+            --text-body: #e5e5e5;
+            --text-muted: #E6C9A8;
+            --border-color: #39282b;
+        }
+
+        /* Specific print styles to ensure PDF looks good */
+        @media print {
+            body {
+                background-color: white !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .print-only {
+                display: block !important;
+            }
+
+            #receipt-card {
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+                color: black !important;
+                background-color: white !important;
+            }
+
+            #receipt-card * {
+                color: black !important;
+                border-color: #eee !important;
+            }
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "var(--primary)",
+                        "cream-bg": "var(--bg-main)",
+                        "sidebar-cream": "var(--bg-sidebar)",
+                        "espresso": "var(--text-main)",
+                        "charcoal": "var(--text-body)",
+                        "muted-espresso": "var(--text-muted)",
+                        "border-cream": "var(--border-color)",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            .material-symbols-outlined {
+                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            }
+        }
+    </style>
+
+    <!-- PDF Generation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body
+    class="bg-cream-bg text-charcoal font-display transition-colors duration-200 antialiased overflow-x-hidden selection:bg-primary selection:text-white flex flex-col min-h-screen">
+
+    <!-- Top Nav with Go Home -->
+    <nav class="p-6 no-print absolute top-0 left-0 w-full z-10 flex justify-between items-center">
+        <a href="../home/index.html" class="flex items-center gap-2 group">
+            <span
+                class="material-symbols-outlined text-muted-espresso dark:text-gray-400 group-hover:text-primary transition-colors">arrow_back</span>
+            <span
+                class="text-sm font-bold text-espresso dark:text-gray-300 group-hover:text-primary transition-colors">Back
+                to Home</span>
+        </a>
+
+        <button id="theme-toggle"
+            class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-charcoal dark:text-white"
+            aria-label="Toggle Theme">
+            <span class="material-symbols-outlined dark:hidden">light_mode</span>
+            <span class="material-symbols-outlined hidden dark:block">dark_mode</span>
+        </button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col items-center justify-center p-4 pt-24 pb-12 w-full">
+        <!-- Success Message -->
+        <div class="text-center mb-8 no-print animate-[fadeIn_0.5s_ease-out]">
+            <div
+                class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 mb-6">
+                <span class="material-symbols-outlined text-5xl">check_circle</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black text-espresso dark:text-white mb-4">Order Successful!</h1>
+            <p class="text-muted-espresso dark:text-gray-400 max-w-md mx-auto">
+                Thank you for your purchase. Your order has been placed and is being processed.
+                Please download your payment slip below.
+            </p>
+        </div>
+
+        <!-- Receipt Card (The part to be printed/downloaded) -->
+        <div id="receipt-card"
+            class="bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 rounded-2xl p-8 md:p-10 shadow-lg max-w-lg w-full mb-8 relative overflow-hidden">
+            <!-- Decorative Header -->
+            <div class="absolute top-0 left-0 w-full h-2 bg-primary"></div>
+
+            <div class="flex justify-between items-start mb-8 border-b border-border-cream dark:border-white/10 pb-6">
+                <div>
+                    <h2 class="text-2xl font-black tracking-tighter text-espresso dark:text-white lowercase mb-1">
+                        dzerts<span class="text-primary">.</span></h2>
+                    <p class="text-xs text-muted-espresso dark:text-gray-500">Premium Artisanal Desserts</p>
+                </div>
+                <!-- Token Details -->
+                <div class="text-right">
+                    <p class="text-xs text-muted-espresso dark:text-gray-500 uppercase tracking-widest font-bold mb-1">
+                        Token Number</p>
+                    <div class="bg-primary/10 text-primary font-mono font-bold px-3 py-1 rounded text-lg border border-primary/20 inline-block"
+                        id="token-display">
+                        #----
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Order Info -->
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <p class="text-muted-espresso dark:text-gray-500 mb-1">Order ID:</p>
+                        <p class="font-bold text-espresso dark:text-white" id="order-id">ORD-XXXXXX</p>
+                    </div>
+                    <div>
+                        <p class="text-muted-espresso dark:text-gray-500 mb-1">Date:</p>
+                        <p class="font-bold text-espresso dark:text-white" id="order-date">Date Here</p>
+                    </div>
+                    <div class="col-span-2">
+                        <p class="text-muted-espresso dark:text-gray-500 mb-1">Billed To:</p>
+                        <p class="font-bold text-espresso dark:text-white" id="order-customer">Name Here</p>
+                    </div>
+                </div>
+
+                <!-- Items Breakdown -->
+                <div>
+                    <h3
+                        class="text-sm font-bold text-espresso dark:text-white border-b border-border-cream dark:border-white/10 pb-2 mb-3">
+                        Items</h3>
+                    <ul id="order-items" class="space-y-3">
+                        <!-- Items injected by JS -->
+                    </ul>
+                </div>
+
+                <!-- Totals -->
+                <div class="border-t border-border-cream dark:border-white/10 pt-4 space-y-2 text-sm">
+                    <div class="flex justify-between text-muted-espresso dark:text-gray-400">
+                        <span>Subtotal</span>
+                        <span id="order-subtotal">$0.00</span>
+                    </div>
+                    <div class="flex justify-between text-muted-espresso dark:text-gray-400">
+                        <span>Shipping</span>
+                        <span id="order-shipping">$0.00</span>
+                    </div>
+                    <div
+                        class="flex justify-between text-lg font-black text-espresso dark:text-white pt-2 border-t border-border-cream dark:border-white/10">
+                        <span>Total Paid</span>
+                        <span class="text-primary" id="order-total">$0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="mt-8 pt-6 border-t border-border-cream dark:border-white/10 text-center text-xs text-muted-espresso dark:text-gray-500">
+                <p>Please keep this token number for tracking your order context.</p>
+                <p class="mt-1">For any inquiries, contact support@dzerts.in</p>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 no-print">
+            <button id="download-pdf"
+                class="flex items-center justify-center gap-2 rounded-xl bg-espresso dark:bg-white px-6 py-3 text-sm font-bold text-white dark:text-black shadow-sm hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                <span class="material-symbols-outlined">download</span> Download Payment Slip
+            </button>
+            <a href="../menu/index.html"
+                class="flex items-center justify-center gap-2 rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/10 px-6 py-3 text-sm font-bold text-espresso dark:text-white shadow-sm hover:border-primary/50 transition-colors">
+                Continue Shopping
+            </a>
+        </div>
+    </main>
+
+    <style>
+        .theme-transition,
+        .theme-transition *,
+        .theme-transition *::before,
+        .theme-transition *::after {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            transition-delay: 0s !important;
+        }
+    </style>
+    <script>
+        const toggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        const enableThemeTransition = () => {
+            htmlElement.classList.add('theme-transition');
+            setTimeout(() => {
+                htmlElement.classList.remove('theme-transition');
+            }, 500);
+        };
+
+        function updateTheme(isDark) {
+            if (isDark) {
+                htmlElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            } else {
+                htmlElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            }
+        }
+
+        function initTheme() {
+            if (localStorage.theme === 'dark') {
+                htmlElement.classList.add('dark');
+            } else {
+                htmlElement.classList.remove('dark');
+                if (!('theme' in localStorage)) {
+                    localStorage.theme = 'light';
+                }
+            }
+        }
+
+        initTheme();
+
+        const toggleHandler = () => {
+            enableThemeTransition();
+            const isDark = htmlElement.classList.contains('dark');
+            updateTheme(!isDark);
+        };
+
+        if (toggleBtn) toggleBtn.addEventListener('click', toggleHandler);
+    </script>
+    <script src="../assets/js/success.js"></script>
+</body>
+
+</html>
