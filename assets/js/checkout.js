@@ -190,6 +190,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             show_default_blocks: true
                         }
                     }
+                },
+                modal: {
+                    ondismiss: function () {
+                        // Reset button state when user closes the modal
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                    }
                 }
             };
 
