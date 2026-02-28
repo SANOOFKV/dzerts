@@ -236,10 +236,10 @@
                                     <span
                                         class="material-symbols-outlined text-[18px] group-hover:text-primary">filter_list</span>
                                 </button>
-                                <button
-                                    class="flex items-center gap-2 h-10 px-4 rounded-lg bg-primary text-white text-sm font-medium shadow-[0_4px_15px_rgba(212,17,50,0.2)] hover:shadow-[0_6px_20px_rgba(212,17,50,0.3)] transition-all">
-                                    <span>Sort by Price</span>
-                                    <span class="material-symbols-outlined text-[18px]">expand_more</span>
+                                <button id="sort-price-btn" data-sort="default"
+                                    class="flex items-center gap-2 h-10 px-4 rounded-lg bg-primary text-white text-sm font-medium shadow-[0_4px_15px_rgba(212,17,50,0.2)] hover:shadow-[0_6px_20px_rgba(212,17,50,0.3)] transition-all w-[140px] justify-between">
+                                    <span id="sort-text">Sort by Price</span>
+                                    <span id="sort-icon" class="material-symbols-outlined text-[18px]">swap_vert</span>
                                 </button>
                             </div>
                         </div>
@@ -268,7 +268,7 @@
                     </div>
                 </header>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="menu-grid">
-                    <div data-tags="gluten-free best-sellers"
+                    <div data-tags="gluten-free best-sellers" data-price="9.50"
                         class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -306,7 +306,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-tags="gluten-free"
+                    <div data-tags="gluten-free" data-price="12.00"
                         class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -344,7 +344,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-tags="best-sellers"
+                    <div data-tags="best-sellers" data-price="7.00"
                         class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -378,7 +378,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-tags="nut-free vegan"
+                    <div data-tags="nut-free vegan" data-price="8.50"
                         class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -414,7 +414,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-tags="best-sellers"
+                    <div data-tags="best-sellers" data-price="10.00"
                         class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -448,7 +448,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-tags="nut-free"
+                    <div data-tags="nut-free" data-price="11.00"
                         class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -587,6 +587,37 @@
                             item.style.display = 'none';
                         }
                     });
+                });
+            });
+
+            // Sorting Logic
+            const sortBtn = document.getElementById('sort-price-btn');
+            const sortText = document.getElementById('sort-text');
+            const sortIcon = document.getElementById('sort-icon');
+            const menuGrid = document.getElementById('menu-grid');
+
+            sortBtn.addEventListener('click', () => {
+                const currentSort = sortBtn.getAttribute('data-sort');
+                const itemsArray = Array.from(menuItems);
+
+                if (currentSort === 'default' || currentSort === 'desc') {
+                    // Sort Low to High
+                    itemsArray.sort((a, b) => parseFloat(a.getAttribute('data-price')) - parseFloat(b.getAttribute('data-price')));
+                    sortBtn.setAttribute('data-sort', 'asc');
+                    sortText.textContent = 'Low to High';
+                    sortIcon.textContent = 'arrow_upward';
+                } else {
+                    // Sort High to Low
+                    itemsArray.sort((a, b) => parseFloat(b.getAttribute('data-price')) - parseFloat(a.getAttribute('data-price')));
+                    sortBtn.setAttribute('data-sort', 'desc');
+                    sortText.textContent = 'High to Low';
+                    sortIcon.textContent = 'arrow_downward';
+                }
+
+                // Re-append sorted items to the grid (this also keeps existing filter display states)
+                menuGrid.innerHTML = '';
+                itemsArray.forEach(item => {
+                    menuGrid.appendChild(item);
                 });
             });
         });
