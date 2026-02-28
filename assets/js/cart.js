@@ -90,7 +90,7 @@ function renderCart() {
 
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = `
-            <div class="flex flex-col items-center justify-center h-full text-charcoal/50 dark:text-gray-400 py-10">
+            <div class="flex flex-col items-center justify-center h-full text-charcoal/50 dark:text-gray-400 py-10 bg-white dark:bg-[#1a0d0f] rounded-lg border border-border-cream dark:border-white/10 shadow-sm">
                 <span class="material-symbols-outlined text-4xl mb-4 opacity-50">shopping_bag</span>
                 <p>Your cart is empty</p>
                 <button onclick="closeCartSidebar()" class="mt-6 text-primary hover:underline">Continue Shopping</button>
