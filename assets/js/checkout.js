@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
                 <div class="text-sm font-medium text-espresso dark:text-gray-300">
-                    $${(item.price * item.quantity).toFixed(2)}
+                    ₹${(item.price * item.quantity).toFixed(2)}
                 </div>
             `;
             checkoutItemsContainer.appendChild(li);
@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const total = subtotal + shippingCost;
 
-        checkoutSubtotal.textContent = `$${subtotal.toFixed(2)}`;
-        checkoutTotal.textContent = `$${total.toFixed(2)}`;
+        checkoutSubtotal.textContent = `₹${subtotal.toFixed(2)}`;
+        checkoutTotal.textContent = `₹${total.toFixed(2)}`;
     }
 
     renderCheckoutSummary();

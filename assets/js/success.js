@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="font-medium text-espresso dark:text-gray-300">${item.quantity}x ${item.name}</span>
                 </div>
                 <div class="text-muted-espresso dark:text-gray-400">
-                    $${itemTotal}
+                    ₹${itemTotal}
                 </div>
             `;
             orderItemsContainer.appendChild(li);
@@ -59,9 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Render totals
-    if (orderSubtotalDisplay) orderSubtotalDisplay.textContent = `$${orderData.subtotal.toFixed(2)}`;
-    if (orderShippingDisplay) orderShippingDisplay.textContent = `$${orderData.shipping.toFixed(2)}`;
-    if (orderTotalDisplay) orderTotalDisplay.textContent = `$${orderData.total.toFixed(2)}`;
+    if (orderSubtotalDisplay) orderSubtotalDisplay.textContent = `₹${orderData.subtotal.toFixed(2)}`;
+    if (orderShippingDisplay) orderShippingDisplay.textContent = `₹${orderData.shipping.toFixed(2)}`;
+    if (orderTotalDisplay) orderTotalDisplay.textContent = `₹${orderData.total.toFixed(2)}`;
 
     // 3. Handle PDF Download
     const downloadBtn = document.getElementById('download-pdf');

@@ -82,7 +82,7 @@ function renderCart() {
                 <button onclick="closeCartSidebar()" class="mt-6 text-primary hover:underline">Continue Shopping</button>
             </div>
         `;
-        cartTotalElement.textContent = '$0.00';
+        cartTotalElement.textContent = '₹0.00';
         return;
     }
 
@@ -95,7 +95,7 @@ function renderCart() {
             </div>
             <div class="flex-1 min-w-0">
                 <h4 class="text-sm font-bold text-espresso dark:text-white truncate">${item.name}</h4>
-                <div class="text-primary font-bold text-sm mt-1">$${item.price.toFixed(2)}</div>
+                <div class="text-primary font-bold text-sm mt-1">₹${item.price.toFixed(2)}</div>
             </div>
             <div class="flex items-center gap-2 border border-border-cream dark:border-white/10 rounded-lg p-1 bg-cream-bg dark:bg-black">
                 <button onclick="updateQuantity('${item.id}', ${item.quantity - 1})" class="w-6 h-6 flex items-center justify-center text-charcoal dark:text-gray-300 hover:text-primary transition-colors">
@@ -110,7 +110,7 @@ function renderCart() {
         cartItemsContainer.appendChild(itemElement);
     });
 
-    cartTotalElement.textContent = '$' + getCartTotal().toFixed(2);
+    cartTotalElement.textContent = '₹' + getCartTotal().toFixed(2);
 }
 
 // Sidebar toggle logic
@@ -179,7 +179,7 @@ function injectCartUI() {
             <div class="p-6 border-t border-border-cream dark:border-white/10 bg-white dark:bg-[#1a0d0f] flex flex-col gap-4">
                 <div class="flex items-center justify-between text-espresso dark:text-white">
                     <span class="font-medium text-charcoal/70 dark:text-gray-400">Subtotal</span>
-                    <span id="cart-total" class="text-2xl font-black">$0.00</span>
+                    <span id="cart-total" class="text-2xl font-black">₹0.00</span>
                 </div>
                 <button onclick="proceedToCheckout()" class="w-full h-14 rounded-lg bg-primary text-white font-bold text-lg shadow-[0_4px_15px_rgba(212,17,50,0.2)] hover:shadow-[0_6px_20px_rgba(212,17,50,0.3)] transition-all hover:bg-primary/95 flex items-center justify-center gap-2">
                     Checkout <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
