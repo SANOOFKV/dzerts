@@ -49,20 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderCheckoutSummary();
 
-    // 3. Handle Form Submission
-    if (checkoutForm) {
-        checkoutForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            // Basic validation
-            if (!checkoutForm.checkValidity()) {
-                checkoutForm.reportValidity();
-                return;
-            }
-
-            // Gather Order Data
-            const formData = new FormData(checkoutForm);
-            const customerInfo = Object.fromEntries(formData.entries());
+    // 3. Handle Proceed to Payment Click
+    const payNowBtn = document.getElementById('pay-now-btn');
+    if (payNowBtn) {
+        payNowBtn.addEventListener('click', () => {
 
             // Calculate final totals for the order record
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -71,8 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const pendingOrderData = {
                 date: new Date().toISOString(),
                 customer: {
-                    name: customerInfo['name'],
-                    phone: customerInfo['phone'] || 'N/A'
+                    name: 'Guest',
+                    phone: 'N/A'
                 },
                 items: cart,
                 subtotal: subtotal,
@@ -80,11 +70,135 @@ document.addEventListener('DOMContentLoaded', () => {
                 total: total
             };
 
-            // Save order data to localStorage to pass to payment page
+            // Save order data to localStorage for fallback/verification
             localStorage.setItem('dzerts_pending_order', JSON.stringify(pendingOrderData));
 
-            // Redirect to Payment Page
-            window.location.href = '../payment/index.html';
+            // Disable button during processing
+            const originalBtnText = payNowBtn.innerHTML;
+            payNowBtn.innerHTML = 'Processing... <span class="material-symbols-outlined animate-spin">sync</span>';
+            payNowBtn.disabled = true;
+
+            // Trigger Razorpay Payment
+            initiatePayment(pendingOrderData, originalBtnText, payNowBtn);
         });
+    }
+
+    async function initiatePayment(pendingOrder, originalBtnText, submitBtn) {
+        try {
+            // Step 1: Create Order on Backend
+            const response = await fetch('https://dzerts.onrender.com/create-order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ amount: pendingOrder.total })
+            });
+
+            if (!response.ok) throw new Error('Failed to create order on server.');
+
+            const orderData = await response.json();
+
+            // Step 2: Configure Razorpay Checkout
+            const options = {
+                key: orderData.keyId,
+                amount: orderData.amount,
+                currency: orderData.currency,
+                name: "dzerts.",
+                description: "In-store Pick up Order",
+                order_id: orderData.orderId,
+                handler: async function (response) {
+                    try {
+                        // Step 3: Verify Signature on Backend
+                        const verifyRes = await fetch('https://dzerts.onrender.com/verify-payment', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_signature: response.razorpay_signature
+                            })
+                        });
+
+                        const verifyData = await verifyRes.json();
+
+                        if (verifyData.verified) {
+                            // Generate Final Order Data
+                            const finalOrderData = {
+                                ...pendingOrder,
+                                orderId: response.razorpay_payment_id,
+                                paymentTime: new Date().toISOString()
+                            };
+
+                            // Save order data for success page
+                            localStorage.setItem('dzerts_latest_order', JSON.stringify(finalOrderData));
+
+                            // Clean up
+                            localStorage.removeItem('dzerts_cart');
+                            localStorage.removeItem('dzerts_pending_order');
+
+                            // Redirect to Success Page
+                            window.location.href = '../success/index.html';
+                        } else {
+                            alert("Payment verification failed. Please try again or contact the counter.");
+                            submitBtn.innerHTML = originalBtnText;
+                            submitBtn.disabled = false;
+                        }
+                    } catch (err) {
+                        console.error("Verification Error:", err);
+                        alert("Something went wrong verifying the payment.");
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                    }
+                },
+                prefill: {
+                    name: pendingOrder.customer.name,
+                    contact: pendingOrder.customer.phone === 'N/A' || !pendingOrder.customer.phone ? '9999999999' : pendingOrder.customer.phone
+                },
+                theme: {
+                    color: "#d41132" // Primary brand color
+                },
+                config: {
+                    display: {
+                        blocks: {
+                            upi: {
+                                name: "Pay via UPI",
+                                instruments: [
+                                    {
+                                        method: "upi"
+                                    }
+                                ]
+                            },
+                            other: {
+                                name: "Other Payment Methods",
+                                instruments: [
+                                    { method: "card" },
+                                    { method: "netbanking" },
+                                    { method: "wallet" }
+                                ]
+                            }
+                        },
+                        sequence: ["block.upi", "block.other"],
+                        preferences: {
+                            show_default_blocks: true
+                        }
+                    }
+                }
+            };
+
+            // Open Modal
+            const rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response) {
+                alert("Payment Failed. Reason: " + response.error.description);
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            });
+            rzp1.open();
+
+        } catch (error) {
+            console.error("Checkout Error:", error);
+            alert("Could not initialize payment wrapper.");
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+        }
     }
 });
