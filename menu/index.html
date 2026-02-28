@@ -614,10 +614,9 @@
                     sortIcon.textContent = 'arrow_downward';
                 }
 
-                // Re-append sorted items to the grid (this also keeps existing filter display states)
-                menuGrid.innerHTML = '';
-                itemsArray.forEach(item => {
-                    menuGrid.appendChild(item);
+                // Use CSS order to sort visually without breaking the DOM on mobile
+                itemsArray.forEach((item, index) => {
+                    item.style.order = index;
                 });
             });
         });
