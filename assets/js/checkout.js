@@ -78,12 +78,19 @@ document.addEventListener('DOMContentLoaded', () => {
             payNowBtn.innerHTML = 'Processing... <span class="material-symbols-outlined animate-spin">sync</span>';
             payNowBtn.disabled = true;
 
+            // Inform user if Render Free Tier is waking up
+            const wakeUpTimeout = setTimeout(() => {
+                if (payNowBtn.disabled) {
+                    payNowBtn.innerHTML = 'Waking up secure server (can take 30s)... <span class="material-symbols-outlined animate-spin">sync</span>';
+                }
+            }, 4000);
+
             // Trigger Razorpay Payment
-            initiatePayment(pendingOrderData, originalBtnText, payNowBtn);
+            initiatePayment(pendingOrderData, originalBtnText, payNowBtn, wakeUpTimeout);
         });
     }
 
-    async function initiatePayment(pendingOrder, originalBtnText, submitBtn) {
+    async function initiatePayment(pendingOrder, originalBtnText, submitBtn, wakeUpTimeout) {
         try {
             // Step 1: Create Order on Backend
             const response = await fetch('https://dzerts.onrender.com/create-order', {
@@ -97,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error('Failed to create order on server.');
 
             const orderData = await response.json();
+            clearTimeout(wakeUpTimeout); // Server responded, no need to show the delay text
 
             // Step 2: Configure Razorpay Checkout
             const options = {
@@ -196,7 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error("Checkout Error:", error);
-            alert("Could not initialize payment wrapper.");
+            clearTimeout(wakeUpTimeout);
+            alert("Could not connect to payment server. Please try again.");
             submitBtn.innerHTML = originalBtnText;
             submitBtn.disabled = false;
         }

@@ -197,4 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
     injectCartUI();
     updateCartIcon();
     renderCart();
+
+    // Silent ping to wake up Render Free Tier backend
+    fetch('https://dzerts.onrender.com/ping')
+        .then(() => console.log('Backend pre-warmed'))
+        .catch(() => console.log('Backend pre-warm failed or waking up'));
 });

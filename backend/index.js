@@ -14,6 +14,11 @@ const razorpay = new Razorpay({
     key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
+// Route: Health Check to wake up Render
+app.get('/ping', (req, res) => {
+    res.json({ status: 'awake' });
+});
+
 // Route: Create Order
 app.post('/create-order', async (req, res) => {
     try {
