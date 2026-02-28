@@ -10,6 +10,20 @@ function saveCart() {
     renderCart();
 }
 
+// Sync cart from localStorage across pages/tabs
+function syncCart() {
+    cart = JSON.parse(localStorage.getItem('dzerts_cart')) || [];
+    updateCartIcon();
+    renderCart();
+}
+
+// Listen for storage events (when other tabs/windows update the cart)
+window.addEventListener('storage', (e) => {
+    if (e.key === 'dzerts_cart') {
+        syncCart();
+    }
+});
+
 // Add item to cart
 function addToCart(item) {
     const existingItem = cart.find(cartItem => cartItem.id === item.id);
@@ -115,6 +129,7 @@ function renderCart() {
 
 // Sidebar toggle logic
 function openCartSidebar() {
+    syncCart(); // Always sync state when opening
     const sidebar = document.getElementById('cart-sidebar');
     const overlay = document.getElementById('cart-overlay');
     if (sidebar && overlay) {
