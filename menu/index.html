@@ -244,28 +244,32 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-wrap gap-3 mt-2">
-                        <button
-                            class="flex items-center gap-2 px-4 py-1.5 rounded-full border border-border-cream dark:border-white/10 bg-white dark:bg-[#1a0d0f] hover:border-primary/30 text-muted-espresso dark:text-gray-400 text-sm transition-colors shadow-sm">
+                    <div class="flex flex-wrap gap-3 mt-2" id="filter-buttons">
+                        <button data-filter="all"
+                            class="filter-btn active flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/10 text-primary text-sm font-bold transition-colors shadow-sm">
+                            All
+                        </button>
+                        <button data-filter="gluten-free"
+                            class="filter-btn flex items-center gap-2 px-4 py-1.5 rounded-full border border-border-cream dark:border-white/10 bg-white dark:bg-[#1a0d0f] hover:border-primary/30 text-muted-espresso dark:text-gray-400 text-sm transition-colors shadow-sm">
                             Gluten-Free
                         </button>
-                        <button
-                            class="flex items-center gap-2 px-4 py-1.5 rounded-full border border-border-cream dark:border-white/10 bg-white dark:bg-[#1a0d0f] hover:border-primary/30 text-muted-espresso dark:text-gray-400 text-sm transition-colors shadow-sm">
+                        <button data-filter="nut-free"
+                            class="filter-btn flex items-center gap-2 px-4 py-1.5 rounded-full border border-border-cream dark:border-white/10 bg-white dark:bg-[#1a0d0f] hover:border-primary/30 text-muted-espresso dark:text-gray-400 text-sm transition-colors shadow-sm">
                             Nut-Free
                         </button>
-                        <button
-                            class="flex items-center gap-2 px-4 py-1.5 rounded-full border border-border-cream dark:border-white/10 bg-white dark:bg-[#1a0d0f] hover:border-primary/30 text-muted-espresso dark:text-gray-400 text-sm transition-colors shadow-sm">
+                        <button data-filter="vegan"
+                            class="filter-btn flex items-center gap-2 px-4 py-1.5 rounded-full border border-border-cream dark:border-white/10 bg-white dark:bg-[#1a0d0f] hover:border-primary/30 text-muted-espresso dark:text-gray-400 text-sm transition-colors shadow-sm">
                             Vegan
                         </button>
-                        <button
-                            class="flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/10 text-primary text-sm font-bold transition-colors">
+                        <button data-filter="best-sellers"
+                            class="filter-btn flex items-center gap-2 px-4 py-1.5 rounded-full border border-border-cream dark:border-white/10 bg-white dark:bg-[#1a0d0f] hover:border-primary/30 text-muted-espresso dark:text-gray-400 text-sm transition-colors shadow-sm">
                             Best Sellers
                         </button>
                     </div>
                 </header>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div
-                        class="group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="menu-grid">
+                    <div data-tags="gluten-free best-sellers"
+                        class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                 style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBUBsvfj05Y72qZFdz8soTwor5L5uHIz62wgaHUOpxG7sYdQx_FtYcj8UFZo7w1CgJJLRbvslNnUHHposvK6Q03K0VoFBIoTJB__PGV8GORZB-aSpTu5s6DE6xnZAVQOObhuSb6_x5hdso1QDLOZE3nsUXnWkMfdpREMH1u3tTXu0-v61WmOeDQNHJueN3RCW9alwpMA2slv6i6UaOSkv1sFq6jtPTydwb9Rlx8mjfC8WB_sNG-eLR0LoD9F0_gVcgwYI0JdwuUdg");'>
@@ -302,8 +306,8 @@
                             </div>
                         </div>
                     </div>
-                    <div
-                        class="group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+                    <div data-tags="gluten-free"
+                        class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                 style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyUMY_5VuXkFZbvDsxlF9C_lscc2IyVeqz7oFGnoJKOY1GJ6DSfhbKq3IjaIPcLPOLuo7v7Q_khZcaM2UnOoLjlW2sZ8IsqUyUsrvj4sVcZvsvlJAmG5kd8IQietXoNjHpbhF_It6xX-KJYcJXQSul3Duz-V8p7wmg7H7T2-ZxXD1YQnu0_4Evsr7km9_AIOoU2igm5wVMn1WJqg5BwikWstpW_HJ1gV_-H-DoYV17tnDdPGhIhz6OxHDJ_A4CL2PHVinj8GYoyA");'>
@@ -340,8 +344,8 @@
                             </div>
                         </div>
                     </div>
-                    <div
-                        class="group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+                    <div data-tags="best-sellers"
+                        class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                 style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCevbLR9_L7_FgcbSBpq0PHJx9-GMyj2aNF6I0-9cL1zq93kyfUjMhyQsI-xLJC2bS1sptUKbHrcMRauD9j2lLdFHgV4E9KFPZyDqFmpzRE6ft1V_uApVgzhhR4ldn6yig1v_VjgrJ9wTAhXnaWCtXZzYSO3g4_SJolPptbAl0g-Tj6YJaBwtySfryT0O4GYNzneygNKNbkDBClcgpt5CKNLfl5_aI1tkaYiibIuPchUmEX7LWPmQ4P6RiBdtpooSDRFiJVuzVShw");'>
@@ -374,8 +378,8 @@
                             </div>
                         </div>
                     </div>
-                    <div
-                        class="group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+                    <div data-tags="nut-free vegan"
+                        class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                 style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD6kUI9eLXiSzkHY5Ofu_gZLbmSsosa-mhUgnwdJQFtZbsVIHB6Os1EDs_TeBJhRZ76W1FjZ_hK3rHJU3WceIUnmJbUmt7X6-0m_3EP96DJ3slPTDQRjft_89dKHpVqAFgjYBnFWRvmMq_Bmzc_2swlcsm3ucKc2vse2ZyVh9dCS1X-tpjw6i5Zi5AISpyKKebdQxmLhNM93FFUKtYmafhNoqvqHIFybKQjhmzC17nXBv1hZGVofzR3nU8Vze7kLYkDXQa23v8fBw");'>
@@ -410,8 +414,8 @@
                             </div>
                         </div>
                     </div>
-                    <div
-                        class="group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+                    <div data-tags="best-sellers"
+                        class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                 style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBqsPhvYITqrh85uhQLH8fYhaGjxVLRixjjasITxBLEAjVGdsbNULJkyRG4Ay1l4AfB_XJUvYRSqptPPsxGxgB-4dzxdtQlQfMJNMG7l3mkOs3U4YazdmkPHH6UOR8CJbLy7IIufJTHAu51pC6AtwbUQwfSoMQMGzR5UHNUWI4cpftITrtMG0yMlT4kvjvIDgnyn05IygVcP2KpnKIk1kdi7we4nNKDZWDgv7qK9_1BDDp8r7NZ0UgtCKsZByoM2ZolfJFuszItPw");'>
@@ -444,8 +448,8 @@
                             </div>
                         </div>
                     </div>
-                    <div
-                        class="group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+                    <div data-tags="nut-free"
+                        class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
                         <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
                             <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                 style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDIr1rIR7vq-3WPBE3fBpOeqhxw9pNiGOYntSvV7iD5uZieIjC-sYbAd5l67b5SPweBCOZecSm79PcwWizjcKn-vShUdu4dLCfomWIvID9G-YMWRaYaSGRn4vzvwOJ9RC1aE5EcBGEaZpB_YGccMuYrRFH0Q3NhJoiS3ZIr760ZEHl8i8wWer8VGH3DJtv81U7cQ1hck-RS9mgQzE3sM1nRb3EM8YPSZcVgM_8ql0JOOEMveSGjX4IIzKi4_gM8po0Wno1KqVn3Og");'>
@@ -549,6 +553,43 @@
 
         if (toggleMain) toggleMain.addEventListener('click', toggleHandler);
         if (toggleMobile) toggleMobile.addEventListener('click', toggleHandler);
+
+        // Menu Filtering Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const menuItems = document.querySelectorAll('.menu-item');
+
+            const activeClass = ['border-primary/20', 'bg-primary/10', 'text-primary', 'font-bold'];
+            const inactiveClass = ['border-border-cream', 'dark:border-white/10', 'bg-white', 'dark:bg-[#1a0d0f]', 'text-muted-espresso', 'dark:text-gray-400'];
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Reset all buttons to inactive
+                    filterBtns.forEach(b => {
+                        b.classList.remove('active', ...activeClass);
+                        b.classList.add(...inactiveClass);
+                    });
+
+                    // Set clicked button to active
+                    btn.classList.remove(...inactiveClass);
+                    btn.classList.add('active', ...activeClass);
+
+                    const filter = btn.getAttribute('data-filter');
+
+                    menuItems.forEach(item => {
+                        const tags = item.getAttribute('data-tags') || '';
+
+                        if (filter === 'all' || tags.includes(filter)) {
+                            item.style.display = 'flex';
+                            item.style.opacity = '0';
+                            setTimeout(() => { item.style.opacity = '1'; }, 50);
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
     </script>
 </body>
 
