@@ -56,7 +56,7 @@ app.post('/create-order', async (req, res) => {
 
         const { amount, items, customerName, customerPhone, customerEmail } = req.body;
 
-        if (!amount || !items || !customerName || !customerPhone) {
+        if (!amount || !items) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 

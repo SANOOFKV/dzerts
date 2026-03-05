@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const tokenDisplay = document.getElementById('token-display');
         const orderIdDisplay = document.getElementById('order-id');
         const orderDateDisplay = document.getElementById('order-date');
-        const orderCustomerDisplay = document.getElementById('order-customer');
         const orderItemsContainer = document.getElementById('order-items');
 
         const orderSubtotalDisplay = document.getElementById('order-subtotal');
@@ -40,7 +39,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         tokenDisplay.textContent = `#${tokenString}`;
         orderIdDisplay.textContent = orderData.rzpOrderId || orderData._id;
         orderDateDisplay.textContent = orderDate.toLocaleDateString('en-US', dateOptions);
-        orderCustomerDisplay.textContent = orderData.customerName || 'Customer';
 
         // Render items line by line
         if (orderItemsContainer && orderData.items) {

@@ -15,11 +15,11 @@ const orderSchema = new mongoose.Schema({
     },
     customerName: {
         type: String,
-        required: true
+        default: 'Guest'
     },
     customerPhone: {
         type: String,
-        required: true
+        default: 'N/A'
     },
     customerEmail: {
         type: String

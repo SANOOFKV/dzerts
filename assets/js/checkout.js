@@ -51,18 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Handle Proceed to Payment Click
     const payNowBtn = document.getElementById('pay-now-btn');
-    const customerNameInput = document.getElementById('customerName');
-    const customerPhoneInput = document.getElementById('customerPhone');
-
     if (payNowBtn) {
         payNowBtn.addEventListener('click', () => {
-            const customerName = customerNameInput.value.trim();
-            const customerPhone = customerPhoneInput.value.trim();
-
-            if (!customerName || !customerPhone) {
-                alert("Please fill in your Name and Phone Number to continue.");
-                return;
-            }
 
             // Calculate final totals for the order record
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -71,8 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const pendingOrderData = {
                 date: new Date().toISOString(),
                 customer: {
-                    name: customerName,
-                    phone: customerPhone,
+                    name: 'Guest',
+                    phone: '9999999999',
                     email: ''
                 },
                 items: cart,
