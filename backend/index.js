@@ -20,9 +20,17 @@ const razorpay = new Razorpay({
 });
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('MongoDB connection error:', err));
+let dbReady = false;
+if (process.env.MONGODB_URI) {
+    mongoose.connect(process.env.MONGODB_URI)
+        .then(() => { dbReady = true; console.log('Connected to MongoDB'); })
+        .catch(err => console.error('MongoDB connection error:', err));
+
+    mongoose.connection.on('disconnected', () => { dbReady = false; });
+    mongoose.connection.on('reconnected', () => { dbReady = true; });
+} else {
+    console.error('WARNING: MONGODB_URI is not set. Database features will be unavailable.');
+}
 
 // Helper: Atomic Token Generation
 async function generateToken() {
@@ -36,12 +44,16 @@ async function generateToken() {
 
 // Route: Health Check to wake up Render
 app.get('/ping', (req, res) => {
-    res.json({ status: 'awake' });
+    res.json({ status: 'awake', db: dbReady });
 });
 
 // Route: Create Order
 app.post('/create-order', async (req, res) => {
     try {
+        if (!dbReady) {
+            return res.status(503).json({ error: 'Database is not connected. Please try again in a moment.' });
+        }
+
         const { amount, items, customerName, customerPhone, customerEmail } = req.body;
 
         if (!amount || !items || !customerName || !customerPhone) {
