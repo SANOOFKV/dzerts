@@ -81,6 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 total: total
             };
 
+            // Save order data to localStorage for fallback/verification
+            localStorage.setItem('dzerts_pending_order', JSON.stringify(pendingOrderData));
 
             // Disable button during processing
             const originalBtnText = payNowBtn.innerHTML;
@@ -151,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                     // Clean up cart
                                     localStorage.removeItem('dzerts_cart');
-
+                                    localStorage.removeItem('dzerts_pending_order');
 
                                     // Redirect to Success Page with DB Order ID
                                     window.location.href = `../success/index.html?orderId=${orderData.dbOrderId}`;
