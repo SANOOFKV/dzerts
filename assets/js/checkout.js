@@ -51,8 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Handle Proceed to Payment Click
     const payNowBtn = document.getElementById('pay-now-btn');
+    const customerNameInput = document.getElementById('customerName');
+    const customerPhoneInput = document.getElementById('customerPhone');
+    const customerEmailInput = document.getElementById('customerEmail');
+
     if (payNowBtn) {
         payNowBtn.addEventListener('click', () => {
+            const customerName = customerNameInput.value.trim();
+            const customerPhone = customerPhoneInput.value.trim();
+            const customerEmail = customerEmailInput.value.trim();
+
+            if (!customerName || !customerPhone) {
+                alert("Please fill in your Name and Phone Number to continue.");
+                return;
+            }
 
             // Calculate final totals for the order record
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -61,8 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const pendingOrderData = {
                 date: new Date().toISOString(),
                 customer: {
-                    name: 'Guest',
-                    phone: 'N/A'
+                    name: customerName,
+                    phone: customerPhone,
+                    email: customerEmail
                 },
                 items: cart,
                 subtotal: subtotal,
@@ -98,10 +111,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ amount: pendingOrder.total })
+                body: JSON.stringify({
+                    amount: pendingOrder.total,
+                    items: pendingOrder.items,
+                    customerName: pendingOrder.customer.name,
+                    customerPhone: pendingOrder.customer.phone,
+                    customerEmail: pendingOrder.customer.email
+                })
             });
 
-            if (!response.ok) throw new Error('Failed to create order on server.');
+            if (!response.ok) {
+                const errData = await response.json();
+                throw new Error(errData.error || 'Failed to create order on server.');
+            }
 
             const orderData = await response.json();
             clearTimeout(wakeUpTimeout); // Server responded, no need to show the delay text
@@ -116,41 +138,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 order_id: orderData.orderId,
                 handler: async function (response) {
                     try {
-                        // Step 3: Verify Signature on Backend
-                        const verifyRes = await fetch('https://dzerts.onrender.com/verify-payment', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                razorpay_order_id: response.razorpay_order_id,
-                                razorpay_payment_id: response.razorpay_payment_id,
-                                razorpay_signature: response.razorpay_signature
-                            })
-                        });
+                        submitBtn.innerHTML = 'Verifying... <span class="material-symbols-outlined animate-spin">sync</span>';
 
-                        const verifyData = await verifyRes.json();
+                        // Step 3: Poll backend for Webhook fulfillment
+                        let attempts = 0;
+                        const maxAttempts = 15; // Poll for approx 30 seconds
 
-                        if (verifyData.verified) {
-                            // Generate Final Order Data
-                            const finalOrderData = {
-                                ...pendingOrder,
-                                orderId: response.razorpay_payment_id,
-                                paymentTime: new Date().toISOString()
-                            };
+                        const verifyInterval = setInterval(async () => {
+                            attempts++;
+                            try {
+                                const pollRes = await fetch(`https://dzerts.onrender.com/api/orders/${orderData.dbOrderId}`);
+                                const orderStatusData = await pollRes.json();
 
-                            // Save order data for success page
-                            localStorage.setItem('dzerts_latest_order', JSON.stringify(finalOrderData));
+                                if (orderStatusData.paymentStatus === 'SUCCESS') {
+                                    clearInterval(verifyInterval);
 
-                            // Clean up
-                            localStorage.removeItem('dzerts_cart');
-                            localStorage.removeItem('dzerts_pending_order');
+                                    // Clean up cart
+                                    localStorage.removeItem('dzerts_cart');
+                                    localStorage.removeItem('dzerts_pending_order');
 
-                            // Redirect to Success Page
-                            window.location.href = '../success/index.html';
-                        } else {
-                            alert("Payment verification failed. Please try again or contact the counter.");
-                            submitBtn.innerHTML = originalBtnText;
-                            submitBtn.disabled = false;
-                        }
+                                    // Redirect to Success Page with DB Order ID
+                                    window.location.href = `../success/index.html?orderId=${orderData.dbOrderId}`;
+                                } else if (orderStatusData.paymentStatus === 'FAILED' || attempts >= maxAttempts) {
+                                    clearInterval(verifyInterval);
+                                    alert("Payment verification failed or timed out. Please try again or contact the counter.");
+                                    submitBtn.innerHTML = originalBtnText;
+                                    submitBtn.disabled = false;
+                                }
+                            } catch (e) {
+                                console.error("Poll Error:", e);
+                            }
+                        }, 2000); // 2 second intervals
                     } catch (err) {
                         console.error("Verification Error:", err);
                         alert("Something went wrong verifying the payment.");
@@ -160,7 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 prefill: {
                     name: pendingOrder.customer.name,
-                    contact: pendingOrder.customer.phone === 'N/A' || !pendingOrder.customer.phone ? '9999999999' : pendingOrder.customer.phone
+                    contact: pendingOrder.customer.phone === 'N/A' || !pendingOrder.customer.phone ? '9999999999' : pendingOrder.customer.phone,
+                    email: pendingOrder.customer.email || ''
                 },
                 theme: {
                     color: "#d41132" // Primary brand color

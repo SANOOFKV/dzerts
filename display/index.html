@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dzerts - Token Display Queue</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@700;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { "primary": "#d41132" },
+                    fontFamily: { "display": ["Work Sans", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-black text-white font-display h-screen w-screen overflow-hidden flex flex-col">
+    <!-- Header -->
+    <header class="p-8 border-b border-white/10 flex justify-between items-center shrink-0">
+        <h1 class="text-4xl font-black lowercase tracking-tighter">dzerts<span class="text-primary">.</span></h1>
+        <div class="text-2xl font-bold text-gray-400 uppercase tracking-widest">Order Status</div>
+    </header>
+
+    <!-- Main Display Split -->
+    <main class="flex-1 grid grid-cols-2">
+        <!-- Preparing Column -->
+        <div class="border-r border-white/10 flex flex-col p-8">
+            <h2 class="text-3xl font-bold text-gray-400 mb-8 uppercase tracking-widest text-center">Preparing</h2>
+            <div id="preparing-grid" class="flex flex-wrap gap-4 justify-center content-start">
+                <!-- Tokens -->
+            </div>
+        </div>
+
+        <!-- Ready Column (Highlighted) -->
+        <div class="flex flex-col p-8 relative overflow-hidden">
+            <!-- decorative background glow -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/20 rounded-full blur-[100px] -z-10">
+            </div>
+
+            <h2 class="text-4xl font-black text-primary mb-10 uppercase tracking-widest text-center">Now Serving</h2>
+
+            <div id="ready-grid" class="grid grid-cols-2 gap-6 justify-center content-start">
+                <!-- Tokens -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Fetch Logic -->
+    <script>
+        const apiBase = 'https://dzerts.onrender.com/api/admin/orders';
+
+        // IMPORTANT: The display screen should be setup bypassing the password, or hardcoding it for the TV browser.
+        // For security, a secure token could be used. Here we assume the shop TV can access it by hardcoding the password for convenience, or the endpoint could be made public if PII is stripped.
+        // I will use a minimal public query to the backend soon, but for now we'll mock the fetch with the admin password.
+        const TV_PASSWORD = 'admin'; // Setup device locally
+
+        const prepGrid = document.getElementById('preparing-grid');
+        const readyGrid = document.getElementById('ready-grid');
+
+        let previousReadySet = new Set(); // Track to know when to ping a sound
+
+        async function updateDisplay() {
+            try {
+                // Fetch active orders (In production we'd create a public endpoint that only returns token numbers without customer names/phones to maintain privacy)
+                const res = await fetch(apiBase, {
+                    headers: { 'x-admin-password': TV_PASSWORD }
+                });
+
+                if (!res.ok) return;
+
+                const orders = await res.json();
+
+                prepGrid.innerHTML = '';
+                readyGrid.innerHTML = '';
+
+                const currentReadySet = new Set();
+
+                orders.forEach(order => {
+                    const token = String(order.tokenNumber).padStart(3, '0');
+
+                    if (order.shopStatus === 'PREPARING') {
+                        prepGrid.innerHTML += `
+                            <div class="text-4xl font-bold text-gray-300 bg-white/5 border border-white/10 px-6 py-4 rounded-xl min-w-[120px] text-center">
+                                ${token}
+                            </div>
+                        `;
+                    } else if (order.shopStatus === 'READY') {
+                        currentReadySet.add(token);
+                        readyGrid.innerHTML += `
+                            <div class="text-6xl font-black text-white bg-primary border border-primary/50 px-8 py-6 rounded-2xl min-w-[160px] text-center shadow-[0_0_30px_rgba(212,17,50,0.4)] transform hover:scale-105 transition-transform duration-500 animate-[fadeIn_0.5s_ease-out]">
+                                ${token}
+                            </div>
+                        `;
+                    }
+                });
+
+                // Play sound if a new order entered READY state
+                for (let t of currentReadySet) {
+                    if (!previousReadySet.has(t)) {
+                        playChime();
+                        break; // play once per poll
+                    }
+                }
+                previousReadySet = currentReadySet;
+
+            } catch (err) {
+                console.error("Display loop error:", err);
+            }
+        }
+
+        function playChime() {
+            // Optional: load a short beep or bell audio file
+            // const audio = new Audio('../assets/bell.mp3');
+            // audio.play().catch(e => {}); // browsers block autoplay without interaction, so click once to enable.
+        }
+
+        // Enable audio with a hidden click listener on body
+        document.body.addEventListener('click', () => playChime(), { once: true });
+
+        // Poll every 5 seconds
+        updateDisplay();
+        setInterval(updateDisplay, 5000);
+    </script>
+</body>
+
+</html>

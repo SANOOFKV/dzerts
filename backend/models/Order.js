@@ -1,0 +1,54 @@
+const mongoose = require('mongoose');
+
+const orderSchema = new mongoose.Schema({
+    // Store cart items cleanly
+    items: [{
+        id: String,
+        name: String,
+        price: Number,
+        quantity: Number,
+        image: String
+    }],
+    totalAmount: {
+        type: Number,
+        required: true
+    },
+    customerName: {
+        type: String,
+        required: true
+    },
+    customerPhone: {
+        type: String,
+        required: true
+    },
+    customerEmail: {
+        type: String
+    },
+    // Razorpay Details
+    rzpOrderId: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    rzpPaymentId: {
+        type: String
+    },
+    // Order State: CREATED -> SUCCESS -> PENDING -> FAILED
+    paymentStatus: {
+        type: String,
+        enum: ['CREATED', 'PENDING', 'SUCCESS', 'FAILED'],
+        default: 'CREATED'
+    },
+    // Queue State for Kitchen Staff
+    shopStatus: {
+        type: String,
+        enum: ['PREPARING', 'READY', 'SERVED'],
+        default: 'PREPARING'
+    },
+    // The Queue Token Number generated upon SUCCESS
+    tokenNumber: {
+        type: Number
+    }
+}, { timestamps: true });
+
+module.exports = mongoose.model('Order', orderSchema);

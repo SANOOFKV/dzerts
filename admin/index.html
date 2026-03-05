@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dzerts - Admin Dashboard</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d41132",
+                        "cream-bg": "#FDFBF7",
+                        "text-main": "#2C1810"
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-cream-bg text-text-main font-display min-h-screen">
+
+    <!-- Password Prompt Modal -->
+    <div id="password-modal" class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-8 max-w-sm w-full shadow-2xl">
+            <h2 class="text-2xl font-black mb-4">Admin Access</h2>
+            <p class="text-sm text-gray-500 mb-6">Enter the shop password to view the production queue.</p>
+            <input type="password" id="admin-password"
+                class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary mb-4"
+                placeholder="Password">
+            <button id="login-btn"
+                class="w-full bg-primary text-white font-bold py-3 rounded-xl hover:opacity-90 transition-opacity">Login</button>
+        </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div id="dashboard" class="hidden flex flex-col h-screen overflow-hidden">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 p-4 flex justify-between items-center shrink-0">
+            <div class="flex items-center gap-4">
+                <h1 class="text-2xl font-black tracking-tighter lowercase">dzerts<span class="text-primary">.</span>
+                    <span class="text-lg text-gray-400 align-middle ml-2">Kitchen Dashboard</span></h1>
+            </div>
+            <div class="flex gap-4">
+                <button onclick="fetchOrders()"
+                    class="flex items-center gap-1 text-sm font-semibold hover:text-primary"><span
+                        class="material-symbols-outlined text-sm">refresh</span> Refresh</button>
+                <button onclick="logout()" class="text-sm font-semibold text-gray-500 hover:text-black">Logout</button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="flex-1 w-full bg-cream-bg p-6 grid grid-cols-1 md:grid-cols-2 gap-8 overflow-hidden">
+
+            <!-- Column 1: Incoming / Preparing -->
+            <section class="bg-white shadow-sm rounded-2xl flex flex-col border border-gray-200 overflow-hidden">
+                <div class="p-4 bg-yellow-50 border-b border-yellow-100 shrink-0">
+                    <h2 class="text-xl font-bold flex items-center justify-between">
+                        <span>Incoming / Preparing</span>
+                        <span id="prep-count"
+                            class="bg-yellow-200 text-yellow-800 text-sm px-2 py-1 rounded-full">0</span>
+                    </h2>
+                </div>
+                <div id="preparing-container" class="p-4 flex-1 overflow-y-auto space-y-4">
+                    <!-- Cards Go Here -->
+                </div>
+            </section>
+
+            <!-- Column 2: Ready for Pickup -->
+            <section class="bg-white shadow-sm rounded-2xl flex flex-col border border-gray-200 overflow-hidden">
+                <div class="p-4 bg-green-50 border-b border-green-100 shrink-0">
+                    <h2 class="text-xl font-bold flex items-center justify-between">
+                        <span>Ready for Pickup</span>
+                        <span id="ready-count"
+                            class="bg-green-200 text-green-800 text-sm px-2 py-1 rounded-full">0</span>
+                    </h2>
+                </div>
+                <div id="ready-container" class="p-4 flex-1 overflow-y-auto space-y-4">
+                    <!-- Cards Go Here -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        let adminPassword = localStorage.getItem('dzerts_admin_pw');
+        const apiBase = 'https://dzerts.onrender.com/api/admin/orders';
+
+        // DOM Elements
+        const passwordModal = document.getElementById('password-modal');
+        const dashboard = document.getElementById('dashboard');
+        const passwordInput = document.getElementById('admin-password');
+        const loginBtn = document.getElementById('login-btn');
+
+        const prepContainer = document.getElementById('preparing-container');
+        const readyContainer = document.getElementById('ready-container');
+        const prepCount = document.getElementById('prep-count');
+        const readyCount = document.getElementById('ready-count');
+
+        // Check login state on load
+        if (adminPassword) {
+            login(adminPassword);
+        }
+
+        loginBtn.addEventListener('click', () => {
+            const pwd = passwordInput.value;
+            if (pwd) login(pwd);
+        });
+
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && passwordInput.value) login(passwordInput.value);
+        });
+
+        async function login(pwd) {
+            adminPassword = pwd;
+            const success = await fetchOrders();
+            if (success) {
+                localStorage.setItem('dzerts_admin_pw', pwd);
+                passwordModal.classList.add('hidden');
+                dashboard.classList.remove('hidden');
+            } else {
+                localStorage.removeItem('dzerts_admin_pw');
+                alert("Incorrect password or server error.");
+                passwordInput.value = '';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('dzerts_admin_pw');
+            window.location.reload();
+        }
+
+        async function fetchOrders() {
+            try {
+                const res = await fetch(apiBase, {
+                    headers: { 'x-admin-password': adminPassword }
+                });
+
+                if (res.status === 401) return false;
+                if (!res.ok) throw new Error("Failed to fetch");
+
+                const orders = await res.json();
+                renderOrders(orders);
+                return true;
+
+            } catch (err) {
+                console.error(err);
+                if (adminPassword && passwordModal.classList.contains('hidden')) {
+                    alert("Lost connection to server.");
+                }
+                return false;
+            }
+        }
+
+        function renderOrders(orders) {
+            prepContainer.innerHTML = '';
+            readyContainer.innerHTML = '';
+            let pCount = 0;
+            let rCount = 0;
+
+            orders.forEach(order => {
+                const token = String(order.tokenNumber).padStart(3, '0');
+                const rowItems = order.items.map(i => `<div class="text-sm border-b last:border-0 border-gray-100 py-1 flex justify-between"><span>${i.quantity}x ${i.name}</span></div>`).join('');
+
+                const timeStr = new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                const cardHtml = `
+                    <div class="border border-gray-200 rounded-xl p-4 shadow-sm bg-white relative">
+                        <div class="absolute top-4 right-4 bg-gray-100 text-gray-800 font-mono font-bold px-2 py-1 rounded text-lg border border-gray-200">
+                            #${token}
+                        </div>
+                        <div class="mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-gray-400 block">${timeStr}</span>
+                            <span class="font-bold text-lg">${order.customerName}</span>
+                            <span class="text-sm text-gray-500 block">${order.customerPhone}</span>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-3 mb-4">
+                            ${rowItems}
+                        </div>
+                        <div class="flex gap-2">
+                            ${order.shopStatus === 'PREPARING'
+                        ? `<button onclick="updateStatus('${order._id}', 'READY')" class="flex-1 bg-primary text-white font-bold py-2 rounded-lg hover:opacity-90">Mark Ready</button>`
+                        : `<button onclick="updateStatus('${order._id}', 'SERVED')" class="flex-1 bg-green-600 text-white font-bold py-2 rounded-lg hover:opacity-90">Mark Served</button>`
+                    }
+                        </div>
+                    </div>
+                `;
+
+                if (order.shopStatus === 'PREPARING') {
+                    prepContainer.innerHTML += cardHtml;
+                    pCount++;
+                } else if (order.shopStatus === 'READY') {
+                    readyContainer.innerHTML += cardHtml;
+                    rCount++;
+                }
+            });
+
+            prepCount.textContent = pCount;
+            readyCount.textContent = rCount;
+        }
+
+        async function updateStatus(orderId, newStatus) {
+            try {
+                const res = await fetch(`${apiBase}/${orderId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-admin-password': adminPassword
+                    },
+                    body: JSON.stringify({ status: newStatus })
+                });
+
+                if (res.ok) {
+                    fetchOrders();
+                } else {
+                    alert("Failed to update order status");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error communicating with server.");
+            }
+        }
+
+        // Auto Refresh every 10 seconds
+        setInterval(() => {
+            if (!passwordModal.classList.contains('hidden')) return;
+            fetchOrders();
+        }, 10000);
+
+    </script>
+</body>
+
+</html>
