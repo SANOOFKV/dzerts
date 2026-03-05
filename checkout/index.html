@@ -116,83 +116,81 @@
 
         <div class="lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start">
 
-            <div class="lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start">
-
-                <!-- Customer Details Form -->
-                <div class="lg:col-span-7">
-                    <section
-                        class="bg-sidebar-cream dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 rounded-2xl p-6 md:p-8 shadow-sm mb-8 lg:mb-0">
-                        <h2 class="text-xl font-bold text-espresso dark:text-white mb-6">Contact Details</h2>
-                        <form id="customer-details-form" class="space-y-6">
-                            <div>
-                                <label for="customerName"
-                                    class="block text-sm font-medium text-espresso dark:text-gray-300">Full Name</label>
-                                <input type="text" id="customerName" required
-                                    class="mt-1 block w-full rounded-md border border-border-cream dark:border-white/10 bg-white dark:bg-[#221013] px-3 py-2 text-espresso dark:text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary shadow-sm focus:bg-white"
-                                    placeholder="John Doe">
-                            </div>
-                            <div>
-                                <label for="customerPhone"
-                                    class="block text-sm font-medium text-espresso dark:text-gray-300">Phone Number (For
-                                    Order Lookup)</label>
-                                <input type="tel" id="customerPhone" required
-                                    class="mt-1 block w-full rounded-md border border-border-cream dark:border-white/10 bg-white dark:bg-[#221013] px-3 py-2 text-espresso dark:text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary shadow-sm focus:bg-white"
-                                    placeholder="9876543210">
-                            </div>
-                            <div>
-                                <label for="customerEmail"
-                                    class="block text-sm font-medium text-espresso dark:text-gray-300">Email Address
-                                    (Optional)</label>
-                                <input type="email" id="customerEmail"
-                                    class="mt-1 block w-full rounded-md border border-border-cream dark:border-white/10 bg-white dark:bg-[#221013] px-3 py-2 text-espresso dark:text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary shadow-sm focus:bg-white"
-                                    placeholder="john@example.com">
-                            </div>
-                        </form>
-                    </section>
-                </div>
-
-                <!-- Order Summary -->
-                <div class="lg:col-span-5">
-                    <section aria-labelledby="summary-heading"
-                        class="bg-sidebar-cream dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 rounded-2xl p-6 md:p-8 shadow-sm sticky top-24">
-                        <h2 id="summary-heading" class="text-xl font-bold text-espresso dark:text-white mb-6">Order
-                            Summary
-                        </h2>
-
-                        <ul role="list" id="checkout-items"
-                            class="divide-y divide-border-cream dark:divide-white/10 max-h-[40vh] overflow-y-auto pr-2 mb-6">
-                            <!-- Items will be populated by JS -->
-                        </ul>
-
-                        <div class="space-y-4 pt-6 border-t border-border-cream dark:border-white/10">
-                            <div class="flex items-center justify-between">
-                                <dt class="text-sm text-muted-espresso dark:text-gray-400">Subtotal</dt>
-                                <dd class="text-sm font-medium text-espresso dark:text-white" id="checkout-subtotal">
-                                    ₹0.00
-                                </dd>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <dt class="text-sm text-muted-espresso dark:text-gray-400">Service Fee</dt>
-                                <dd class="text-sm font-medium text-espresso dark:text-white" id="checkout-shipping">
-                                    Free
-                                </dd>
-                            </div>
-                            <div
-                                class="flex items-center justify-between border-t border-border-cream dark:border-white/10 pt-4">
-                                <dt class="text-base font-bold text-espresso dark:text-white">Order total</dt>
-                                <dd class="text-xl font-bold text-primary" id="checkout-total">₹0.00</dd>
-                            </div>
+            <!-- Customer Details Form -->
+            <div class="lg:col-span-7">
+                <section
+                    class="bg-sidebar-cream dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 rounded-2xl p-6 md:p-8 shadow-sm mb-8 lg:mb-0">
+                    <h2 class="text-xl font-bold text-espresso dark:text-white mb-6">Contact Details</h2>
+                    <form id="customer-details-form" class="space-y-6">
+                        <div>
+                            <label for="customerName"
+                                class="block text-sm font-medium text-espresso dark:text-gray-300">Full Name</label>
+                            <input type="text" id="customerName" required
+                                class="mt-1 block w-full rounded-md border border-border-cream dark:border-white/10 bg-white dark:bg-[#221013] px-3 py-2 text-espresso dark:text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary shadow-sm focus:bg-white"
+                                placeholder="John Doe">
                         </div>
-
-                        <div class="mt-8">
-                            <button type="button" id="pay-now-btn"
-                                class="w-full rounded-xl bg-primary px-4 py-4 text-base font-bold text-white shadow-sm hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 flex justify-center items-center gap-2">
-                                Proceed to Payment <span class="material-symbols-outlined">arrow_forward</span>
-                            </button>
+                        <div>
+                            <label for="customerPhone"
+                                class="block text-sm font-medium text-espresso dark:text-gray-300">Phone Number (For
+                                Order Lookup)</label>
+                            <input type="tel" id="customerPhone" required
+                                class="mt-1 block w-full rounded-md border border-border-cream dark:border-white/10 bg-white dark:bg-[#221013] px-3 py-2 text-espresso dark:text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary shadow-sm focus:bg-white"
+                                placeholder="9876543210">
                         </div>
-                    </section>
-                </div>
+                        <div>
+                            <label for="customerEmail"
+                                class="block text-sm font-medium text-espresso dark:text-gray-300">Email Address
+                                (Optional)</label>
+                            <input type="email" id="customerEmail"
+                                class="mt-1 block w-full rounded-md border border-border-cream dark:border-white/10 bg-white dark:bg-[#221013] px-3 py-2 text-espresso dark:text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary shadow-sm focus:bg-white"
+                                placeholder="john@example.com">
+                        </div>
+                    </form>
+                </section>
             </div>
+
+            <!-- Order Summary -->
+            <div class="lg:col-span-5">
+                <section aria-labelledby="summary-heading"
+                    class="bg-sidebar-cream dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 rounded-2xl p-6 md:p-8 shadow-sm sticky top-24">
+                    <h2 id="summary-heading" class="text-xl font-bold text-espresso dark:text-white mb-6">Order
+                        Summary
+                    </h2>
+
+                    <ul role="list" id="checkout-items"
+                        class="divide-y divide-border-cream dark:divide-white/10 max-h-[40vh] overflow-y-auto pr-2 mb-6">
+                        <!-- Items will be populated by JS -->
+                    </ul>
+
+                    <div class="space-y-4 pt-6 border-t border-border-cream dark:border-white/10">
+                        <div class="flex items-center justify-between">
+                            <dt class="text-sm text-muted-espresso dark:text-gray-400">Subtotal</dt>
+                            <dd class="text-sm font-medium text-espresso dark:text-white" id="checkout-subtotal">
+                                ₹0.00
+                            </dd>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <dt class="text-sm text-muted-espresso dark:text-gray-400">Service Fee</dt>
+                            <dd class="text-sm font-medium text-espresso dark:text-white" id="checkout-shipping">
+                                Free
+                            </dd>
+                        </div>
+                        <div
+                            class="flex items-center justify-between border-t border-border-cream dark:border-white/10 pt-4">
+                            <dt class="text-base font-bold text-espresso dark:text-white">Order total</dt>
+                            <dd class="text-xl font-bold text-primary" id="checkout-total">₹0.00</dd>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <button type="button" id="pay-now-btn"
+                            class="w-full rounded-xl bg-primary px-4 py-4 text-base font-bold text-white shadow-sm hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 flex justify-center items-center gap-2">
+                            Proceed to Payment <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </div>
     </main>
 
     <style>
