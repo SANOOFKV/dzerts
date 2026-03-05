@@ -33,7 +33,7 @@ function addToCart(item) {
         cart.push({ ...item, quantity: 1 });
     }
     saveCart();
-    openCartSidebar();
+    updateCartIcon();
 }
 
 // Remove item from cart completely
