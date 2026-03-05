@@ -53,13 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const payNowBtn = document.getElementById('pay-now-btn');
     const customerNameInput = document.getElementById('customerName');
     const customerPhoneInput = document.getElementById('customerPhone');
-    const customerEmailInput = document.getElementById('customerEmail');
 
     if (payNowBtn) {
         payNowBtn.addEventListener('click', () => {
             const customerName = customerNameInput.value.trim();
             const customerPhone = customerPhoneInput.value.trim();
-            const customerEmail = customerEmailInput.value.trim();
 
             if (!customerName || !customerPhone) {
                 alert("Please fill in your Name and Phone Number to continue.");
@@ -75,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 customer: {
                     name: customerName,
                     phone: customerPhone,
-                    email: customerEmail
+                    email: ''
                 },
                 items: cart,
                 subtotal: subtotal,
@@ -116,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     items: pendingOrder.items,
                     customerName: pendingOrder.customer.name,
                     customerPhone: pendingOrder.customer.phone,
-                    customerEmail: pendingOrder.customer.email
+                    customerEmail: ''
                 })
             });
 
