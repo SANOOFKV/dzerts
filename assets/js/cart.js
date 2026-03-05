@@ -8,6 +8,7 @@ function saveCart() {
     localStorage.setItem('dzerts_cart', JSON.stringify(cart));
     updateCartIcon();
     renderCart();
+    if (typeof renderProductActions === 'function') renderProductActions();
 }
 
 // Sync cart from localStorage across pages/tabs
@@ -15,6 +16,7 @@ function syncCart() {
     cart = JSON.parse(localStorage.getItem('dzerts_cart')) || [];
     updateCartIcon();
     renderCart();
+    if (typeof renderProductActions === 'function') renderProductActions();
 }
 
 // Listen for storage events (when other tabs/windows update the cart)
@@ -127,6 +129,43 @@ function renderCart() {
     cartTotalElement.textContent = '₹' + getCartTotal().toFixed(2);
 }
 
+// Render dynamic product action buttons (Add vs Stepper)
+function renderProductActions() {
+    const containers = document.querySelectorAll('.product-action-container');
+
+    containers.forEach(container => {
+        const id = container.getAttribute('data-id');
+        const name = container.getAttribute('data-name');
+        const price = parseFloat(container.getAttribute('data-price'));
+        const image = container.getAttribute('data-image');
+
+        const cartItem = cart.find(item => item.id === id);
+        const quantity = cartItem ? cartItem.quantity : 0;
+
+        if (quantity > 0) {
+            // Render Stepper
+            container.innerHTML = `
+                <div class="flex items-center justify-between gap-2 border border-primary/30 rounded-lg p-1 bg-primary/5 dark:bg-primary/10 h-9 shrink-0 w-[90px]">
+                    <button onclick="updateQuantity('${id}', ${quantity - 1})" class="w-6 h-6 flex items-center justify-center text-primary hover:bg-primary/10 rounded-md transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">remove</span>
+                    </button>
+                    <span class="text-sm font-bold min-w-[14px] text-center text-espresso dark:text-white">${quantity}</span>
+                    <button onclick="updateQuantity('${id}', ${quantity + 1})" class="w-6 h-6 flex items-center justify-center text-primary hover:bg-primary/10 rounded-md transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">add</span>
+                    </button>
+                </div>
+            `;
+        } else {
+            // Render Add Button
+            container.innerHTML = `
+                <button onclick="addToCart({id: '${id}', name: '${name.replace(/'/g, "\\'")}', price: ${price}, image: '${image}'})" class="h-9 w-[90px] rounded-lg bg-espresso dark:bg-white text-white dark:text-black hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-colors flex items-center justify-center gap-1 text-sm font-bold shrink-0">
+                    Add <span class="material-symbols-outlined text-[16px]">add</span>
+                </button>
+            `;
+        }
+    });
+}
+
 // Sidebar toggle logic
 function openCartSidebar() {
     syncCart(); // Always sync state when opening
@@ -212,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
     injectCartUI();
     updateCartIcon();
     renderCart();
+    if (typeof renderProductActions === 'function') renderProductActions();
 
     // Silent ping to wake up Render Free Tier backend
     fetch('https://dzerts.onrender.com/ping')
