@@ -145,7 +145,7 @@ function renderProductActions() {
         if (quantity > 0) {
             // Render Stepper
             container.innerHTML = `
-                <div class="flex items-center justify-between gap-2 border border-primary/30 rounded-lg p-1 bg-primary/5 dark:bg-primary/10 h-9 shrink-0 w-[90px]">
+                <div class="relative z-10 flex items-center justify-between gap-2 border border-primary/30 rounded-lg p-1 bg-primary/5 dark:bg-primary/10 h-9 shrink-0 w-[90px]">
                     <button onclick="updateQuantity('${id}', ${quantity - 1})" class="w-6 h-6 flex items-center justify-center text-primary hover:bg-primary/10 rounded-md transition-colors">
                         <span class="material-symbols-outlined text-[16px]">remove</span>
                     </button>
@@ -158,7 +158,7 @@ function renderProductActions() {
         } else {
             // Render Add Button
             container.innerHTML = `
-                <button onclick="addToCart({id: '${id}', name: '${name.replace(/'/g, "\\'")}', price: ${price}, image: '${image}'})" class="h-9 w-[90px] rounded-lg bg-espresso dark:bg-white text-white dark:text-black hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-colors flex items-center justify-center gap-1 text-sm font-bold shrink-0">
+                <button onclick="addToCart({id: '${id}', name: '${name.replace(/'/g, "\\'")}', price: ${price}, image: '${image}'})" class="relative z-10 h-9 w-[90px] rounded-lg bg-espresso dark:bg-white text-white dark:text-black hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-colors flex items-center justify-center gap-1 text-sm font-bold shrink-0">
                     Add <span class="material-symbols-outlined text-[16px]">add</span>
                 </button>
             `;
