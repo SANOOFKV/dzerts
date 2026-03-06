@@ -274,6 +274,12 @@
 
         if (toggleBtn) toggleBtn.addEventListener('click', toggleHandler);
 
+        // Prevent back-swipe/back-button from going to checkout — redirect to home instead
+        history.pushState(null, '', window.location.href);
+        window.addEventListener('popstate', () => {
+            window.location.href = '../home/index.html';
+        });
+
         // Sync theme across tabs in real-time
         window.addEventListener('storage', (e) => {
             if (e.key === 'theme') {
