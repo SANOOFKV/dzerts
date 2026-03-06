@@ -23,9 +23,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const orderIdDisplay = document.getElementById('order-id');
         const orderDateDisplay = document.getElementById('order-date');
         const orderItemsContainer = document.getElementById('order-items');
-
         const orderSubtotalDisplay = document.getElementById('order-subtotal');
-        const orderShippingDisplay = document.getElementById('order-shipping'); // We leave this 0 or hidden
+        const orderShippingDisplay = document.getElementById('order-shipping');
         const orderTotalDisplay = document.getElementById('order-total');
 
         // Pad token to 3 digits (e.g., 001, 042, 105)
@@ -42,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Render items line by line
         if (orderItemsContainer && orderData.items) {
-            orderItemsContainer.innerHTML = ''; // clear existing
+            orderItemsContainer.innerHTML = '';
 
             orderData.items.forEach(item => {
                 const li = document.createElement('li');
@@ -64,47 +63,53 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Render totals
         if (orderTotalDisplay) orderTotalDisplay.textContent = `₹${orderData.totalAmount.toFixed(2)}`;
-
-        // Calculate subtotal if shipping was stored (currently 0)
         if (orderSubtotalDisplay) orderSubtotalDisplay.textContent = `₹${orderData.totalAmount.toFixed(2)}`;
         if (orderShippingDisplay) orderShippingDisplay.textContent = `₹0.00`;
 
-        // 3. Handle PDF Download
+        // 3. Shared PDF generation function
         const downloadBtn = document.getElementById('download-pdf');
 
-        if (downloadBtn) {
-            downloadBtn.addEventListener('click', () => {
-                const receiptElement = document.getElementById('receipt-card');
+        function generatePDF(isAuto = false) {
+            const receiptElement = document.getElementById('receipt-card');
+            const filename = `dzerts_receipt_${orderData._id}.pdf`;
 
-                // Generate filename based on order ID
-                const filename = `dzerts_receipt_${orderData._id}.pdf`;
+            const opt = {
+                margin: 10,
+                filename: filename,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, logging: false },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
 
-                // Options for html2pdf
-                const opt = {
-                    margin: 10,
-                    filename: filename,
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true, logging: false },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
+            receiptElement.classList.add('pdf-render-mode');
 
-                // Temporarily add a class to ensure text is visible during capture
-                receiptElement.classList.add('pdf-render-mode');
-
-                // Change button state to indicate processing
+            if (!isAuto && downloadBtn) {
+                // Manual download: show button loading state
                 const originalText = downloadBtn.innerHTML;
                 downloadBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Generating...';
                 downloadBtn.disabled = true;
 
-                // Generate PDF
                 html2pdf().set(opt).from(receiptElement).save().then(() => {
-                    // Restore button state
                     downloadBtn.innerHTML = originalText;
                     downloadBtn.disabled = false;
                     receiptElement.classList.remove('pdf-render-mode');
                 });
-            });
+            } else {
+                // Auto-download: run silently in background
+                html2pdf().set(opt).from(receiptElement).save().then(() => {
+                    receiptElement.classList.remove('pdf-render-mode');
+                });
+            }
         }
+
+        // 4. Wire manual download button
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', () => generatePDF(false));
+        }
+
+        // 5. Auto-download slip after receipt is fully painted
+        // Delay ensures DOM and fonts are fully rendered before html2canvas captures
+        setTimeout(() => generatePDF(true), 1500);
 
     } catch (error) {
         console.error("Error fetching order:", error);
