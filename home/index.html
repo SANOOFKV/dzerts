@@ -857,14 +857,14 @@
             }, 500); // Match CSS duration
         };
 
-        // Check local storage. Default to light if not set.
-        if (localStorage.theme === 'dark') {
-            htmlElement.classList.add('dark');
-        } else {
+        // Check local storage. Default to dark if not set.
+        if (localStorage.theme === 'light') {
             htmlElement.classList.remove('dark');
-            // If not set, explicitly set to light to persist it (optional, or just leave as default)
+        } else {
+            htmlElement.classList.add('dark');
+            // If not set, explicitly set to dark to persist it
             if (!('theme' in localStorage)) {
-                localStorage.theme = 'light';
+                localStorage.theme = 'dark';
             }
         }
 
@@ -877,6 +877,18 @@
             } else {
                 htmlElement.classList.add('dark');
                 localStorage.theme = 'dark';
+            }
+        });
+
+        // Sync theme across tabs in real-time
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                enableThemeTransition();
+                if (e.newValue === 'light') {
+                    htmlElement.classList.remove('dark');
+                } else {
+                    htmlElement.classList.add('dark');
+                }
             }
         });
     </script>

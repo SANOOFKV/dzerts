@@ -526,13 +526,13 @@
         }
 
         function initTheme() {
-            // Check local storage. Default to light if not set.
-            if (localStorage.theme === 'dark') {
-                htmlElement.classList.add('dark');
-            } else {
+            // Check local storage. Default to dark if not set.
+            if (localStorage.theme === 'light') {
                 htmlElement.classList.remove('dark');
+            } else {
+                htmlElement.classList.add('dark');
                 if (!('theme' in localStorage)) {
-                    localStorage.theme = 'light';
+                    localStorage.theme = 'dark';
                 }
             }
         }
@@ -547,6 +547,18 @@
 
         if (toggleMain) toggleMain.addEventListener('click', toggleHandler);
         if (toggleMobile) toggleMobile.addEventListener('click', toggleHandler);
+
+        // Sync theme across tabs in real-time
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                enableThemeTransition();
+                if (e.newValue === 'light') {
+                    htmlElement.classList.remove('dark');
+                } else {
+                    htmlElement.classList.add('dark');
+                }
+            }
+        });
 
         // Menu Filtering Logic
         document.addEventListener('DOMContentLoaded', () => {

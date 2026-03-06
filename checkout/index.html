@@ -191,12 +191,13 @@
         }
 
         function initTheme() {
-            if (localStorage.theme === 'dark') {
-                htmlElement.classList.add('dark');
-            } else {
+            // Default to dark if not set.
+            if (localStorage.theme === 'light') {
                 htmlElement.classList.remove('dark');
+            } else {
+                htmlElement.classList.add('dark');
                 if (!('theme' in localStorage)) {
-                    localStorage.theme = 'light';
+                    localStorage.theme = 'dark';
                 }
             }
         }
@@ -210,6 +211,18 @@
         };
 
         if (toggleBtn) toggleBtn.addEventListener('click', toggleHandler);
+
+        // Sync theme across tabs in real-time
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                enableThemeTransition();
+                if (e.newValue === 'light') {
+                    htmlElement.classList.remove('dark');
+                } else {
+                    htmlElement.classList.add('dark');
+                }
+            }
+        });
     </script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="../assets/js/checkout.js"></script>
