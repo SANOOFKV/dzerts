@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>dzerts - My Orders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary: #d41132;
+            --bg-main: #FDFBF7;
+            --text-main: #2C1810;
+            --text-body: #333333;
+            --text-muted: #6B5B55;
+            --border-color: #E8E1D5;
+        }
+        .dark {
+            --primary: #d41132;
+            --bg-main: #221013;
+            --text-main: #ffffff;
+            --text-body: #e5e5e5;
+            --text-muted: #E6C9A8;
+            --border-color: #39282b;
+        }
+        .theme-transition, .theme-transition *, .theme-transition *::before, .theme-transition *::after {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "var(--primary)",
+                        "cream-bg": "var(--bg-main)",
+                        "espresso": "var(--text-main)",
+                        "charcoal": "var(--text-body)",
+                        "muted-espresso": "var(--text-muted)",
+                        "border-cream": "var(--border-color)",
+                    },
+                    fontFamily: { "display": ["Work Sans", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-cream-bg text-charcoal font-display min-h-screen antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 w-full border-b border-border-cream dark:border-white/5 bg-cream-bg/95 backdrop-blur-md">
+        <div class="mx-auto flex h-20 max-w-4xl items-center justify-between px-6">
+            <a href="../home/index.html" class="flex items-center gap-2 group">
+                <span class="material-symbols-outlined text-muted-espresso dark:text-gray-400 group-hover:text-primary transition-colors">arrow_back</span>
+                <h1 class="text-2xl font-black tracking-tighter text-espresso dark:text-white lowercase">dzerts<span class="text-primary">.</span></h1>
+            </a>
+            <div class="flex items-center gap-3">
+                <a href="../orders/index.html" class="text-sm font-bold text-primary border-b-2 border-primary pb-0.5">My Orders</a>
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-charcoal dark:text-white" aria-label="Toggle Theme">
+                    <span class="material-symbols-outlined dark:hidden">light_mode</span>
+                    <span class="material-symbols-outlined hidden dark:block">dark_mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-4xl px-4 py-10 sm:px-6">
+
+        <div class="mb-10">
+            <h2 class="text-3xl font-black text-espresso dark:text-white tracking-tight">My Orders</h2>
+            <p class="text-muted-espresso dark:text-gray-400 mt-1 text-sm">Your order history from this device, plus phone lookup.</p>
+        </div>
+
+        <!-- Section A: This Device (localStorage) -->
+        <section class="mb-12">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-muted-espresso dark:text-gray-500 mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-base">smartphone</span> This Device
+            </h3>
+            <div id="local-orders-container">
+                <div class="flex flex-col items-center justify-center py-12 text-muted-espresso dark:text-gray-500 border border-dashed border-border-cream dark:border-white/10 rounded-2xl">
+                    <span class="material-symbols-outlined text-4xl mb-3 opacity-40">receipt_long</span>
+                    <p class="text-sm">No orders found on this device yet.</p>
+                    <a href="../menu/index.html" class="mt-4 text-primary text-sm font-bold hover:underline">Browse the Menu →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="flex items-center gap-4 mb-10">
+            <div class="flex-1 h-px bg-border-cream dark:bg-white/10"></div>
+            <span class="text-xs font-bold uppercase tracking-widest text-muted-espresso dark:text-gray-500">Or look up by phone</span>
+            <div class="flex-1 h-px bg-border-cream dark:bg-white/10"></div>
+        </div>
+
+        <!-- Section B: Phone Lookup -->
+        <section class="mb-16">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-muted-espresso dark:text-gray-500 mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-base">phone</span> Phone Lookup
+            </h3>
+            <div class="bg-sidebar-bg dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 rounded-2xl p-6 shadow-sm">
+                <p class="text-sm text-muted-espresso dark:text-gray-400 mb-4">Enter the phone number you used at checkout to see your orders from any device.</p>
+                <div class="flex gap-3">
+                    <input type="tel" id="phone-lookup-input" placeholder="10-digit phone number" maxlength="10"
+                        class="flex-1 rounded-xl border border-border-cream dark:border-white/10 bg-white dark:bg-[#221013] text-espresso dark:text-white placeholder-muted-espresso dark:placeholder-gray-500 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+                    <button id="phone-lookup-btn"
+                        class="rounded-xl bg-primary text-white font-bold px-6 py-3 text-sm hover:opacity-90 transition-opacity flex items-center gap-2 shrink-0">
+                        <span class="material-symbols-outlined text-[18px]">search</span> Search
+                    </button>
+                </div>
+                <div id="phone-orders-container" class="mt-6 hidden"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Order Card Template (JS renders into these containers) -->
+    <script>
+        const API_BASE = 'https://dzerts.onrender.com';
+
+        // ── Status badge helper ──────────────────────────────────────────────
+        function statusBadge(shopStatus) {
+            const map = {
+                PREPARING: { label: 'Preparing', cls: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400' },
+                READY:     { label: 'Ready for Pickup!', cls: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' },
+                SERVED:    { label: 'Served', cls: 'bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400' },
+            };
+            const s = map[shopStatus] || map.SERVED;
+            return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold ${s.cls}">${s.label}</span>`;
+        }
+
+        // ── Build an order card ──────────────────────────────────────────────
+        function buildOrderCard(order) {
+            const token = String(order.tokenNumber || '---').padStart(3, '0');
+            const date = new Date(order.createdAt || order.date).toLocaleDateString('en-US', {
+                day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+            const items = (order.items || []).map(i => `<span>${i.quantity}× ${i.name}</span>`).join('<span class="opacity-30 mx-1">·</span>');
+            const total = order.totalAmount !== undefined ? order.totalAmount : order.total;
+
+            return `
+                <div class="bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 rounded-2xl p-5 shadow-sm">
+                    <div class="flex items-start justify-between gap-4 mb-3">
+                        <div>
+                            <p class="text-xs text-muted-espresso dark:text-gray-500 mb-1">${date}</p>
+                            <div class="flex flex-wrap gap-1 text-sm text-espresso dark:text-gray-300 font-medium">${items}</div>
+                        </div>
+                        <div class="text-right shrink-0">
+                            <div class="font-mono font-bold text-lg text-primary">#${token}</div>
+                            <div class="text-sm font-bold text-espresso dark:text-white mt-0.5">₹${Number(total).toFixed(2)}</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        ${statusBadge(order.shopStatus)}
+                        <a href="../success/index.html?orderId=${order._id || order.dbOrderId}"
+                           class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                            View Slip <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+                        </a>
+                    </div>
+                </div>`;
+        }
+
+        // ── Section A: Load from localStorage ───────────────────────────────
+        async function loadLocalOrders() {
+            const container = document.getElementById('local-orders-container');
+            const history = JSON.parse(localStorage.getItem('dzerts_order_history')) || [];
+
+            if (history.length === 0) return; // leave placeholder
+
+            container.innerHTML = '<div class="flex flex-col gap-4"></div>';
+            const list = container.querySelector('div');
+
+            // Fetch fresh status for each saved order
+            for (const saved of history) {
+                try {
+                    const res = await fetch(`${API_BASE}/api/orders/${saved.dbOrderId}`);
+                    const order = res.ok ? await res.json() : null;
+                    list.insertAdjacentHTML('beforeend', buildOrderCard(order || saved));
+                } catch {
+                    list.insertAdjacentHTML('beforeend', buildOrderCard(saved));
+                }
+            }
+        }
+
+        // ── Section B: Phone lookup ──────────────────────────────────────────
+        document.getElementById('phone-lookup-btn').addEventListener('click', async () => {
+            const phone = document.getElementById('phone-lookup-input').value.trim();
+            const container = document.getElementById('phone-orders-container');
+            const btn = document.getElementById('phone-lookup-btn');
+
+            if (!phone || phone.length < 10) {
+                document.getElementById('phone-lookup-input').classList.add('ring-2', 'ring-primary');
+                return;
+            }
+            document.getElementById('phone-lookup-input').classList.remove('ring-2', 'ring-primary');
+
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">sync</span> Searching...';
+            btn.disabled = true;
+            container.classList.remove('hidden');
+            container.innerHTML = '<p class="text-sm text-muted-espresso dark:text-gray-400 text-center py-4">Looking up orders...</p>';
+
+            try {
+                const res = await fetch(`${API_BASE}/api/orders/by-phone/${phone}`);
+                const orders = await res.json();
+
+                if (!Array.isArray(orders) || orders.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center text-muted-espresso dark:text-gray-400 py-6">
+                            <span class="material-symbols-outlined text-3xl mb-2 opacity-40 block">search_off</span>
+                            <p class="text-sm">No orders found for this phone number.</p>
+                        </div>`;
+                } else {
+                    container.innerHTML = `<div class="flex flex-col gap-4">${orders.map(buildOrderCard).join('')}</div>`;
+                }
+            } catch (err) {
+                container.innerHTML = '<p class="text-sm text-primary text-center py-4">Could not reach server. Please try again.</p>';
+            }
+
+            btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">search</span> Search';
+            btn.disabled = false;
+        });
+
+        // Allow Enter key on phone input
+        document.getElementById('phone-lookup-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') document.getElementById('phone-lookup-btn').click();
+        });
+
+        // ── Theme init ───────────────────────────────────────────────────────
+        const htmlEl = document.documentElement;
+        const toggleBtn = document.getElementById('theme-toggle');
+
+        function initTheme() {
+            if (localStorage.theme === 'light') {
+                htmlEl.classList.remove('dark');
+            } else {
+                htmlEl.classList.add('dark');
+                if (!('theme' in localStorage)) localStorage.theme = 'dark';
+            }
+        }
+
+        initTheme();
+
+        toggleBtn.addEventListener('click', () => {
+            htmlEl.classList.add('theme-transition');
+            setTimeout(() => htmlEl.classList.remove('theme-transition'), 500);
+            const isDark = htmlEl.classList.contains('dark');
+            if (isDark) { htmlEl.classList.remove('dark'); localStorage.theme = 'light'; }
+            else { htmlEl.classList.add('dark'); localStorage.theme = 'dark'; }
+        });
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                htmlEl.classList.add('theme-transition');
+                setTimeout(() => htmlEl.classList.remove('theme-transition'), 500);
+                e.newValue === 'light' ? htmlEl.classList.remove('dark') : htmlEl.classList.add('dark');
+            }
+        });
+
+        // ── Boot ─────────────────────────────────────────────────────────────
+        loadLocalOrders();
+    </script>
+
+</body>
+</html>

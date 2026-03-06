@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkoutItemsContainer = document.getElementById('checkout-items');
     const checkoutSubtotal = document.getElementById('checkout-subtotal');
     const checkoutTotal = document.getElementById('checkout-total');
-    const checkoutForm = document.getElementById('checkout-form');
 
     // Redirect to home if cart is empty
     if (cart.length === 0) {
@@ -42,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const total = subtotal + shippingCost;
-
         checkoutSubtotal.textContent = `₹${subtotal.toFixed(2)}`;
         checkoutTotal.textContent = `₹${total.toFixed(2)}`;
     }
@@ -53,16 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const payNowBtn = document.getElementById('pay-now-btn');
     if (payNowBtn) {
         payNowBtn.addEventListener('click', () => {
-
-            // Calculate final totals for the order record
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const total = subtotal + shippingCost;
+
+            // Read name + phone from form fields (with graceful fallback)
+            const nameInput = document.getElementById('customer-name');
+            const phoneInput = document.getElementById('customer-phone');
+            const customerName = (nameInput && nameInput.value.trim()) || 'Guest';
+            const customerPhone = (phoneInput && phoneInput.value.trim()) || '9999999999';
 
             const pendingOrderData = {
                 date: new Date().toISOString(),
                 customer: {
-                    name: 'Guest',
-                    phone: '9999999999',
+                    name: customerName,
+                    phone: customerPhone,
                     email: ''
                 },
                 items: cart,
@@ -96,9 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Step 1: Create Order on Backend
             const response = await fetch('https://dzerts.onrender.com/create-order', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     amount: pendingOrder.total,
                     items: pendingOrder.items,
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const orderData = await response.json();
-            clearTimeout(wakeUpTimeout); // Server responded, no need to show the delay text
+            clearTimeout(wakeUpTimeout);
 
             // Step 2: Configure Razorpay Checkout
             const options = {
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         // Step 3: Poll backend for Webhook fulfillment
                         let attempts = 0;
-                        const maxAttempts = 15; // Poll for approx 30 seconds
+                        const maxAttempts = 15;
 
                         const verifyInterval = setInterval(async () => {
                             attempts++;
@@ -140,6 +140,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                 if (orderStatusData.paymentStatus === 'SUCCESS') {
                                     clearInterval(verifyInterval);
+
+                                    // Save to localStorage order history (Option A)
+                                    saveOrderToHistory({
+                                        dbOrderId: orderData.dbOrderId,
+                                        rzpOrderId: orderStatusData.rzpOrderId,
+                                        total: orderStatusData.totalAmount,
+                                        items: orderStatusData.items,
+                                        date: orderStatusData.createdAt,
+                                        tokenNumber: orderStatusData.tokenNumber,
+                                        customerPhone: pendingOrder.customer.phone,
+                                        customerName: pendingOrder.customer.name
+                                    });
 
                                     // Clean up cart
                                     localStorage.removeItem('dzerts_cart');
@@ -156,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             } catch (e) {
                                 console.error("Poll Error:", e);
                             }
-                        }, 2000); // 2 second intervals
+                        }, 2000);
                     } catch (err) {
                         console.error("Verification Error:", err);
                         alert("Something went wrong verifying the payment.");
@@ -166,48 +178,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 prefill: {
                     name: pendingOrder.customer.name,
-                    contact: pendingOrder.customer.phone === 'N/A' || !pendingOrder.customer.phone ? '9999999999' : pendingOrder.customer.phone,
+                    contact: pendingOrder.customer.phone,
                     email: pendingOrder.customer.email || ''
                 },
-                theme: {
-                    color: "#d41132" // Primary brand color
-                },
+                theme: { color: "#d41132" },
                 config: {
                     display: {
                         blocks: {
-                            upi: {
-                                name: "Pay via UPI",
-                                instruments: [
-                                    {
-                                        method: "upi"
-                                    }
-                                ]
-                            },
-                            other: {
-                                name: "Other Payment Methods",
-                                instruments: [
-                                    { method: "card" },
-                                    { method: "netbanking" },
-                                    { method: "wallet" }
-                                ]
-                            }
+                            upi: { name: "Pay via UPI", instruments: [{ method: "upi" }] },
+                            other: { name: "Other Payment Methods", instruments: [{ method: "card" }, { method: "netbanking" }, { method: "wallet" }] }
                         },
                         sequence: ["block.upi", "block.other"],
-                        preferences: {
-                            show_default_blocks: true
-                        }
+                        preferences: { show_default_blocks: true }
                     }
                 },
                 modal: {
                     ondismiss: function () {
-                        // Reset button state when user closes the modal
                         submitBtn.innerHTML = originalBtnText;
                         submitBtn.disabled = false;
                     }
                 }
             };
 
-            // Open Modal
             const rzp1 = new Razorpay(options);
             rzp1.on('payment.failed', function (response) {
                 alert("Payment Failed. Reason: " + response.error.description);
@@ -222,6 +214,19 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Could not connect to payment server. Please try again.");
             submitBtn.innerHTML = originalBtnText;
             submitBtn.disabled = false;
+        }
+    }
+
+    // Save a completed order to localStorage history (Option A)
+    function saveOrderToHistory(orderRecord) {
+        const history = JSON.parse(localStorage.getItem('dzerts_order_history')) || [];
+        // Avoid duplicate entries
+        const exists = history.some(o => o.dbOrderId === orderRecord.dbOrderId);
+        if (!exists) {
+            history.unshift(orderRecord); // newest first
+            // Keep only last 20 orders
+            if (history.length > 20) history.splice(20);
+            localStorage.setItem('dzerts_order_history', JSON.stringify(history));
         }
     }
 });

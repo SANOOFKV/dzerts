@@ -116,6 +116,26 @@
 
         <div class="lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start">
 
+            <!-- Customer Details -->
+            <div class="lg:col-span-8 lg:col-start-3 mb-6">
+                <section class="bg-sidebar-cream dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 rounded-2xl p-6 md:p-8 shadow-sm">
+                    <h2 class="text-xl font-bold text-espresso dark:text-white mb-6">Your Details <span class="text-sm font-normal text-muted-espresso dark:text-gray-400">(optional — for order history)</span></h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="customer-name" class="block text-sm font-medium text-muted-espresso dark:text-gray-400 mb-1">Name</label>
+                            <input type="text" id="customer-name" placeholder="Your name"
+                                class="w-full rounded-xl border border-border-cream dark:border-white/10 bg-white dark:bg-[#221013] text-espresso dark:text-white placeholder-muted-espresso dark:placeholder-gray-500 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+                        </div>
+                        <div>
+                            <label for="customer-phone" class="block text-sm font-medium text-muted-espresso dark:text-gray-400 mb-1">Phone Number</label>
+                            <input type="tel" id="customer-phone" placeholder="10-digit mobile number" maxlength="10"
+                                class="w-full rounded-xl border border-border-cream dark:border-white/10 bg-white dark:bg-[#221013] text-espresso dark:text-white placeholder-muted-espresso dark:placeholder-gray-500 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+                            <p class="text-xs text-muted-espresso dark:text-gray-500 mt-1">Used to look up your orders later</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
             <!-- Order Summary -->
             <div class="lg:col-span-8 lg:col-start-3">
                 <section aria-labelledby="summary-heading"

@@ -175,6 +175,25 @@ app.get('/api/orders/:id', async (req, res) => {
     }
 });
 
+// Route: Get order history by phone number (Option B - cross-device lookup)
+app.get('/api/orders/by-phone/:phone', async (req, res) => {
+    try {
+        const phone = req.params.phone.trim();
+        if (!phone || phone.length < 10) {
+            return res.status(400).json({ error: 'Invalid phone number' });
+        }
+
+        const orders = await Order.find({
+            customerPhone: phone,
+            paymentStatus: 'SUCCESS'
+        }).sort({ createdAt: -1 }); // Newest first
+
+        res.json(orders);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch orders' });
+    }
+});
+
 
 // --- ADMIN & QUEUE DISPLAY ENDPOINTS ---
 
