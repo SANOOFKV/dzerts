@@ -107,10 +107,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             downloadBtn.addEventListener('click', () => generatePDF(false));
         }
 
-        // 5. Auto-download slip after receipt is fully painted
-        // Delay ensures DOM and fonts are fully rendered before html2canvas captures
-        setTimeout(() => generatePDF(true), 1500);
-
     } catch (error) {
         console.error("Error fetching order:", error);
         alert("Could not load your order details. Please contact the counter with your phone number.");
