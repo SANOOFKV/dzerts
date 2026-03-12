@@ -100,6 +100,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
         integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../assets/js/theme.js"></script>
 </head>
 
 <body
@@ -231,67 +232,6 @@
             transition-delay: 0s !important;
         }
     </style>
-    <script>
-        const toggleBtn = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-
-        const enableThemeTransition = () => {
-            htmlElement.classList.add('theme-transition');
-            setTimeout(() => {
-                htmlElement.classList.remove('theme-transition');
-            }, 500);
-        };
-
-        function updateTheme(isDark) {
-            if (isDark) {
-                htmlElement.classList.add('dark');
-                localStorage.theme = 'dark';
-            } else {
-                htmlElement.classList.remove('dark');
-                localStorage.theme = 'light';
-            }
-        }
-
-        function initTheme() {
-            // Default to dark if not set.
-            if (localStorage.theme === 'light') {
-                htmlElement.classList.remove('dark');
-            } else {
-                htmlElement.classList.add('dark');
-                if (!('theme' in localStorage)) {
-                    localStorage.theme = 'dark';
-                }
-            }
-        }
-
-        initTheme();
-
-        const toggleHandler = () => {
-            enableThemeTransition();
-            const isDark = htmlElement.classList.contains('dark');
-            updateTheme(!isDark);
-        };
-
-        if (toggleBtn) toggleBtn.addEventListener('click', toggleHandler);
-
-        // Prevent back-swipe/back-button from going to checkout — redirect to home instead
-        history.pushState(null, '', window.location.href);
-        window.addEventListener('popstate', () => {
-            window.location.href = '../home/index.html';
-        });
-
-        // Sync theme across tabs in real-time
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'theme') {
-                enableThemeTransition();
-                if (e.newValue === 'light') {
-                    htmlElement.classList.remove('dark');
-                } else {
-                    htmlElement.classList.add('dark');
-                }
-            }
-        });
-    </script>
     <script src="../assets/js/success.js"></script>
 </body>
 

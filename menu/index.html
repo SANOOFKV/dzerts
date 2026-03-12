@@ -99,7 +99,9 @@
     <noscript><img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=4129169604002277&ev=PageView&noscript=1" /></noscript>
     <!-- End Meta Pixel Code -->
-    <!-- Cart Logic -->
+    <!-- Product Data + Theme + Cart Logic -->
+    <script src="../assets/js/products.js"></script>
+    <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/cart.js"></script>
 </head>
 
@@ -121,32 +123,22 @@
                             class="text-primary">.</span></h1>
                 </div>
                 <nav class="flex flex-col gap-2">
-                    <p
-                        class="text-muted-espresso dark:text-gray-500 text-xs font-bold uppercase tracking-widest mb-2 opacity-60">
-                        Menu
-                        Categories</p>
-                    <a class="group flex items-center justify-between rounded-lg bg-primary/5 dark:bg-primary/10 px-4 py-3 border-l-4 border-primary shadow-sm"
-                        href="#">
-                        <span class="text-espresso dark:text-white text-base font-medium">Artisanal Cakes</span>
-                        <span class="material-symbols-outlined text-primary text-[20px]">cake</span>
+                    <p class="text-muted-espresso dark:text-gray-500 text-xs font-bold uppercase tracking-widest mb-2 opacity-60">Menu Categories</p>
+                    <a class="category-link group flex items-center justify-between rounded-lg bg-primary/5 dark:bg-primary/10 px-4 py-3 border-l-4 border-primary shadow-sm" data-category="all" href="#">
+                        <span class="text-espresso dark:text-white text-base font-medium">All Items</span>
+                        <span class="material-symbols-outlined text-primary text-[20px]">restaurant_menu</span>
                     </a>
-                    <a class="group flex items-center justify-between rounded-lg px-4 py-3 text-muted-espresso dark:text-gray-400 hover:bg-white dark:hover:bg-white/5 hover:text-espresso dark:hover:text-white transition-all"
-                        href="#">
+                    <a class="category-link group flex items-center justify-between rounded-lg px-4 py-3 text-muted-espresso dark:text-gray-400 hover:bg-white dark:hover:bg-white/5 hover:text-espresso dark:hover:text-white transition-all" data-category="cakes" href="#">
+                        <span class="text-base font-medium">Artisanal Cakes</span>
+                        <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity text-[20px]">cake</span>
+                    </a>
+                    <a class="category-link group flex items-center justify-between rounded-lg px-4 py-3 text-muted-espresso dark:text-gray-400 hover:bg-white dark:hover:bg-white/5 hover:text-espresso dark:hover:text-white transition-all" data-category="macarons" href="#">
                         <span class="text-base font-medium">Handcrafted Macarons</span>
-                        <span
-                            class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity text-[20px]">cookie</span>
+                        <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity text-[20px]">cookie</span>
                     </a>
-                    <a class="group flex items-center justify-between rounded-lg px-4 py-3 text-muted-espresso dark:text-gray-400 hover:bg-white dark:hover:bg-white/5 hover:text-espresso dark:hover:text-white transition-all"
-                        href="#">
+                    <a class="category-link group flex items-center justify-between rounded-lg px-4 py-3 text-muted-espresso dark:text-gray-400 hover:bg-white dark:hover:bg-white/5 hover:text-espresso dark:hover:text-white transition-all" data-category="pastries" href="#">
                         <span class="text-base font-medium">Gourmet Pastries</span>
-                        <span
-                            class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity text-[20px]">bakery_dining</span>
-                    </a>
-                    <a class="group flex items-center justify-between rounded-lg px-4 py-3 text-muted-espresso dark:text-gray-400 hover:bg-white dark:hover:bg-white/5 hover:text-espresso dark:hover:text-white transition-all"
-                        href="#">
-                        <span class="text-base font-medium">Iced Delights</span>
-                        <span
-                            class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity text-[20px]">icecream</span>
+                        <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity text-[20px]">bakery_dining</span>
                     </a>
                 </nav>
             </div>
@@ -230,11 +222,11 @@
                                 </button>
                             </div>
                             <div class="flex flex-wrap gap-2 md:justify-end">
-                                <button
-                                    class="flex items-center gap-2 h-10 px-4 rounded-lg bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/10 hover:border-primary/50 text-espresso dark:text-white text-sm font-medium transition-all group shadow-sm">
+                                <button id="filter-toggle-btn"
+                                    class="flex items-center gap-2 h-10 px-4 rounded-lg bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/10 hover:border-primary/50 text-espresso dark:text-white text-sm font-medium transition-all group shadow-sm"
+                                    aria-label="Toggle dietary filters" title="Toggle dietary filters">
                                     <span>Filter by</span>
-                                    <span
-                                        class="material-symbols-outlined text-[18px] group-hover:text-primary">filter_list</span>
+                                    <span class="material-symbols-outlined text-[18px] group-hover:text-primary">filter_list</span>
                                 </button>
                                 <button id="sort-price-btn" data-sort="default"
                                     class="flex items-center gap-2 h-10 px-4 rounded-lg bg-primary text-white text-sm font-medium shadow-[0_4px_15px_rgba(212,17,50,0.2)] hover:shadow-[0_6px_20px_rgba(212,17,50,0.3)] transition-all">
@@ -479,154 +471,136 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-16 flex justify-center pb-8">
-                    <button
-                        class="text-espresso hover:text-primary transition-colors font-bold text-sm flex items-center gap-2 border-b-2 border-transparent hover:border-primary pb-1">
-                        View All Collections <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                    </button>
-                </div>
             </div>
         </main>
     </div>
     <style>
-        /* Smooth Theme Transition Class - Applied only during toggle */
-        .theme-transition,
-        .theme-transition *,
-        .theme-transition *::before,
-        .theme-transition *::after {
+        .theme-transition, .theme-transition *, .theme-transition *::before, .theme-transition *::after {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
             transition-delay: 0s !important;
         }
+        .category-link.active-category { background: var(--primary); }
     </style>
     <script>
-        // Theme Toggle Logic
-        // We have two toggles in menu page (main header and mobile header)
-        const toggleMain = document.getElementById('theme-toggle-main');
-        const toggleMobile = document.getElementById('theme-toggle-mobile');
-        const htmlElement = document.documentElement;
-
-        // Sync function with transition
-        const enableThemeTransition = () => {
-            htmlElement.classList.add('theme-transition');
-            // Remove class after transition completes
-            setTimeout(() => {
-                htmlElement.classList.remove('theme-transition');
-            }, 500); // Match CSS duration
-        };
-
-        // Sync function
-        function updateTheme(isDark) {
-            if (isDark) {
-                htmlElement.classList.add('dark');
-                localStorage.theme = 'dark';
-            } else {
-                htmlElement.classList.remove('dark');
-                localStorage.theme = 'light';
-            }
+        // ── Render items from products.js ──────────────────────────────
+        function renderMenuItems(products) {
+            const grid = document.getElementById('menu-grid');
+            if (!grid) return;
+            grid.innerHTML = products.map(p => {
+                const badge = p.badge ? `<div class="absolute top-2 left-2"><span class="inline-flex items-center px-2 py-1 rounded bg-white/90 dark:bg-black backdrop-blur-sm text-[10px] font-bold text-espresso dark:text-white uppercase tracking-wider border border-border-cream dark:border-white/20">${p.badge}</span></div>` : '';
+                const meta = p.meta ? `<span>•</span><span>${p.meta}</span>` : '';
+                return `<div data-tags="${p.tags.join(' ')}" data-price="${p.price}" data-category="${p.category}" class="menu-item group relative flex flex-col sm:flex-row rounded-xl bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+                    <div class="w-full sm:w-48 md:w-56 shrink-0 h-56 sm:h-auto relative overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('${p.image}')"></div>
+                        ${badge}
+                    </div>
+                    <div class="flex flex-col justify-between p-6 flex-1">
+                        <div class="flex flex-col gap-2">
+                            <div class="flex justify-between items-start gap-4">
+                                <h3 class="text-xl font-bold text-espresso dark:text-white group-hover:text-primary transition-colors">${p.name}</h3>
+                                <span class="text-primary font-bold text-lg">&#8377;${p.price.toFixed(2)}</span>
+                            </div>
+                            <p class="text-muted-espresso dark:text-gray-400 font-light text-sm leading-relaxed">${p.description}</p>
+                        </div>
+                        <div class="flex items-end justify-between mt-6">
+                            <div class="flex gap-2 text-xs text-muted-espresso dark:text-gray-500">
+                                <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">star</span> ${p.rating}</span>
+                                ${meta}
+                            </div>
+                            <div class="product-action-container" data-id="${p.id}" data-name="${p.name.replace(/"/g,'&quot;')}" data-price="${p.price}" data-image="${p.image}"></div>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+            if (typeof renderProductActions === 'function') renderProductActions();
         }
 
-        function initTheme() {
-            // Check local storage. Default to dark if not set.
-            if (localStorage.theme === 'light') {
-                htmlElement.classList.remove('dark');
-            } else {
-                htmlElement.classList.add('dark');
-                if (!('theme' in localStorage)) {
-                    localStorage.theme = 'dark';
-                }
-            }
-        }
-
-        initTheme();
-
-        const toggleHandler = () => {
-            enableThemeTransition(); // Turn on transitions
-            const isDark = htmlElement.classList.contains('dark');
-            updateTheme(!isDark);
-        };
-
-        if (toggleMain) toggleMain.addEventListener('click', toggleHandler);
-        if (toggleMobile) toggleMobile.addEventListener('click', toggleHandler);
-
-        // Sync theme across tabs in real-time
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'theme') {
-                enableThemeTransition();
-                if (e.newValue === 'light') {
-                    htmlElement.classList.remove('dark');
-                } else {
-                    htmlElement.classList.add('dark');
-                }
-            }
-        });
-
-        // Menu Filtering Logic
         document.addEventListener('DOMContentLoaded', () => {
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const menuItems = document.querySelectorAll('.menu-item');
+            renderMenuItems(PRODUCTS);
 
+            // ── Dietary Filter Pills ───────────────────────────────────
+            const filterBtns = document.querySelectorAll('.filter-btn');
             const activeClass = ['border-primary/20', 'bg-primary/10', 'text-primary', 'font-bold'];
             const inactiveClass = ['border-border-cream', 'dark:border-white/10', 'bg-white', 'dark:bg-[#1a0d0f]', 'text-muted-espresso', 'dark:text-gray-400'];
+            let activeCategory = 'all';
+            let activeDietary = 'all';
+
+            function applyFilters() {
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    const tags = item.getAttribute('data-tags') || '';
+                    const cat  = item.getAttribute('data-category') || '';
+                    const okDiet = activeDietary === 'all' || tags.includes(activeDietary);
+                    const okCat  = activeCategory === 'all' || cat === activeCategory;
+                    if (okDiet && okCat) {
+                        item.style.display = 'flex';
+                        item.style.opacity = '0';
+                        setTimeout(() => { item.style.opacity = '1'; }, 50);
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
 
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    // Reset all buttons to inactive
-                    filterBtns.forEach(b => {
-                        b.classList.remove('active', ...activeClass);
-                        b.classList.add(...inactiveClass);
-                    });
-
-                    // Set clicked button to active
+                    filterBtns.forEach(b => { b.classList.remove('active', ...activeClass); b.classList.add(...inactiveClass); });
                     btn.classList.remove(...inactiveClass);
                     btn.classList.add('active', ...activeClass);
-
-                    const filter = btn.getAttribute('data-filter');
-
-                    menuItems.forEach(item => {
-                        const tags = item.getAttribute('data-tags') || '';
-
-                        if (filter === 'all' || tags.includes(filter)) {
-                            item.style.display = 'flex';
-                            item.style.opacity = '0';
-                            setTimeout(() => { item.style.opacity = '1'; }, 50);
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
+                    activeDietary = btn.getAttribute('data-filter');
+                    applyFilters();
                 });
             });
 
-            // Sorting Logic
-            const sortBtn = document.getElementById('sort-price-btn');
+            // ── Category Sidebar Links ─────────────────────────────────
+            const catLinks = document.querySelectorAll('.category-link');
+            const activeLinkClass = 'group flex items-center justify-between rounded-lg bg-primary/5 dark:bg-primary/10 px-4 py-3 border-l-4 border-primary shadow-sm';
+            const inactiveLinkClass = 'group flex items-center justify-between rounded-lg px-4 py-3 text-muted-espresso dark:text-gray-400 hover:bg-white dark:hover:bg-white/5 hover:text-espresso dark:hover:text-white transition-all';
+
+            catLinks.forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    catLinks.forEach(l => { l.className = 'category-link ' + inactiveLinkClass; });
+                    link.className = 'category-link ' + activeLinkClass;
+                    activeCategory = link.getAttribute('data-category');
+                    applyFilters();
+                });
+            });
+
+            // ── Filter Toggle Button ───────────────────────────────────
+            const filterToggleBtn = document.getElementById('filter-toggle-btn');
+            const filterRow = document.getElementById('filter-buttons');
+            if (filterToggleBtn && filterRow) {
+                filterToggleBtn.addEventListener('click', () => {
+                    const hidden = filterRow.classList.toggle('hidden');
+                    filterToggleBtn.classList.toggle('border-primary/50', !hidden);
+                    filterToggleBtn.classList.toggle('bg-primary/5', !hidden);
+                });
+            }
+
+            // ── Sort Logic ────────────────────────────────────────────
+            const sortBtn  = document.getElementById('sort-price-btn');
             const sortText = document.getElementById('sort-text');
             const sortIcon = document.getElementById('sort-icon');
-            const menuGrid = document.getElementById('menu-grid');
 
             sortBtn.addEventListener('click', () => {
-                const currentSort = sortBtn.getAttribute('data-sort');
-                const itemsArray = Array.from(menuItems);
-
-                if (currentSort === 'default' || currentSort === 'desc') {
-                    // Sort Low to High
-                    itemsArray.sort((a, b) => parseFloat(a.getAttribute('data-price')) - parseFloat(b.getAttribute('data-price')));
+                const current = sortBtn.getAttribute('data-sort');
+                const items = Array.from(document.querySelectorAll('.menu-item'));
+                if (current === 'default' || current === 'desc') {
+                    items.sort((a, b) => parseFloat(a.getAttribute('data-price')) - parseFloat(b.getAttribute('data-price')));
                     sortBtn.setAttribute('data-sort', 'asc');
                     sortText.textContent = 'Low to High';
                     sortIcon.textContent = 'arrow_upward';
                 } else {
-                    // Sort High to Low
-                    itemsArray.sort((a, b) => parseFloat(b.getAttribute('data-price')) - parseFloat(a.getAttribute('data-price')));
+                    items.sort((a, b) => parseFloat(b.getAttribute('data-price')) - parseFloat(a.getAttribute('data-price')));
                     sortBtn.setAttribute('data-sort', 'desc');
                     sortText.textContent = 'High to Low';
                     sortIcon.textContent = 'arrow_downward';
                 }
-
-                // Use CSS order to sort visually without breaking the DOM on mobile
-                itemsArray.forEach((item, index) => {
-                    item.style.order = index;
-                });
+                items.forEach((item, i) => { item.style.order = i; });
             });
         });
     </script>
+
 </body>
 
 </html>

@@ -82,6 +82,7 @@
             background: #d41132; 
         }
     </style>
+    <script src="../assets/js/theme.js"></script>
     <!-- End Meta Pixel Code -->
 </head>
 
@@ -189,61 +190,6 @@
             transition-delay: 0s !important;
         }
     </style>
-    <script>
-        const toggleBtn = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-
-        const enableThemeTransition = () => {
-            htmlElement.classList.add('theme-transition');
-            setTimeout(() => {
-                htmlElement.classList.remove('theme-transition');
-            }, 500);
-        };
-
-        function updateTheme(isDark) {
-            if (isDark) {
-                htmlElement.classList.add('dark');
-                localStorage.theme = 'dark';
-            } else {
-                htmlElement.classList.remove('dark');
-                localStorage.theme = 'light';
-            }
-        }
-
-        function initTheme() {
-            // Default to dark if not set.
-            if (localStorage.theme === 'light') {
-                htmlElement.classList.remove('dark');
-            } else {
-                htmlElement.classList.add('dark');
-                if (!('theme' in localStorage)) {
-                    localStorage.theme = 'dark';
-                }
-            }
-        }
-
-        initTheme();
-
-        const toggleHandler = () => {
-            enableThemeTransition();
-            const isDark = htmlElement.classList.contains('dark');
-            updateTheme(!isDark);
-        };
-
-        if (toggleBtn) toggleBtn.addEventListener('click', toggleHandler);
-
-        // Sync theme across tabs in real-time
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'theme') {
-                enableThemeTransition();
-                if (e.newValue === 'light') {
-                    htmlElement.classList.remove('dark');
-                } else {
-                    htmlElement.classList.add('dark');
-                }
-            }
-        });
-    </script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="../assets/js/checkout.js"></script>
 </body>

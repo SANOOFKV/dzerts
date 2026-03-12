@@ -207,7 +207,7 @@ const requireAdmin = (req, res, next) => {
 };
 
 // Route: Get all active orders for Dashboard
-app.get('/api/admin/orders', async (req, res) => {
+app.get('/api/admin/orders', requireAdmin, async (req, res) => {
     try {
         // Fetch SUCCESS orders that are not SERVED yet.
         const activeOrders = await Order.find({

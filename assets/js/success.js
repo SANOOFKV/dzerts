@@ -1,6 +1,13 @@
 // success.js
 
+// Prevent back-swipe from returning to checkout
+history.pushState(null, '', window.location.href);
+window.addEventListener('popstate', () => {
+    window.location.href = '../home/index.html';
+});
+
 document.addEventListener('DOMContentLoaded', async () => {
+
     // 1. Retrieve Order ID from URL
     const urlParams = new URLSearchParams(window.location.search);
     const orderId = urlParams.get('orderId');
