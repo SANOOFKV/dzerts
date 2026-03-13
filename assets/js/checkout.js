@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function initiatePayment(pendingOrder, originalBtnText, submitBtn, wakeUpTimeout) {
         try {
             // Step 1: Create Order on Backend
-            const response = await fetch('https://dzerts.onrender.com/create-order', {
+            const response = await fetch('https://dzerts.onrender.com/api/create-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

@@ -48,7 +48,7 @@ app.get('/ping', (req, res) => {
 });
 
 // Route: Create Order
-app.post('/create-order', async (req, res) => {
+app.post('/api/create-order', async (req, res) => {
     try {
         if (!dbReady) {
             return res.status(503).json({ error: 'Database is not connected. Please try again in a moment.' });
@@ -56,8 +56,16 @@ app.post('/create-order', async (req, res) => {
 
         const { amount, items, customerName, customerPhone, customerEmail } = req.body;
 
-        if (!amount || !items) {
+        if (!amount || !items || !customerName || !customerPhone) {
             return res.status(400).json({ error: 'Missing required fields' });
+        }
+        
+        // Sanitisation
+        const cleanName = customerName.replace(/[<>'"/\\;]/g, '').trim();
+        const cleanPhone = customerPhone.replace(/[^\d\+\-\s\(\)]/g, '').trim();
+
+        if (cleanName.length < 2 || cleanPhone.length < 8) {
+            return res.status(400).json({ error: 'Invalid name or phone' });
         }
 
         // Feature: Kitchen Capacity Control
@@ -83,9 +91,11 @@ app.post('/create-order', async (req, res) => {
         const newOrder = new Order({
             items,
             totalAmount: amount,
-            customerName,
-            customerPhone,
-            customerEmail,
+            customerName: cleanName,
+            customerPhone: cleanPhone,
+            customerEmail: customerEmail || '',
+            paymentStatus: 'CREATED',
+            shopStatus: 'CREATED',
             rzpOrderId: rzpOrder.id
         });
 
