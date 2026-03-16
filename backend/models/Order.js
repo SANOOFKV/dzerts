@@ -42,8 +42,8 @@ const orderSchema = new mongoose.Schema({
     // Queue State for Kitchen Staff
     shopStatus: {
         type: String,
-        enum: ['PREPARING', 'READY', 'SERVED'],
-        default: 'PREPARING'
+        enum: ['CREATED', 'PREPARING', 'READY', 'SERVED'],
+        default: 'CREATED'
     },
     // The Queue Token Number generated upon SUCCESS
     tokenNumber: {
