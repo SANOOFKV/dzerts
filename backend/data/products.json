@@ -70,5 +70,17 @@
         "meta": null,
         "category": "cakes",
         "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDIr1rIR7vq-3WPBE3fBpOeqhxw9pNiGOYntSvV7iD5uZieIjC-sYbAd5l67b5SPweBCOZecSm79PcwWizjcKn-vShUdu4dLCfomWIvID9G-YMWRaYaSGRn4vzvwOJ9RC1aE5EcBGEaZpB_YGccMuYrRFH0Q3NhJoiS3ZIr760ZEHl8i8wWer8VGH3DJtv81U7cQ1hck-RS9mgQzE3sM1nRb3EM8YPSZcVgM_8ql0JOOEMveSGjX4IIzKi4_gM8po0Wno1KqVn3Og"
+    },
+    {
+        "id": "prd_07",
+        "name": "Gelato",
+        "description": "An authentic Italian frozen dessert — silky smooth, intensely flavoured, and crafted fresh daily in classic and seasonal flavours.",
+        "price": 250.00,
+        "tags": ["best-sellers"],
+        "badge": "New",
+        "rating": 4.8,
+        "meta": "3 scoops",
+        "category": "ice-cream",
+        "image": "https://images.unsplash.com/photo-1557142046-c704a3adf364?w=800&q=80"
     }
 ]
