@@ -7,13 +7,34 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
+const multer = require('multer');
+const sharp = require('sharp');
 
-// Product catalog — edit backend/data/products.json to update the menu
-const PRODUCTS = require('./data/products.json');
+// Seed data fallback
+const PRODUCTS_SEED = require('./data/products.json');
 
 // Models
 const Order = require('./models/Order');
 const Counter = require('./models/Counter');
+const Product = require('./models/Product');
+
+// Multer — in-memory upload (never touches disk)
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
+    fileFilter: (req, file, cb) => {
+        file.mimetype.startsWith('image/') ? cb(null, true) : cb(new Error('Images only'));
+    }
+});
+
+// Compress uploaded image → WebP base64
+async function processImage(buffer) {
+    const webp = await sharp(buffer)
+        .resize(800, 500, { fit: 'cover', position: 'centre' })
+        .webp({ quality: 82 })
+        .toBuffer();
+    return 'data:image/webp;base64,' + webp.toString('base64');
+}
 
 const app = express();
 app.use(express.json());
@@ -29,13 +50,34 @@ const razorpay = new Razorpay({
 let dbReady = false;
 if (process.env.MONGODB_URI) {
     mongoose.connect(process.env.MONGODB_URI)
-        .then(() => { dbReady = true; console.log('Connected to MongoDB'); })
+        .then(async () => {
+            dbReady = true;
+            console.log('Connected to MongoDB');
+            await seedProducts();
+        })
         .catch(err => console.error('MongoDB connection error:', err));
 
     mongoose.connection.on('disconnected', () => { dbReady = false; });
     mongoose.connection.on('reconnected', () => { dbReady = true; });
 } else {
     console.error('WARNING: MONGODB_URI is not set. Database features will be unavailable.');
+}
+
+// Seed products from JSON on first run
+async function seedProducts() {
+    try {
+        const count = await Product.countDocuments();
+        if (count === 0) {
+            const docs = PRODUCTS_SEED.map(p => ({
+                productId: p.id, name: p.name, description: p.description,
+                price: p.price, category: p.category, tags: p.tags || [],
+                badge: p.badge, rating: p.rating, meta: p.meta,
+                image: p.image, inStock: true
+            }));
+            await Product.insertMany(docs);
+            console.log(`Seeded ${docs.length} products into MongoDB`);
+        }
+    } catch (err) { console.error('Seed error:', err.message); }
 }
 
 // Helper: Atomic Token Generation
@@ -53,10 +95,17 @@ app.get('/ping', (req, res) => {
     res.json({ status: 'awake', db: dbReady });
 });
 
-// Route: Public product catalog
-app.get('/api/products', (req, res) => {
-    res.set('Cache-Control', 'public, max-age=300'); // 5-min browser cache
-    res.json(PRODUCTS);
+// Route: Public product catalog (reads from MongoDB, falls back to JSON)
+app.get('/api/products', async (req, res) => {
+    try {
+        const products = await Product.find({ inStock: true }).select('-__v').lean();
+        const formatted = products.map(p => ({ ...p, id: p.productId || p._id.toString() }));
+        res.set('Cache-Control', 'public, max-age=60');
+        res.json(formatted);
+    } catch {
+        res.set('Cache-Control', 'public, max-age=60');
+        res.json(PRODUCTS_SEED);
+    }
 });
 
 // Route: Create Order
@@ -288,6 +337,72 @@ app.put('/api/admin/orders/:id', requireAdmin, async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: 'Failed to update order status' });
     }
+});
+
+// ── Admin Product CRUD ────────────────────────────────────────────
+
+// GET all products (admin — includes out-of-stock)
+app.get('/api/admin/products', requireAdmin, async (req, res) => {
+    try {
+        const products = await Product.find({}).sort({ createdAt: -1 }).lean();
+        res.json(products.map(p => ({ ...p, id: p.productId || p._id.toString() })));
+    } catch { res.status(500).json({ error: 'Failed to fetch products' }); }
+});
+
+// POST create product
+app.post('/api/admin/products', requireAdmin, upload.single('image'), async (req, res) => {
+    try {
+        const { name, description, price, category, tags, badge, rating, meta, inStock } = req.body;
+        if (!name || !price) return res.status(400).json({ error: 'Name and price are required' });
+        const imageStr = req.file ? await processImage(req.file.buffer) : '';
+        const product = await Product.create({
+            productId: 'prd_' + Date.now().toString(36),
+            name: name.trim(), description: description || '',
+            price: parseFloat(price), category: category || 'cakes',
+            tags: JSON.parse(tags || '[]'), badge: badge || null,
+            rating: parseFloat(rating) || 5.0, meta: meta || null,
+            image: imageStr, inStock: inStock !== 'false'
+        });
+        res.json({ success: true, product });
+    } catch (err) { res.status(500).json({ error: err.message || 'Failed to create product' }); }
+});
+
+// PUT update product
+app.put('/api/admin/products/:id', requireAdmin, upload.single('image'), async (req, res) => {
+    try {
+        const { name, description, price, category, tags, badge, rating, meta, inStock } = req.body;
+        const update = {
+            name: name.trim(), description: description || '',
+            price: parseFloat(price), category: category || 'cakes',
+            tags: JSON.parse(tags || '[]'), badge: badge || null,
+            rating: parseFloat(rating) || 5.0, meta: meta || null,
+            inStock: inStock !== 'false'
+        };
+        if (req.file) update.image = await processImage(req.file.buffer);
+        const product = await Product.findByIdAndUpdate(req.params.id, update, { new: true });
+        if (!product) return res.status(404).json({ error: 'Product not found' });
+        res.json({ success: true, product });
+    } catch (err) { res.status(500).json({ error: err.message || 'Failed to update product' }); }
+});
+
+// DELETE product
+app.delete('/api/admin/products/:id', requireAdmin, async (req, res) => {
+    try {
+        const p = await Product.findByIdAndDelete(req.params.id);
+        if (!p) return res.status(404).json({ error: 'Product not found' });
+        res.json({ success: true });
+    } catch { res.status(500).json({ error: 'Failed to delete product' }); }
+});
+
+// PATCH toggle inStock
+app.patch('/api/admin/products/:id/stock', requireAdmin, async (req, res) => {
+    try {
+        const p = await Product.findById(req.params.id);
+        if (!p) return res.status(404).json({ error: 'Product not found' });
+        p.inStock = !p.inStock;
+        await p.save();
+        res.json({ success: true, inStock: p.inStock });
+    } catch { res.status(500).json({ error: 'Failed to toggle stock' }); }
 });
 
 const PORT = process.env.PORT || 3000;
