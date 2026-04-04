@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Redirect to home if cart is empty
     if (cart.length === 0) {
-        alert("Your cart is empty. Please add items to checkout.");
-        window.location.href = '../home/index.html';
+        showToast('Your cart is empty. Please add items before checking out.', 'error', 3000);
+        setTimeout(() => { window.location.href = '../home/index.html'; }, 1200);
         return;
     }
 
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     window.location.href = `../success/index.html?orderId=${orderData.dbOrderId}`;
                                 } else if (orderStatusData.paymentStatus === 'FAILED' || attempts >= maxAttempts) {
                                     clearInterval(verifyInterval);
-                                    alert("Payment verification failed or timed out. Please try again or contact the counter.");
+                                    showToast('Payment verification failed or timed out. Please contact the counter.', 'error', 6000);
                                     submitBtn.innerHTML = originalBtnText;
                                     submitBtn.disabled = false;
                                 }
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }, 2000);
                     } catch (err) {
                         console.error("Verification Error:", err);
-                        alert("Something went wrong verifying the payment.");
+                        showToast('Something went wrong verifying the payment. Please try again.', 'error');
                         submitBtn.innerHTML = originalBtnText;
                         submitBtn.disabled = false;
                     }
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const rzp1 = new Razorpay(options);
             rzp1.on('payment.failed', function (response) {
-                alert("Payment Failed. Reason: " + response.error.description);
+                showToast('Payment failed: ' + response.error.description, 'error', 6000);
                 submitBtn.innerHTML = originalBtnText;
                 submitBtn.disabled = false;
             });
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Checkout Error:", error);
             clearTimeout(wakeUpTimeout);
-            alert("Could not connect to payment server. Please try again.");
+            showToast('Could not connect to the payment server. Please try again.', 'error', 5000);
             submitBtn.innerHTML = originalBtnText;
             submitBtn.disabled = false;
         }

@@ -33,6 +33,8 @@
             }
         }
     </script>
+    <!-- Toast Notifications -->
+    <script src="../assets/js/toast.js"></script>
 </head>
 
 <body class="bg-cream-bg text-text-main font-display min-h-screen">
@@ -101,10 +103,10 @@
         </main>
     </div>
 
-    <!-- JavaScript Logic -->
     <script>
-        let adminPassword = localStorage.getItem('dzerts_admin_pw');
+        let adminToken = sessionStorage.getItem('dzerts_admin_token');
         const apiBase = 'https://dzerts.onrender.com/api/admin/orders';
+        const loginUrl = 'https://dzerts.onrender.com/api/admin/login';
 
         // DOM Elements
         const passwordModal = document.getElementById('password-modal');
@@ -118,46 +120,84 @@
         const readyCount = document.getElementById('ready-count');
 
         // Check login state on load
-        if (adminPassword) {
-            login(adminPassword);
+        if (adminToken) {
+            showDashboard();
+            fetchOrders();
         }
 
         loginBtn.addEventListener('click', () => {
             const pwd = passwordInput.value;
-            if (pwd) login(pwd);
+            if (pwd) doLogin(pwd);
         });
 
         passwordInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && passwordInput.value) login(passwordInput.value);
+            if (e.key === 'Enter' && passwordInput.value) doLogin(passwordInput.value);
         });
 
-        async function login(pwd) {
-            adminPassword = pwd;
-            const success = await fetchOrders();
-            if (success) {
-                localStorage.setItem('dzerts_admin_pw', pwd);
-                passwordModal.classList.add('hidden');
-                dashboard.classList.remove('hidden');
-            } else {
-                localStorage.removeItem('dzerts_admin_pw');
-                alert("Incorrect password or server error.");
-                passwordInput.value = '';
+        async function doLogin(pwd) {
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Verifying...';
+            try {
+                const res = await fetch(loginUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: pwd })
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    const msg = err.error || 'Incorrect password';
+                    showToast(msg, 'error');
+                    passwordInput.value = '';
+                } else {
+                    const data = await res.json();
+                    adminToken = data.token;
+                    sessionStorage.setItem('dzerts_admin_token', adminToken);
+                    showDashboard();
+                    fetchOrders();
+                }
+            } catch (e) {
+                showToast('Could not reach server. Please try again.', 'error');
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Login';
             }
         }
 
+        function showDashboard() {
+            passwordModal.classList.add('hidden');
+            dashboard.classList.remove('hidden');
+        }
+
+        function showLogin(msg) {
+            sessionStorage.removeItem('dzerts_admin_token');
+            adminToken = null;
+            dashboard.classList.add('hidden');
+            passwordModal.classList.remove('hidden');
+            passwordInput.value = '';
+            if (msg) showToast(msg, 'warning', 6000);
+        }
+
         function logout() {
-            localStorage.removeItem('dzerts_admin_pw');
-            window.location.reload();
+            showLogin();
+        }
+
+        function authHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + adminToken
+            };
         }
 
         async function fetchOrders() {
             try {
-                const res = await fetch(apiBase, {
-                    headers: { 'x-admin-password': adminPassword }
-                });
+                const res = await fetch(apiBase, { headers: authHeaders() });
 
-                if (res.status === 401) return false;
-                if (!res.ok) throw new Error("Failed to fetch");
+                if (res.status === 401) {
+                    showLogin('Session expired. Please log in again.');
+                    return false;
+                }
+                if (!res.ok) throw new Error('Failed to fetch');
 
                 const orders = await res.json();
                 renderOrders(orders);
@@ -165,8 +205,8 @@
 
             } catch (err) {
                 console.error(err);
-                if (adminPassword && passwordModal.classList.contains('hidden')) {
-                    alert("Lost connection to server.");
+                if (adminToken && passwordModal.classList.contains('hidden')) {
+                    showToast('Lost connection to server. Retrying...', 'warning', 5000);
                 }
                 return false;
             }
@@ -221,27 +261,28 @@
             try {
                 const res = await fetch(`${apiBase}/${orderId}`, {
                     method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-admin-password': adminPassword
-                    },
+                    headers: authHeaders(),
                     body: JSON.stringify({ status: newStatus })
                 });
 
+                if (res.status === 401) {
+                    showLogin('Session expired. Please log in again.');
+                    return;
+                }
                 if (res.ok) {
                     fetchOrders();
                 } else {
-                    alert("Failed to update order status");
+                    showToast('Failed to update order status.', 'error');
                 }
             } catch (err) {
                 console.error(err);
-                alert("Error communicating with server.");
+                showToast('Error communicating with server.', 'error');
             }
         }
 
         // Auto Refresh every 10 seconds
         setInterval(() => {
-            if (!passwordModal.classList.contains('hidden')) return;
+            if (!adminToken || !passwordModal.classList.contains('hidden')) return;
             fetchOrders();
         }, 10000);
 

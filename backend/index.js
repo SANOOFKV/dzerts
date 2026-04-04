@@ -4,6 +4,12 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
+const path = require('path');
+
+// Product catalog — edit backend/data/products.json to update the menu
+const PRODUCTS = require('./data/products.json');
 
 // Models
 const Order = require('./models/Order');
@@ -45,6 +51,12 @@ async function generateToken() {
 // Route: Health Check to wake up Render
 app.get('/ping', (req, res) => {
     res.json({ status: 'awake', db: dbReady });
+});
+
+// Route: Public product catalog
+app.get('/api/products', (req, res) => {
+    res.set('Cache-Control', 'public, max-age=300'); // 5-min browser cache
+    res.json(PRODUCTS);
 });
 
 // Route: Create Order
@@ -207,13 +219,36 @@ app.get('/api/orders/by-phone/:phone', async (req, res) => {
 
 // --- ADMIN & QUEUE DISPLAY ENDPOINTS ---
 
-// Check Admin Password Middleware
-const requireAdmin = (req, res, next) => {
-    const pass = req.headers['x-admin-password'];
-    if (pass !== process.env.ADMIN_PASSWORD) {
-        return res.status(401).json({ error: 'Unauthorized' });
+// Rate limiter: max 5 login attempts per 15 minutes per IP
+const adminLoginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 5,
+    message: { error: 'Too many login attempts. Please wait 15 minutes.' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+// Route: Admin Login — issues a signed JWT
+app.post('/api/admin/login', adminLoginLimiter, (req, res) => {
+    const { password } = req.body;
+    if (!password || password !== process.env.ADMIN_PASSWORD) {
+        return res.status(401).json({ error: 'Incorrect password.' });
     }
-    next();
+    const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '12h' });
+    res.json({ token });
+});
+
+// Middleware: Verify JWT Bearer token
+const requireAdmin = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.startsWith('Bearer ') && authHeader.slice(7);
+    if (!token) return res.status(401).json({ error: 'Unauthorized' });
+    try {
+        jwt.verify(token, process.env.JWT_SECRET);
+        next();
+    } catch (err) {
+        return res.status(401).json({ error: 'Session expired or invalid. Please log in again.' });
+    }
 };
 
 // Route: Get all active orders for Dashboard

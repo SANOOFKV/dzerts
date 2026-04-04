@@ -1,6 +1,11 @@
-// assets/js/products.js — Single source of truth for all menu items
+// assets/js/products.js
+// Fetches the product catalog from the backend API.
+// Edit backend/data/products.json to update the menu without a frontend deploy.
 
-const PRODUCTS = [
+const PRODUCTS_API = 'https://dzerts.onrender.com/api/products';
+
+// Fallback catalog — shown if the backend is unreachable
+const PRODUCTS_FALLBACK = [
     {
         id: 'prd_01',
         name: 'Dark Chocolate Truffle',
@@ -74,3 +79,21 @@ const PRODUCTS = [
         image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDIr1rIR7vq-3WPBE3fBpOeqhxw9pNiGOYntSvV7iD5uZieIjC-sYbAd5l67b5SPweBCOZecSm79PcwWizjcKn-vShUdu4dLCfomWIvID9G-YMWRaYaSGRn4vzvwOJ9RC1aE5EcBGEaZpB_YGccMuYrRFH0Q3NhJoiS3ZIr760ZEHl8i8wWer8VGH3DJtv81U7cQ1hck-RS9mgQzE3sM1nRb3EM8YPSZcVgM_8ql0JOOEMveSGjX4IIzKi4_gM8po0Wno1KqVn3Og'
     }
 ];
+
+/**
+ * Fetches the product catalog from the backend API.
+ * Falls back to PRODUCTS_FALLBACK if the request fails.
+ * @returns {Promise<Array>}
+ */
+async function fetchProducts() {
+    try {
+        const res = await fetch(PRODUCTS_API);
+        if (!res.ok) throw new Error('Non-OK response: ' + res.status);
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) return data;
+        throw new Error('Empty product list from API');
+    } catch (err) {
+        console.warn('[products.js] Could not fetch products from API, using fallback.', err.message);
+        return PRODUCTS_FALLBACK;
+    }
+}
