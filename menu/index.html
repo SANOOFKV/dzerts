@@ -396,7 +396,9 @@
 
             sortBtn.addEventListener('click', () => {
                 const current = sortBtn.getAttribute('data-sort');
-                const items = Array.from(document.querySelectorAll('.menu-item'));
+                const grid    = document.getElementById('menu-grid');
+                const items   = Array.from(document.querySelectorAll('.menu-item'));
+
                 if (current === 'default' || current === 'desc') {
                     items.sort((a, b) => parseFloat(a.getAttribute('data-price')) - parseFloat(b.getAttribute('data-price')));
                     sortBtn.setAttribute('data-sort', 'asc');
@@ -408,7 +410,25 @@
                     sortText.textContent = 'High to Low';
                     sortIcon.textContent = 'arrow_downward';
                 }
-                items.forEach((item, i) => { item.style.order = i; });
+
+                // Step 1: fade + shrink all cards out
+                items.forEach(item => {
+                    item.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+                    item.style.opacity    = '0';
+                    item.style.transform  = 'scale(0.97)';
+                    item.style.order      = '';
+                });
+
+                // Step 2: after fade-out, reorder in DOM then stagger fade-in
+                setTimeout(() => {
+                    items.forEach(item => grid.appendChild(item));
+                    items.forEach((item, i) => {
+                        setTimeout(() => {
+                            item.style.opacity   = '1';
+                            item.style.transform = 'scale(1)';
+                        }, i * 45);
+                    });
+                }, 200);
             });
             }); // end fetchProducts().then()
         });
