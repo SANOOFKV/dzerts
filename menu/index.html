@@ -338,19 +338,39 @@
             let activeDietary = 'all';
 
             function applyFilters() {
-                document.querySelectorAll('.menu-item').forEach(item => {
-                    const tags = item.getAttribute('data-tags') || '';
-                    const cat  = item.getAttribute('data-category') || '';
-                    const okDiet = activeDietary === 'all' || tags.includes(activeDietary);
-                    const okCat  = activeCategory === 'all' || cat === activeCategory;
-                    if (okDiet && okCat) {
-                        item.style.display = 'flex';
-                        item.style.opacity = '0';
-                        setTimeout(() => { item.style.opacity = '1'; }, 50);
-                    } else {
-                        item.style.display = 'none';
-                    }
+                const allItems = Array.from(document.querySelectorAll('.menu-item'));
+
+                // Step 1: fade + shrink everything out
+                allItems.forEach(item => {
+                    item.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+                    item.style.opacity    = '0';
+                    item.style.transform  = 'scale(0.97)';
                 });
+
+                // Step 2: after fade-out, show/hide then stagger visible ones back in
+                setTimeout(() => {
+                    const visible = [];
+                    allItems.forEach(item => {
+                        const tags   = item.getAttribute('data-tags') || '';
+                        const cat    = item.getAttribute('data-category') || '';
+                        const okDiet = activeDietary === 'all' || tags.includes(activeDietary);
+                        const okCat  = activeCategory === 'all' || cat === activeCategory;
+                        if (okDiet && okCat) {
+                            item.style.display = 'flex';
+                            visible.push(item);
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    // Stagger fade-in for visible items
+                    visible.forEach((item, i) => {
+                        setTimeout(() => {
+                            item.style.opacity   = '1';
+                            item.style.transform = 'scale(1)';
+                        }, i * 45);
+                    });
+                }, 200);
             }
 
             filterBtns.forEach(btn => {
