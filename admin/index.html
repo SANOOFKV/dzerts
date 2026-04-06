@@ -1,186 +1,285 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>dzerts — Admin Dashboard</title>
+    <title>dzerts. Admin Terminal</title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
         tailwind.config = {
+            darkMode: "class",
             theme: {
                 extend: {
-                    colors: { primary: '#d41132' },
-                    fontFamily: { display: ['Work Sans', 'sans-serif'] }
+                    colors: {
+                        "primary":                  "#d41132",
+                        "on-primary":               "#ffffff",
+                        "primary-container":        "#ffe7e6",
+                        "on-primary-container":     "#410007",
+                        "secondary":                "#2C1810",
+                        "on-secondary":             "#ffffff",
+                        "secondary-container":      "#F5F1E9",
+                        "on-secondary-container":   "#2C1810",
+                        "tertiary":                 "#6B5B55",
+                        "tertiary-container":       "#E8E1D5",
+                        "on-tertiary-container":    "#2C1810",
+                        "error":                    "#ba1a1a",
+                        "on-error":                 "#ffffff",
+                        "error-container":          "#ffdad6",
+                        "on-error-container":       "#410002",
+                        "background":               "#FDFBF7",
+                        "on-background":            "#2C1810",
+                        "surface":                  "#FDFBF7",
+                        "on-surface":               "#2C1810",
+                        "surface-variant":          "#F5F1E9",
+                        "on-surface-variant":       "#6B5B55",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low":    "#FDFBF7",
+                        "surface-container":        "#F5F1E9",
+                        "surface-container-high":   "#E8E1D5",
+                        "surface-container-highest":"#D1C8B9",
+                        "surface-dim":              "#F5F1E9",
+                        "surface-bright":           "#ffffff",
+                        "outline":                  "#E8E1D5",
+                        "outline-variant":          "#D1C8B9",
+                        "inverse-surface":          "#333333",
+                        "inverse-on-surface":       "#FDFBF7",
+                        "inverse-primary":          "#ffb3b1"
+                    },
+                    fontFamily: { display: ["Work Sans", "sans-serif"] }
                 }
             }
         }
     </script>
     <style>
         body { font-family: 'Work Sans', sans-serif; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; line-height: 1; }
-        .tab-active  { background:#d41132; color:#fff; }
-        .tab-inactive{ color:#6b7280; }
-        .tab-inactive:hover { background:#f3f4f6; }
-        .tag-pill { cursor:pointer; user-select:none; transition:all .15s; }
+        .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; line-height:1; }
+        .tag-pill  { cursor:pointer; user-select:none; transition:all .15s; }
         .tag-pill.selected { background:rgba(212,17,50,.1); border-color:rgba(212,17,50,.5); color:#d41132; font-weight:600; }
         .toggle-track { transition:background .2s; }
         .toggle-thumb { transition:transform .2s; }
         input:checked ~ .toggle-track { background:#d41132; }
         input:checked ~ .toggle-thumb { transform:translateX(20px); }
-        #product-form-panel { transition: transform .3s cubic-bezier(.4,0,.2,1); }
-        #form-overlay { transition: opacity .3s; }
+        #product-form-panel { transition:transform .3s cubic-bezier(.4,0,.2,1); }
+        #form-overlay { transition:opacity .3s; }
         .line-clamp-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+        /* Active tab underline */
+        .tab-nav-active   { color:#d41132; border-bottom:2px solid #d41132; font-weight:700; }
+        .tab-nav-inactive { color:rgba(44,24,16,.5); border-bottom:2px solid transparent; font-weight:500; }
+        .tab-nav-inactive:hover { color:#d41132; }
     </style>
     <script src="../assets/js/toast.js"></script>
 </head>
 
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-surface text-on-surface antialiased min-h-screen">
 
-<!-- ════════════════════════════════ LOGIN MODAL ═══════════════════════════════ -->
-<div id="password-modal" class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-8 max-w-sm w-full shadow-2xl">
-        <h2 class="text-2xl font-black tracking-tighter lowercase mb-1">dzerts<span class="text-primary">.</span></h2>
-        <p class="text-sm text-gray-400 mb-6">Admin access only.</p>
+<!-- ═══════════════════════ LOGIN MODAL ═══════════════════════ -->
+<div id="password-modal" class="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest rounded-xl p-8 max-w-sm w-full shadow-2xl">
+        <h2 class="text-2xl font-black lowercase text-secondary tracking-tight mb-1">dzerts<span class="text-primary">.</span></h2>
+        <p class="text-sm text-on-surface-variant mb-6">Admin terminal access only.</p>
         <input type="password" id="admin-password" placeholder="Password"
-            class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none mb-4 text-sm">
-        <button id="login-btn" class="w-full bg-primary text-white font-bold py-3 rounded-xl hover:opacity-90 transition-opacity text-sm">
-            Login
+            class="w-full px-4 py-3 rounded-lg border border-outline focus:ring-2 focus:ring-primary focus:border-primary outline-none mb-4 text-sm bg-surface">
+        <button id="login-btn" class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:opacity-90 transition-opacity text-sm tracking-widest uppercase">
+            Authenticate
         </button>
     </div>
 </div>
 
-<!-- ════════════════════════════════ DASHBOARD ════════════════════════════════ -->
-<div id="dashboard" class="hidden flex-col h-screen overflow-hidden">
+<!-- ═══════════════════════ DASHBOARD ═══════════════════════ -->
+<div id="dashboard" class="hidden flex-col min-h-screen">
 
-    <!-- Header -->
-    <header class="bg-white border-b border-gray-200 px-5 py-3 flex items-center justify-between shrink-0 z-10">
-        <div class="flex items-center gap-5">
-            <span class="text-xl font-black tracking-tighter lowercase">dzerts<span class="text-primary">.</span></span>
-            <nav class="flex gap-1">
+    <!-- ── Top Nav ── -->
+    <header class="fixed top-0 w-full z-50 bg-[#FDFBF7] border-b border-outline flex justify-between items-center px-8 py-4 shrink-0">
+        <div class="flex items-center gap-10">
+            <h1 class="text-2xl font-black lowercase text-secondary tracking-tight">dzerts<span class="text-primary">.</span></h1>
+            <nav class="hidden md:flex items-center gap-8">
                 <button id="tab-kitchen" onclick="switchTab('kitchen')"
-                    class="tab-active tab-btn flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all">
-                    <span class="material-symbols-outlined text-[17px]">restaurant</span> Kitchen
+                    class="tab-nav-active uppercase tracking-widest text-[11px] pb-1 transition-all">
+                    Kitchen
                 </button>
                 <button id="tab-menu" onclick="switchTab('menu')"
-                    class="tab-inactive tab-btn flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all">
-                    <span class="material-symbols-outlined text-[17px]">menu_book</span> Menu Manager
+                    class="tab-nav-inactive uppercase tracking-widest text-[11px] pb-1 transition-all">
+                    Menu Manager
                 </button>
             </nav>
         </div>
-        <div class="flex items-center gap-4">
-            <button id="kitchen-refresh-btn" onclick="fetchOrders()"
-                class="flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined text-[17px]">refresh</span> Refresh
+        <div class="flex items-center gap-3">
+            <button id="kitchen-refresh-btn" onclick="fetchOrders()" title="Refresh orders"
+                class="p-2 text-on-surface-variant hover:text-primary transition-colors active:scale-95">
+                <span class="material-symbols-outlined">refresh</span>
             </button>
-            <button onclick="logout()" class="text-sm text-gray-400 hover:text-gray-700 font-semibold transition-colors">Logout</button>
+            <button onclick="logout()" title="Logout"
+                class="p-2 text-on-surface-variant hover:text-primary transition-colors active:scale-95">
+                <span class="material-symbols-outlined">logout</span>
+            </button>
+            <div class="w-9 h-9 rounded-full bg-surface-container-high overflow-hidden ring-1 ring-outline-variant ml-1">
+                <img class="w-full h-full object-cover" alt="Admin" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqa_bD1evz3I3zmg_eoActXOqwR8bGTpaERw2AZKwFu6Crn2wr5QpXF0tZHCSWzqHK7A4rrtifFd-4dyQ-77wzifiCSSQLq71c5DSBL1jyUqVRKVu5vxuCMd6O8ZLzWeifcjxMtQxVHF3KKGG1d_gqIzWvJgOwklcQsMf4KaeyLDVKELvWT5qDMhwVriRFzj_ygO3irK_5KuEt0jFVUhr9TnsQMmBJfK66ZPAbaSuyqqdBYWcRgSuj5O3-XEIYuDWAc08qujztLQ" />
+            </div>
         </div>
     </header>
 
-    <!-- ── KITCHEN TAB ─────────────────────────────────────────── -->
-    <main id="kitchen-view" class="flex-1 p-5 grid grid-cols-1 md:grid-cols-2 gap-6 overflow-hidden bg-gray-50">
-        <section class="bg-white rounded-2xl border border-gray-200 shadow-sm flex flex-col overflow-hidden">
-            <div class="p-4 bg-amber-50 border-b border-amber-100 flex items-center justify-between shrink-0">
-                <h2 class="font-bold text-gray-800">Incoming / Preparing</h2>
-                <span id="prep-count" class="bg-amber-200 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-full">0</span>
+    <!-- ── KITCHEN VIEW ── -->
+    <main id="kitchen-view" class="pt-24 pb-12 px-8 max-w-[1600px] mx-auto w-full">
+
+        <!-- Bento stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+            <div class="md:col-span-2 bg-surface-container rounded-xl p-8 flex flex-col justify-between min-h-[160px]">
+                <div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-2 block">Terminal Status</span>
+                    <h2 class="text-2xl font-black text-secondary lowercase">kitchen dashboard</h2>
+                </div>
+                <div class="flex gap-4 items-center flex-wrap">
+                    <span class="flex items-center gap-2 px-3 py-1 bg-white/70 rounded-full text-xs font-medium border border-outline">
+                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> Live Sync
+                    </span>
+                    <span id="last-updated" class="text-xs text-on-surface-variant"></span>
+                </div>
             </div>
-            <div id="preparing-container" class="p-4 flex-1 overflow-y-auto space-y-3"></div>
-        </section>
-        <section class="bg-white rounded-2xl border border-gray-200 shadow-sm flex flex-col overflow-hidden">
-            <div class="p-4 bg-green-50 border-b border-green-100 flex items-center justify-between shrink-0">
-                <h2 class="font-bold text-gray-800">Ready for Pickup</h2>
-                <span id="ready-count" class="bg-green-200 text-green-800 text-xs font-bold px-2.5 py-1 rounded-full">0</span>
+            <div class="bg-primary text-white rounded-xl p-6 flex flex-col justify-between shadow-sm">
+                <div class="flex justify-between items-start">
+                    <span class="material-symbols-outlined text-white/80">restaurant</span>
+                    <span id="prep-count" class="text-3xl font-black">0</span>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-widest opacity-80 mt-4 block">Pending Orders</span>
             </div>
-            <div id="ready-container" class="p-4 flex-1 overflow-y-auto space-y-3"></div>
-        </section>
+            <div class="bg-secondary text-white rounded-xl p-6 flex flex-col justify-between shadow-sm">
+                <div class="flex justify-between items-start">
+                    <span class="material-symbols-outlined text-white/80">check_circle</span>
+                    <span id="ready-count" class="text-3xl font-black">0</span>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-widest opacity-80 mt-4 block">Ready for Pickup</span>
+            </div>
+        </div>
+
+        <!-- Two-column Kanban -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <section class="space-y-6">
+                <div class="flex items-center justify-between border-b border-outline pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-2 h-8 bg-amber-400 rounded-full"></div>
+                        <h3 class="text-lg font-bold text-secondary uppercase tracking-tighter">Incoming / Preparing</h3>
+                    </div>
+                </div>
+                <div id="preparing-container" class="grid gap-6">
+                    <p class="text-sm text-on-surface-variant text-center py-10">No pending orders.</p>
+                </div>
+            </section>
+
+            <section class="space-y-6">
+                <div class="flex items-center justify-between border-b border-outline pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-2 h-8 bg-emerald-500 rounded-full"></div>
+                        <h3 class="text-lg font-bold text-secondary uppercase tracking-tighter">Ready for Pickup</h3>
+                    </div>
+                </div>
+                <div id="ready-container" class="grid gap-6">
+                    <p class="text-sm text-on-surface-variant text-center py-10">No orders ready yet.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- New order notification (hidden by default) -->
+        <div id="new-order-toast" class="hidden fixed bottom-8 left-8 bg-white/90 backdrop-blur-md px-6 py-4 rounded-xl shadow-xl border border-outline flex items-center gap-4 max-w-sm z-40">
+            <div class="w-10 h-10 bg-primary/10 text-primary rounded-full flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined">shopping_cart</span>
+            </div>
+            <div>
+                <p id="new-order-title" class="text-sm font-bold text-secondary">New Order</p>
+                <p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Just now</p>
+            </div>
+            <button onclick="this.closest('#new-order-toast').classList.add('hidden')" class="text-xs font-bold text-primary uppercase ml-4">Dismiss</button>
+        </div>
     </main>
 
-    <!-- ── MENU MANAGER TAB ────────────────────────────────────── -->
-    <main id="menu-view" class="hidden flex-1 overflow-y-auto bg-gray-50 p-5">
-        <div class="flex items-center justify-between mb-5">
-            <h2 class="text-lg font-bold text-gray-800">
-                Product Catalogue
-                <span id="product-count" class="text-sm font-normal text-gray-400 ml-1"></span>
-            </h2>
+    <!-- ── MENU MANAGER VIEW ── -->
+    <main id="menu-view" class="hidden pt-24 pb-12 px-8 max-w-[1600px] mx-auto w-full">
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1 block">Menu Manager</span>
+                <h2 class="text-2xl font-black text-secondary lowercase tracking-tight">
+                    Product Catalogue
+                    <span id="product-count" class="text-base font-normal text-on-surface-variant ml-1"></span>
+                </h2>
+            </div>
             <button onclick="openProductForm(null)"
-                class="flex items-center gap-2 bg-primary text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity shadow-sm">
+                class="flex items-center gap-2 bg-primary text-white text-[11px] font-bold px-5 py-2.5 rounded-lg shadow-sm hover:opacity-90 transition-opacity uppercase tracking-widest">
                 <span class="material-symbols-outlined text-[18px]">add</span> Add Product
             </button>
         </div>
-        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
     </main>
-</div>
 
-<!-- ════════════════════════════════ PRODUCT FORM PANEL ══════════════════════ -->
-<div id="form-overlay" class="fixed inset-0 bg-black/40 z-[60] hidden opacity-0" onclick="closeProductForm()"></div>
+</div><!-- /dashboard -->
+
+<!-- ═══════════════════════ PRODUCT FORM PANEL ═══════════════════════ -->
+<div id="form-overlay" class="fixed inset-0 bg-black/40 z-[110] hidden opacity-0" onclick="closeProductForm()"></div>
 
 <div id="product-form-panel"
-    class="fixed top-0 right-0 h-full w-full sm:w-[460px] bg-white z-[70] translate-x-full flex flex-col shadow-2xl border-l border-gray-200">
+    class="fixed top-0 right-0 h-full w-full sm:w-[460px] bg-surface-container-lowest z-[120] translate-x-full flex flex-col shadow-2xl border-l border-outline">
 
-    <!-- Panel Header -->
-    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between shrink-0">
-        <h3 id="form-panel-title" class="text-base font-bold text-gray-900">Add Product</h3>
-        <button onclick="closeProductForm()" class="p-1.5 rounded-lg hover:bg-gray-100 transition-colors">
-            <span class="material-symbols-outlined text-gray-500 text-[20px]">close</span>
+    <div class="px-6 py-4 border-b border-outline flex items-center justify-between shrink-0">
+        <h3 id="form-panel-title" class="text-base font-bold text-secondary tracking-tight">Add Product</h3>
+        <button onclick="closeProductForm()" class="p-1.5 rounded-lg hover:bg-surface-variant transition-colors">
+            <span class="material-symbols-outlined text-on-surface-variant text-[20px]">close</span>
         </button>
     </div>
 
-    <!-- Panel Body -->
     <div class="flex-1 overflow-y-auto px-6 py-5 space-y-4">
 
         <!-- Image Upload -->
         <div>
-            <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">Product Image</label>
+            <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-2">Product Image</label>
             <div id="img-drop-zone" onclick="document.getElementById('img-input').click()"
-                class="border-2 border-dashed border-gray-300 rounded-xl p-5 text-center cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-all">
+                class="border-2 border-dashed border-outline rounded-xl p-5 text-center cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-all">
                 <input type="file" id="img-input" accept="image/*" class="hidden">
                 <div id="img-placeholder">
-                    <span class="material-symbols-outlined text-4xl text-gray-300 mb-2 block">upload</span>
-                    <p class="text-sm text-gray-500 font-medium">Click to upload image</p>
-                    <p class="text-xs text-gray-400 mt-1">JPG, PNG, WebP · Max 10 MB</p>
+                    <span class="material-symbols-outlined text-4xl text-outline-variant mb-2 block">upload</span>
+                    <p class="text-sm text-on-surface-variant font-medium">Click to upload image</p>
+                    <p class="text-xs text-on-surface-variant/60 mt-1">JPG, PNG, WebP · Max 10 MB</p>
                 </div>
                 <div id="img-preview-wrap" class="hidden">
                     <img id="img-preview" src="" class="w-full h-44 object-cover rounded-lg mb-2">
-                    <p class="text-xs text-gray-400">Click to change image</p>
+                    <p class="text-xs text-on-surface-variant">Click to change image</p>
                 </div>
             </div>
         </div>
 
         <!-- Name -->
         <div>
-            <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">Name <span class="text-primary">*</span></label>
+            <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Name <span class="text-primary">*</span></label>
             <input id="f-name" type="text" required placeholder="e.g. Dark Chocolate Truffle"
-                class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition">
+                class="w-full px-4 py-2.5 rounded-lg border border-outline text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition bg-surface">
         </div>
 
         <!-- Description -->
         <div>
-            <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">Description</label>
+            <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Description</label>
             <textarea id="f-desc" rows="2" placeholder="Short, enticing description..."
-                class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition resize-none"></textarea>
+                class="w-full px-4 py-2.5 rounded-lg border border-outline text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition resize-none bg-surface"></textarea>
         </div>
 
         <!-- Price + Rating -->
         <div class="grid grid-cols-2 gap-3">
             <div>
-                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">Price (₹) <span class="text-primary">*</span></label>
+                <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Price (₹) <span class="text-primary">*</span></label>
                 <input id="f-price" type="number" min="0" step="0.01" placeholder="0.00"
-                    class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition">
+                    class="w-full px-4 py-2.5 rounded-lg border border-outline text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition bg-surface">
             </div>
             <div>
-                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">Rating (0–5)</label>
+                <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Rating (0–5)</label>
                 <input id="f-rating" type="number" min="0" max="5" step="0.1" placeholder="4.8"
-                    class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition">
+                    class="w-full px-4 py-2.5 rounded-lg border border-outline text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition bg-surface">
             </div>
         </div>
 
         <!-- Category + Meta -->
         <div class="grid grid-cols-2 gap-3">
             <div>
-                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">Category</label>
+                <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Category</label>
                 <select id="f-category"
-                    class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition bg-white">
+                    class="w-full px-4 py-2.5 rounded-lg border border-outline text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition bg-surface">
                     <option value="cakes">Artisanal Cakes</option>
                     <option value="macarons">Macarons</option>
                     <option value="pastries">Gourmet Pastries</option>
@@ -188,74 +287,61 @@
                 </select>
             </div>
             <div>
-                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">Meta <span class="text-gray-400 font-normal text-[10px]">(optional)</span></label>
+                <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Meta <span class="text-on-surface-variant/50 font-normal">(optional)</span></label>
                 <input id="f-meta" type="text" placeholder='e.g. "3 scoops"'
-                    class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition">
+                    class="w-full px-4 py-2.5 rounded-lg border border-outline text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition bg-surface">
             </div>
         </div>
 
         <!-- Badge -->
         <div>
-            <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">Badge <span class="text-gray-400 font-normal text-[10px]">(optional)</span></label>
+            <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Badge <span class="text-on-surface-variant/50 font-normal">(optional)</span></label>
             <input id="f-badge" type="text" placeholder='e.g. "GF", "New", "Nut-Free"'
-                class="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition">
+                class="w-full px-4 py-2.5 rounded-lg border border-outline text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary outline-none transition bg-surface">
         </div>
 
         <!-- Tags -->
         <div>
-            <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">Dietary Tags</label>
+            <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-2">Dietary Tags</label>
             <div class="flex flex-wrap gap-2" id="tag-container">
-                <label class="tag-pill flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 text-sm">
-                    <input type="checkbox" value="gluten-free" class="hidden tag-cb"> Gluten-Free
-                </label>
-                <label class="tag-pill flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 text-sm">
-                    <input type="checkbox" value="nut-free" class="hidden tag-cb"> Nut-Free
-                </label>
-                <label class="tag-pill flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 text-sm">
-                    <input type="checkbox" value="vegan" class="hidden tag-cb"> Vegan
-                </label>
-                <label class="tag-pill flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 text-sm">
-                    <input type="checkbox" value="best-sellers" class="hidden tag-cb"> Best Seller
-                </label>
+                <label class="tag-pill flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-outline text-sm"><input type="checkbox" value="gluten-free" class="hidden tag-cb"> Gluten-Free</label>
+                <label class="tag-pill flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-outline text-sm"><input type="checkbox" value="nut-free" class="hidden tag-cb"> Nut-Free</label>
+                <label class="tag-pill flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-outline text-sm"><input type="checkbox" value="vegan" class="hidden tag-cb"> Vegan</label>
+                <label class="tag-pill flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-outline text-sm"><input type="checkbox" value="best-sellers" class="hidden tag-cb"> Best Seller</label>
             </div>
         </div>
 
         <!-- In Stock Toggle -->
-        <div class="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-3 border border-gray-200">
+        <div class="flex items-center justify-between bg-surface-container rounded-xl px-4 py-3 border border-outline">
             <div>
-                <p class="text-sm font-semibold text-gray-800">In Stock</p>
-                <p class="text-xs text-gray-400">Visible on customer menu</p>
+                <p class="text-sm font-semibold text-secondary">In Stock</p>
+                <p class="text-xs text-on-surface-variant">Visible on customer menu</p>
             </div>
             <label class="relative flex items-center cursor-pointer select-none">
                 <input type="checkbox" id="f-instock" class="sr-only" checked>
-                <div class="toggle-track w-11 h-6 bg-gray-300 rounded-full"></div>
+                <div class="toggle-track w-11 h-6 bg-outline-variant rounded-full"></div>
                 <div class="toggle-thumb absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow pointer-events-none"></div>
             </label>
         </div>
     </div>
 
-    <!-- Panel Footer -->
-    <div class="px-6 py-4 border-t border-gray-200 flex gap-3 shrink-0">
-        <button onclick="closeProductForm()"
-            class="flex-1 py-2.5 rounded-xl border border-gray-300 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors">Cancel</button>
-        <button id="form-save-btn" onclick="submitProductForm()"
-            class="flex-1 py-2.5 rounded-xl bg-primary text-white text-sm font-bold hover:opacity-90 transition-opacity">Save Product</button>
+    <div class="px-6 py-4 border-t border-outline flex gap-3 shrink-0">
+        <button onclick="closeProductForm()" class="flex-1 py-2.5 rounded-lg border border-outline text-sm font-semibold text-secondary hover:bg-surface-variant transition-colors">Cancel</button>
+        <button id="form-save-btn" onclick="submitProductForm()" class="flex-1 py-2.5 rounded-lg bg-primary text-white text-sm font-bold hover:opacity-90 transition-opacity">Save Product</button>
     </div>
 </div>
 
-<!-- ════════════════════════════════ DELETE MODAL ════════════════════════════ -->
-<div id="delete-modal" class="fixed inset-0 z-[80] bg-black/60 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-8 max-w-sm w-full shadow-2xl text-center">
-        <div class="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span class="material-symbols-outlined text-primary text-3xl">delete_forever</span>
+<!-- ═══════════════════════ DELETE MODAL ═══════════════════════ -->
+<div id="delete-modal" class="fixed inset-0 z-[130] bg-black/60 hidden flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest rounded-2xl p-8 max-w-sm w-full shadow-2xl text-center">
+        <div class="w-14 h-14 bg-error-container rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="material-symbols-outlined text-error text-3xl">delete_forever</span>
         </div>
-        <h3 class="text-lg font-bold text-gray-900 mb-2">Delete Product?</h3>
-        <p id="delete-modal-msg" class="text-sm text-gray-500 mb-6">This action cannot be undone.</p>
+        <h3 class="text-lg font-bold text-secondary mb-2">Delete Product?</h3>
+        <p id="delete-modal-msg" class="text-sm text-on-surface-variant mb-6">This action cannot be undone.</p>
         <div class="flex gap-3">
-            <button onclick="closeDeleteModal()"
-                class="flex-1 py-2.5 rounded-xl border border-gray-300 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors">Cancel</button>
-            <button id="delete-confirm-btn" onclick="confirmDelete()"
-                class="flex-1 py-2.5 rounded-xl bg-primary text-white text-sm font-bold hover:opacity-90 transition-opacity">Delete</button>
+            <button onclick="closeDeleteModal()" class="flex-1 py-2.5 rounded-xl border border-outline text-sm font-semibold text-secondary hover:bg-surface-variant transition-colors">Cancel</button>
+            <button id="delete-confirm-btn" onclick="confirmDelete()" class="flex-1 py-2.5 rounded-xl bg-error text-white text-sm font-bold hover:opacity-90 transition-opacity">Delete</button>
         </div>
     </div>
 </div>
@@ -264,14 +350,15 @@
 const API = 'https://dzerts.onrender.com';
 let adminToken = sessionStorage.getItem('dzerts_admin_token');
 let allProducts = [];
-let editingId = null;
-let deletingId = null;
+let editingId   = null;
+let deletingId  = null;
+let prevOrderCount = 0;
 
-// ─── Auth ────────────────────────────────────────────────────────────────────
-const pwModal    = document.getElementById('password-modal');
-const dashboard  = document.getElementById('dashboard');
-const pwInput    = document.getElementById('admin-password');
-const loginBtn   = document.getElementById('login-btn');
+// ─── Auth ─────────────────────────────────────────────────────────────────────
+const pwModal   = document.getElementById('password-modal');
+const dashboard = document.getElementById('dashboard');
+const pwInput   = document.getElementById('admin-password');
+const loginBtn  = document.getElementById('login-btn');
 
 if (adminToken) { showDashboard(); fetchOrders(); }
 
@@ -282,7 +369,7 @@ async function doLogin(pwd) {
     loginBtn.disabled = true; loginBtn.textContent = 'Verifying…';
     try {
         const r = await fetch(`${API}/api/admin/login`, {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            method:'POST', headers:{'Content-Type':'application/json'},
             body: JSON.stringify({ password: pwd })
         });
         if (!r.ok) { showToast((await r.json()).error || 'Incorrect password', 'error'); pwInput.value = ''; }
@@ -293,11 +380,15 @@ async function doLogin(pwd) {
             showDashboard(); fetchOrders();
         }
     } catch { showToast('Could not reach server.', 'error'); }
-    finally { loginBtn.disabled = false; loginBtn.textContent = 'Login'; }
+    finally { loginBtn.disabled = false; loginBtn.textContent = 'Authenticate'; }
 }
 
-function showDashboard() { pwModal.classList.add('hidden'); dashboard.classList.remove('hidden'); dashboard.classList.add('flex'); }
-function showLogin(msg)  {
+function showDashboard() {
+    pwModal.classList.add('hidden');
+    dashboard.classList.remove('hidden');
+    dashboard.classList.add('flex');
+}
+function showLogin(msg) {
     sessionStorage.removeItem('dzerts_admin_token'); adminToken = null;
     dashboard.classList.add('hidden'); dashboard.classList.remove('flex');
     pwModal.classList.remove('hidden'); pwInput.value = '';
@@ -306,7 +397,7 @@ function showLogin(msg)  {
 function logout() { showLogin(); }
 function ah() { return { 'Authorization': 'Bearer ' + adminToken }; }
 
-// ─── Tabs ────────────────────────────────────────────────────────────────────
+// ─── Tabs ─────────────────────────────────────────────────────────────────────
 function switchTab(tab) {
     const kView = document.getElementById('kitchen-view');
     const mView = document.getElementById('menu-view');
@@ -316,25 +407,34 @@ function switchTab(tab) {
 
     if (tab === 'kitchen') {
         kView.classList.remove('hidden'); mView.classList.add('hidden');
-        kBtn.className = 'tab-active tab-btn flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all';
-        mBtn.className = 'tab-inactive tab-btn flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all';
+        kBtn.className = 'tab-nav-active uppercase tracking-widest text-[11px] pb-1 transition-all';
+        mBtn.className = 'tab-nav-inactive uppercase tracking-widest text-[11px] pb-1 transition-all';
         rfBtn.classList.remove('hidden');
     } else {
         mView.classList.remove('hidden'); kView.classList.add('hidden');
-        mBtn.className = 'tab-active tab-btn flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all';
-        kBtn.className = 'tab-inactive tab-btn flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all';
+        mBtn.className = 'tab-nav-active uppercase tracking-widest text-[11px] pb-1 transition-all';
+        kBtn.className = 'tab-nav-inactive uppercase tracking-widest text-[11px] pb-1 transition-all';
         rfBtn.classList.add('hidden');
         loadProducts();
     }
 }
 
-// ─── Kitchen ─────────────────────────────────────────────────────────────────
+// ─── Kitchen ──────────────────────────────────────────────────────────────────
+function timeSince(date) {
+    const diff = Math.floor((Date.now() - new Date(date)) / 60000);
+    if (diff < 1) return 'Just now';
+    return diff + 'm ago';
+}
+
 async function fetchOrders() {
     try {
         const r = await fetch(`${API}/api/admin/orders`, { headers: ah() });
         if (r.status === 401) { showLogin('Session expired. Please log in again.'); return; }
         if (!r.ok) throw new Error();
-        renderOrders(await r.json());
+        const orders = await r.json();
+        renderOrders(orders);
+        document.getElementById('last-updated').textContent =
+            'Updated ' + new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
     } catch {
         if (adminToken) showToast('Connection lost. Retrying…', 'warning', 4000);
     }
@@ -345,31 +445,68 @@ function renderOrders(orders) {
     const rdy  = document.getElementById('ready-container');
     prep.innerHTML = rdy.innerHTML = '';
     let p = 0, r = 0;
+
     orders.forEach(o => {
         const token = String(o.tokenNumber).padStart(3, '0');
-        const items = o.items.map(i => `<div class="text-sm py-1 border-b last:border-0 border-gray-100">${i.quantity}× ${i.name}</div>`).join('');
-        const time  = new Date(o.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const btn   = o.shopStatus === 'PREPARING'
-            ? `<button onclick="updateStatus('${o._id}','READY')" class="flex-1 bg-primary text-white font-bold py-1.5 rounded-lg text-sm hover:opacity-90">Mark Ready</button>`
-            : `<button onclick="updateStatus('${o._id}','SERVED')" class="flex-1 bg-green-600 text-white font-bold py-1.5 rounded-lg text-sm hover:opacity-90">Mark Served</button>`;
-        const card = `<div class="border border-gray-200 rounded-xl p-4 bg-white relative shadow-sm">
-            <div class="absolute top-3 right-3 font-mono font-bold text-base bg-gray-100 px-2 py-0.5 rounded border border-gray-200">#${token}</div>
-            <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">${time}</p>
-            <div class="bg-gray-50 rounded-lg p-3 mb-3">${items}</div>
-            <div class="flex gap-2">${btn}</div>
-        </div>`;
-        if (o.shopStatus === 'PREPARING') { prep.innerHTML += card; p++; }
+        const time  = new Date(o.createdAt).toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+        const ago   = timeSince(o.createdAt);
+        const isPreparing = o.shopStatus === 'PREPARING';
+
+        const borderColor = isPreparing ? 'border-amber-400' : 'border-emerald-500';
+        const badgeBg     = isPreparing ? 'bg-amber-50 text-amber-700' : 'bg-emerald-50 text-emerald-700';
+        const badgeIcon   = isPreparing ? 'timer' : 'check_circle';
+        const badgeLabel  = isPreparing ? 'Preparing' : 'Ready';
+        const actionBtn   = isPreparing
+            ? `<button onclick="updateStatus('${o._id}','READY')" class="w-full bg-primary text-white py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:opacity-90 active:scale-95 transition-all shadow-sm">Mark Ready</button>`
+            : `<button onclick="updateStatus('${o._id}','SERVED')" class="w-full bg-secondary text-white py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-[#1a0f0a] active:scale-95 transition-all shadow-sm">Mark Served</button>`;
+
+        const items = o.items.map(i => `
+            <li class="flex justify-between items-center text-sm">
+                <div class="flex gap-3 items-center">
+                    <span class="w-6 h-6 flex items-center justify-center bg-surface-container rounded font-bold text-[10px]">${i.quantity}x</span>
+                    <span class="font-medium text-secondary">${i.name}</span>
+                </div>
+            </li>`).join('');
+
+        const card = `
+        <article class="bg-white rounded-xl p-6 shadow-sm border-l-4 ${borderColor} hover:-translate-y-1 transition-all duration-300">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <span class="text-2xl font-black text-secondary">#${token}</span>
+                    <p class="text-xs text-on-surface-variant font-medium mt-1">Ordered at ${time} (${ago})</p>
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1 ${badgeBg} text-[10px] font-bold uppercase rounded-full">
+                    <span class="material-symbols-outlined text-[14px]">${badgeIcon}</span> ${badgeLabel}
+                </div>
+            </div>
+            <ul class="space-y-3 mb-6">${items}</ul>
+            ${actionBtn}
+        </article>`;
+
+        if (isPreparing) { prep.innerHTML += card; p++; }
         else if (o.shopStatus === 'READY') { rdy.innerHTML += card; r++; }
     });
-    document.getElementById('prep-count').textContent = p;
+
+    if (!p) prep.innerHTML = '<p class="text-sm text-on-surface-variant text-center py-10">No pending orders.</p>';
+    if (!r) rdy.innerHTML  = '<p class="text-sm text-on-surface-variant text-center py-10">No orders ready yet.</p>';
+
+    // new order notification
+    if (p > prevOrderCount && prevOrderCount > 0) {
+        document.getElementById('new-order-title').textContent = 'New Order Received!';
+        document.getElementById('new-order-toast').classList.remove('hidden');
+        setTimeout(() => document.getElementById('new-order-toast').classList.add('hidden'), 5000);
+    }
+    prevOrderCount = p;
+
+    document.getElementById('prep-count').textContent  = p;
     document.getElementById('ready-count').textContent = r;
 }
 
 async function updateStatus(id, status) {
     try {
         const r = await fetch(`${API}/api/admin/orders/${id}`, {
-            method: 'PUT',
-            headers: { ...ah(), 'Content-Type': 'application/json' },
+            method:'PUT',
+            headers: { ...ah(), 'Content-Type':'application/json' },
             body: JSON.stringify({ status })
         });
         if (r.status === 401) { showLogin('Session expired.'); return; }
@@ -377,21 +514,18 @@ async function updateStatus(id, status) {
     } catch { showToast('Server error.', 'error'); }
 }
 
+// Auto-poll every 10s when kitchen tab is visible
 setInterval(() => {
-    if (!adminToken || !document.getElementById('kitchen-view').classList.contains('hidden')) return;
-    // Only auto-poll when kitchen tab is visible
+    if (!adminToken) return;
+    const kView = document.getElementById('kitchen-view');
+    if (!kView.classList.contains('hidden')) fetchOrders();
 }, 10000);
 
-setInterval(() => {
-    if (!adminToken || document.getElementById('kitchen-view').classList.contains('hidden')) return;
-    fetchOrders();
-}, 10000);
-
-// ─── Products Grid ────────────────────────────────────────────────────────────
+// ─── Products ─────────────────────────────────────────────────────────────────
 async function loadProducts() {
     const grid = document.getElementById('product-grid');
     grid.innerHTML = `<div class="col-span-full flex justify-center items-center py-16">
-        <span class="material-symbols-outlined text-5xl text-gray-300 animate-spin">autorenew</span></div>`;
+        <span class="material-symbols-outlined text-5xl text-outline-variant animate-spin">autorenew</span></div>`;
     try {
         const r = await fetch(`${API}/api/admin/products`, { headers: ah() });
         if (r.status === 401) { showLogin('Session expired.'); return; }
@@ -406,51 +540,54 @@ function renderProducts(products) {
     const count = document.getElementById('product-count');
     count.textContent = `(${products.length})`;
     if (!products.length) {
-        grid.innerHTML = `<div class="col-span-full text-center py-20 text-gray-400">
+        grid.innerHTML = `<div class="col-span-full text-center py-20 text-on-surface-variant">
             <span class="material-symbols-outlined text-6xl mb-3 block">restaurant_menu</span>
             <p class="text-sm">No products yet. Click "Add Product" to get started.</p></div>`;
         return;
     }
     grid.innerHTML = products.map(p => {
         const imgEl = p.image
-            ? `<img src="${p.image}" class="w-full h-40 object-cover" alt="${p.name}"
-                onerror="this.outerHTML='<div class=\'w-full h-40 bg-gray-100 flex items-center justify-center text-5xl\'>🍰</div>'">`
-            : `<div class="w-full h-40 bg-gray-100 flex items-center justify-center text-5xl">🍰</div>`;
+            ? `<img src="${p.image}" class="w-full h-44 object-cover" alt="${p.name}"
+                onerror="this.outerHTML='<div class=\\'w-full h-44 bg-surface-container flex items-center justify-center text-5xl\\'>🍰</div>'">`
+            : `<div class="w-full h-44 bg-surface-container flex items-center justify-center text-5xl">🍰</div>`;
         const stockLabel = p.inStock !== false
-            ? `<span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full">In Stock</span>`
-            : `<span class="bg-red-100 text-red-600 text-[10px] font-bold px-2 py-0.5 rounded-full">Out of Stock</span>`;
-        const stockIcon  = p.inStock !== false ? 'visibility_off' : 'visibility';
-        const stockTip   = p.inStock !== false ? 'Hide' : 'Show';
-        return `<div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
+            ? `<span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full">In Stock</span>`
+            : `<span class="bg-error-container text-error text-[10px] font-bold px-2 py-0.5 rounded-full">Out of Stock</span>`;
+        const stockIcon = p.inStock !== false ? 'visibility_off' : 'visibility';
+        const stockTip  = p.inStock !== false ? 'Hide' : 'Show';
+        return `
+        <div class="bg-surface-container-lowest rounded-xl border border-outline overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
             <div class="relative overflow-hidden">${imgEl}<div class="absolute top-2 left-2">${stockLabel}</div></div>
             <div class="p-4 flex flex-col flex-1 gap-1">
-                <p class="font-bold text-gray-900 text-sm line-clamp-1">${p.name}</p>
-                <p class="text-xs text-gray-400 line-clamp-2 flex-1">${p.description || ''}</p>
-                <p class="text-primary font-bold text-base mt-1">₹${Number(p.price).toFixed(2)}</p>
-                <div class="flex gap-1.5 mt-2">
-                    <button onclick="toggleStock('${p._id}', ${!!p.inStock})"
-                        class="flex-1 py-1.5 text-xs font-semibold rounded-lg border border-gray-200 text-gray-500 hover:border-gray-300 hover:bg-gray-50 transition-all flex items-center justify-center gap-1">
-                        <span class="material-symbols-outlined text-[13px]">${stockIcon}</span>${stockTip}</button>
+                <p class="font-bold text-secondary text-sm line-clamp-1">${p.name}</p>
+                <p class="text-xs text-on-surface-variant line-clamp-2 flex-1">${p.description || ''}</p>
+                <p class="text-primary font-black text-base mt-1">₹${Number(p.price).toFixed(2)}</p>
+                <div class="flex gap-1.5 mt-3">
+                    <button onclick="toggleStock('${p._id}')"
+                        class="flex-1 py-1.5 text-xs font-semibold rounded-lg border border-outline text-on-surface-variant hover:border-outline-variant hover:bg-surface-variant transition-all flex items-center justify-center gap-1">
+                        <span class="material-symbols-outlined text-[13px]">${stockIcon}</span>${stockTip}
+                    </button>
                     <button onclick="openProductForm('${p._id}')"
-                        class="flex-1 py-1.5 text-xs font-semibold rounded-lg border border-gray-200 text-gray-500 hover:border-gray-300 hover:bg-gray-50 transition-all flex items-center justify-center gap-1">
-                        <span class="material-symbols-outlined text-[13px]">edit</span>Edit</button>
-                    <button onclick="openDeleteModal('${p._id}','${p.name.replace(/'/g,"\\'")}')"
-                        class="py-1.5 px-2.5 rounded-lg bg-red-50 border border-red-100 text-primary hover:bg-red-100 transition-all">
-                        <span class="material-symbols-outlined text-[13px]">delete</span></button>
+                        class="flex-1 py-1.5 text-xs font-semibold rounded-lg border border-outline text-on-surface-variant hover:border-outline-variant hover:bg-surface-variant transition-all flex items-center justify-center gap-1">
+                        <span class="material-symbols-outlined text-[13px]">edit</span>Edit
+                    </button>
+                    <button onclick="openDeleteModal('${p._id}','${p.name.replace(/'/g, "\\'")}')"
+                        class="py-1.5 px-2.5 rounded-lg bg-error-container border border-error-container text-error hover:opacity-80 transition-all">
+                        <span class="material-symbols-outlined text-[13px]">delete</span>
+                    </button>
                 </div>
             </div>
         </div>`;
     }).join('');
 }
 
-// ─── Product Form ────────────────────────────────────────────────────────────
+// ─── Product Form ─────────────────────────────────────────────────────────────
 function openProductForm(productId) {
     editingId = productId || null;
     const panel   = document.getElementById('product-form-panel');
     const overlay = document.getElementById('form-overlay');
     document.getElementById('form-panel-title').textContent = productId ? 'Edit Product' : 'Add Product';
 
-    // Reset
     ['f-name','f-desc','f-price','f-rating','f-meta','f-badge'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('f-category').value = 'cakes';
     document.getElementById('f-instock').checked = true;
@@ -462,13 +599,13 @@ function openProductForm(productId) {
     if (productId) {
         const p = allProducts.find(x => x._id === productId);
         if (p) {
-            document.getElementById('f-name').value    = p.name || '';
-            document.getElementById('f-desc').value    = p.description || '';
-            document.getElementById('f-price').value   = p.price || '';
-            document.getElementById('f-rating').value  = p.rating || '';
-            document.getElementById('f-category').value= p.category || 'cakes';
-            document.getElementById('f-meta').value    = p.meta || '';
-            document.getElementById('f-badge').value   = p.badge || '';
+            document.getElementById('f-name').value     = p.name || '';
+            document.getElementById('f-desc').value     = p.description || '';
+            document.getElementById('f-price').value    = p.price || '';
+            document.getElementById('f-rating').value   = p.rating || '';
+            document.getElementById('f-category').value = p.category || 'cakes';
+            document.getElementById('f-meta').value     = p.meta || '';
+            document.getElementById('f-badge').value    = p.badge || '';
             document.getElementById('f-instock').checked = p.inStock !== false;
             (p.tags || []).forEach(t => {
                 const cb = document.querySelector(`.tag-cb[value="${t}"]`);
@@ -546,7 +683,7 @@ async function submitProductForm() {
     finally { btn.textContent = 'Save Product'; btn.disabled = false; }
 }
 
-// ─── Delete ──────────────────────────────────────────────────────────────────
+// ─── Delete ───────────────────────────────────────────────────────────────────
 function openDeleteModal(id, name) {
     deletingId = id;
     document.getElementById('delete-modal-msg').textContent = `"${name}" will be permanently removed from the menu.`;
@@ -559,7 +696,7 @@ async function confirmDelete() {
     const btn = document.getElementById('delete-confirm-btn');
     btn.textContent = 'Deleting…'; btn.disabled = true;
     try {
-        const r = await fetch(`${API}/api/admin/products/${deletingId}`, { method: 'DELETE', headers: ah() });
+        const r = await fetch(`${API}/api/admin/products/${deletingId}`, { method:'DELETE', headers: ah() });
         if (r.status === 401) { showLogin('Session expired.'); return; }
         if (!r.ok) throw new Error();
         showToast('Product deleted.', 'success');
@@ -571,7 +708,7 @@ async function confirmDelete() {
 // ─── Stock Toggle ─────────────────────────────────────────────────────────────
 async function toggleStock(id) {
     try {
-        const r = await fetch(`${API}/api/admin/products/${id}/stock`, { method: 'PATCH', headers: ah() });
+        const r = await fetch(`${API}/api/admin/products/${id}/stock`, { method:'PATCH', headers: ah() });
         if (r.status === 401) { showLogin('Session expired.'); return; }
         if (!r.ok) throw new Error();
         const d = await r.json();
