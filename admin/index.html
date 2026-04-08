@@ -68,6 +68,12 @@
         .tab-nav-active   { color:#d41132; border-bottom:2px solid #d41132; font-weight:700; }
         .tab-nav-inactive { color:rgba(44,24,16,.5); border-bottom:2px solid transparent; font-weight:500; }
         .tab-nav-inactive:hover { color:#d41132; }
+        /* Sidebar nav item styles */
+        .sidebar-nav-active   { background:rgba(212,17,50,.08); color:#d41132; }
+        .sidebar-nav-inactive { color:rgba(44,24,16,.6); }
+        .sidebar-nav-inactive:hover { background:rgba(0,0,0,.04); color:#2C1810; }
+        /* Sidebar open state */
+        #sidebar-drawer.open { transform: translateX(0); }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="../assets/js/toast.js"></script>
@@ -91,11 +97,54 @@
 <!-- ═══════════════════════ DASHBOARD ═══════════════════════ -->
 <div id="dashboard" class="hidden flex-col min-h-screen">
 
+<!-- ─── Mobile Sidebar Drawer ──────────────────────────────────── -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-[60] hidden" onclick="closeSidebar()"></div>
+<aside id="sidebar-drawer"
+    class="fixed top-0 left-0 h-full w-72 bg-[#FDFBF7] border-r border-outline z-[70] flex flex-col shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out">
+    <!-- Drawer header -->
+    <div class="flex items-center justify-between px-6 py-5 border-b border-outline shrink-0">
+        <h2 class="text-xl font-black lowercase text-secondary tracking-tight">dzerts<span class="text-primary">.</span></h2>
+        <button onclick="closeSidebar()" class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    <!-- Nav Links -->
+    <nav class="flex flex-col gap-1 p-4 flex-1">
+        <button id="sidebar-tab-kitchen" onclick="sidebarTab('kitchen')"
+            class="sidebar-nav-active flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold text-left transition-all w-full">
+            <span class="material-symbols-outlined text-[20px]">restaurant</span>
+            Kitchen
+        </button>
+        <button id="sidebar-tab-menu" onclick="sidebarTab('menu')"
+            class="sidebar-nav-inactive flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold text-left transition-all w-full">
+            <span class="material-symbols-outlined text-[20px]">menu_book</span>
+            Menu Manager
+        </button>
+        <button id="sidebar-tab-analytics" onclick="sidebarTab('analytics')"
+            class="sidebar-nav-inactive flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold text-left transition-all w-full">
+            <span class="material-symbols-outlined text-[20px]">bar_chart</span>
+            Analytics
+        </button>
+    </nav>
+    <!-- Logout at bottom -->
+    <div class="p-4 border-t border-outline shrink-0">
+        <button onclick="logout()" class="flex items-center gap-4 w-full px-4 py-3 rounded-xl text-sm font-bold text-error hover:bg-error-container transition-all">
+            <span class="material-symbols-outlined text-[20px]">logout</span>
+            Logout
+        </button>
+    </div>
+</aside>
+
     <!-- ── Top Nav ── -->
-    <header class="fixed top-0 w-full z-50 bg-[#FDFBF7] border-b border-outline flex justify-between items-center px-8 py-4 shrink-0">
-        <div class="flex items-center gap-4 sm:gap-10">
+    <header class="fixed top-0 w-full z-50 bg-[#FDFBF7] border-b border-outline flex justify-between items-center px-4 sm:px-8 py-4 shrink-0">
+        <div class="flex items-center gap-3 sm:gap-10">
+            <!-- Hamburger: mobile only -->
+            <button id="sidebar-open-btn" onclick="openSidebar()" class="sm:hidden p-2 -ml-2 text-on-surface-variant hover:text-primary transition-colors" aria-label="Open menu">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
             <h1 class="text-xl sm:text-2xl font-black lowercase text-secondary tracking-tight">dzerts<span class="text-primary">.</span></h1>
-            <nav class="flex items-center gap-4 sm:gap-8">
+            <!-- Desktop nav only -->
+            <nav class="hidden sm:flex items-center gap-8">
                 <button id="tab-kitchen" onclick="switchTab('kitchen')"
                     class="tab-nav-active uppercase tracking-widest text-[11px] pb-1 transition-all">
                     Kitchen
@@ -110,16 +159,15 @@
                 </button>
             </nav>
         </div>
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2">
             <button id="kitchen-refresh-btn" onclick="fetchOrders()" title="Refresh orders"
                 class="p-2 text-on-surface-variant hover:text-primary transition-colors active:scale-95">
                 <span class="material-symbols-outlined">refresh</span>
             </button>
-            <button onclick="logout()" title="Logout"
-                class="p-2 text-on-surface-variant hover:text-primary transition-colors active:scale-95">
+            <!-- Logout: desktop only -->
+            <button onclick="logout()" title="Logout" class="hidden sm:block p-2 text-on-surface-variant hover:text-primary transition-colors active:scale-95">
                 <span class="material-symbols-outlined">logout</span>
             </button>
-
         </div>
     </header>
 
@@ -410,6 +458,29 @@ let allProducts = [];
 let editingId   = null;
 let deletingId  = null;
 let prevOrderCount = 0;
+
+// ─── Sidebar (mobile) ───────────────────────────────────────────────────────
+const sidebarDrawer  = document.getElementById('sidebar-drawer');
+const sidebarOverlay = document.getElementById('sidebar-overlay');
+function openSidebar() {
+    sidebarDrawer.classList.add('open');
+    sidebarOverlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+function closeSidebar() {
+    sidebarDrawer.classList.remove('open');
+    sidebarOverlay.classList.add('hidden');
+    document.body.style.overflow = '';
+}
+function sidebarTab(tab) {
+    // Update sidebar button states
+    ['kitchen','menu','analytics'].forEach(t => {
+        const btn = document.getElementById(`sidebar-tab-${t}`);
+        btn.className = `${t === tab ? 'sidebar-nav-active' : 'sidebar-nav-inactive'} flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold text-left transition-all w-full`;
+    });
+    closeSidebar();
+    switchTab(tab);       // reuse desktop switchTab logic
+}
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 const pwModal   = document.getElementById('password-modal');
