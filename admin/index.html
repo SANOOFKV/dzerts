@@ -254,17 +254,36 @@
                     <span id="product-count" class="text-base font-normal text-on-surface-variant ml-1"></span>
                 </h2>
             </div>
-            <div class="flex items-center gap-3">
-                <div class="relative">
-                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
-                    <input id="product-search" type="text" placeholder="Search products…"
-                        class="pl-9 pr-4 py-2 rounded-lg border border-outline text-sm bg-surface focus:ring-2 focus:ring-primary focus:border-primary outline-none transition w-48"
-                        oninput="filterProducts(this.value)">
+            <div class="flex items-center gap-2">
+
+                <!-- Search: icon-only on mobile, full input on sm+ -->
+                <div class="relative flex items-center">
+                    <!-- Mobile: icon button that reveals the input -->
+                    <button id="search-toggle-btn" onclick="toggleSearchBar()"
+                        class="sm:hidden p-2.5 rounded-lg border border-outline text-on-surface-variant hover:text-primary hover:border-primary transition-all"
+                        aria-label="Search">
+                        <span class="material-symbols-outlined text-[20px] leading-none">search</span>
+                    </button>
+                    <!-- Full search input: always visible on sm+, toggleable (dropdown) on mobile -->
+                    <div id="search-input-wrap" class="hidden sm:block">
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+                            <input id="product-search" type="text" placeholder="Search products…"
+                                class="pl-9 pr-4 py-2 rounded-lg border border-outline text-sm bg-surface focus:ring-2 focus:ring-primary focus:border-primary outline-none transition w-44 sm:w-48"
+                                oninput="filterProducts(this.value)">
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Add Product: icon-only on mobile, full label on sm+ -->
                 <button onclick="openProductForm(null)"
-                    class="flex items-center gap-2 bg-primary text-white text-[11px] font-bold px-5 py-2.5 rounded-lg shadow-sm hover:opacity-90 transition-opacity uppercase tracking-widest whitespace-nowrap">
-                    <span class="material-symbols-outlined text-[18px]">add</span> Add Product
+                    class="flex items-center justify-center gap-2 bg-primary text-white font-bold rounded-lg shadow-sm hover:opacity-90 transition-opacity
+                           p-2.5 sm:px-5 sm:py-2.5 sm:text-[11px] sm:uppercase sm:tracking-widest sm:whitespace-nowrap"
+                    aria-label="Add Product">
+                    <span class="material-symbols-outlined text-[20px] sm:text-[18px] leading-none">add</span>
+                    <span class="hidden sm:inline">Add Product</span>
                 </button>
+
             </div>
         </div>
         <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
@@ -725,6 +744,30 @@ function renderProducts(products) {
             </div>
         </div>`;
     }).join('');
+}
+
+// ─── Mobile Search Toggle ─────────────────────────────────────────────────────
+function toggleSearchBar() {
+    const wrap = document.getElementById('search-input-wrap');
+    const input = document.getElementById('product-search');
+    const isHidden = wrap.classList.contains('hidden');
+    if (isHidden) {
+        wrap.classList.remove('hidden');
+        wrap.classList.add('absolute', 'right-0', 'top-full', 'mt-1', 'z-10', 'bg-surface', 'rounded-lg', 'shadow-lg', 'border', 'border-outline', 'sm:relative', 'sm:top-auto', 'sm:mt-0', 'sm:shadow-none', 'sm:border-0');
+        input.focus();
+        // Auto-close when input loses focus
+        input.onblur = () => {
+            if (!input.value) {
+                wrap.classList.add('hidden');
+                wrap.classList.remove('absolute', 'right-0', 'top-full', 'mt-1', 'z-10', 'bg-surface', 'rounded-lg', 'shadow-lg', 'border', 'border-outline');
+            }
+        };
+    } else {
+        if (!input.value) {
+            wrap.classList.add('hidden');
+            wrap.classList.remove('absolute', 'right-0', 'top-full', 'mt-1', 'z-10', 'bg-surface', 'rounded-lg', 'shadow-lg', 'border', 'border-outline');
+        }
+    }
 }
 
 // ─── Search Filter ───────────────────────────────────────────────────────────
