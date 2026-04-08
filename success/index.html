@@ -139,7 +139,29 @@
             </p>
         </div>
 
+        <!-- ── Webhook Polling Status Banners ── -->
+        <!-- Loading: show while waiting for webhook confirmation -->
+        <div id="loading-message" class="no-print mb-6 flex items-center gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/40 text-amber-800 dark:text-amber-300 px-5 py-3 rounded-xl text-sm font-medium max-w-lg w-full">
+            <span class="material-symbols-outlined animate-spin text-xl shrink-0">autorenew</span>
+            <span>Confirming your payment… this usually takes a few seconds.</span>
+        </div>
+        <!-- Failed: paymentStatus === 'FAILED' -->
+        <div id="failed-message" class="hidden no-print mb-6 flex items-center gap-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700/40 text-red-700 dark:text-red-300 px-5 py-3 rounded-xl text-sm font-medium max-w-lg w-full">
+            <span class="material-symbols-outlined text-xl shrink-0">error</span>
+            <span>Payment could not be confirmed. If money was deducted, please show your UPI screenshot at the counter.</span>
+        </div>
+        <!-- Timeout: webhook didn't fire within 2 minutes -->
+        <div id="timeout-message" class="hidden no-print mb-6 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-700/40 text-orange-800 dark:text-orange-300 px-5 py-4 rounded-xl text-sm max-w-lg w-full">
+            <div class="flex items-center gap-2 font-bold mb-1">
+                <span class="material-symbols-outlined text-xl">schedule</span>
+                Payment received — token being assigned
+            </div>
+            <p class="text-xs opacity-80 mb-1">Your payment was successful but confirmation is taking longer than usual. Please show the counter your Razorpay reference:</p>
+            <p id="timeout-ref" class="font-mono font-bold text-xs break-all"></p>
+        </div>
+
         <!-- Receipt Card (The part to be printed/downloaded) -->
+
         <div id="receipt-card"
             class="bg-white dark:bg-[#1a0d0f] border border-border-cream dark:border-white/5 rounded-2xl p-8 md:p-10 shadow-lg max-w-lg w-full mb-8 relative overflow-hidden">
             <!-- Decorative Header -->
