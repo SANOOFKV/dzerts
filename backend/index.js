@@ -3,6 +3,7 @@ const express = require('express');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
@@ -38,7 +39,11 @@ async function processImage(buffer) {
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+    origin: true,          // reflect the request origin (works for same-site and cross-site)
+    credentials: true      // allow cookies to be sent cross-origin
+}));
 
 // Initialize Razorpay Instance
 const razorpay = new Razorpay({
@@ -311,25 +316,44 @@ const adminLoginLimiter = rateLimit({
     legacyHeaders: false
 });
 
-// Route: Admin Login — issues a signed JWT
+// Route: Admin Login — issues a signed JWT, sets httpOnly cookie
 app.post('/api/admin/login', adminLoginLimiter, (req, res) => {
     const { password } = req.body;
     if (!password || password !== process.env.ADMIN_PASSWORD) {
         return res.status(401).json({ error: 'Incorrect password.' });
     }
     const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '12h' });
+    // Set httpOnly cookie (inaccessible to JS — XSS-safe)
+    res.cookie('dzerts_admin', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'None',   // required for cross-origin cookie (Render backend + GitHub Pages frontend)
+        maxAge: 12 * 60 * 60 * 1000  // 12 hours in ms
+    });
+    // Also return token in body so existing frontend code keeps working during migration
     res.json({ token });
 });
 
-// Middleware: Verify JWT Bearer token
+// Route: Admin Logout — clears the httpOnly cookie
+app.post('/api/admin/logout', (req, res) => {
+    res.clearCookie('dzerts_admin', { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'None' });
+    res.json({ success: true });
+});
+
+// Middleware: Verify JWT — accepts httpOnly cookie (primary) or Bearer token (fallback)
 const requireAdmin = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.startsWith('Bearer ') && authHeader.slice(7);
+    // 1. Try httpOnly cookie first (XSS-safe)
+    let token = req.cookies && req.cookies.dzerts_admin;
+    // 2. Fall back to Authorization: Bearer <token>
+    if (!token) {
+        const authHeader = req.headers['authorization'];
+        token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+    }
     if (!token) return res.status(401).json({ error: 'Unauthorized' });
     try {
         jwt.verify(token, process.env.JWT_SECRET);
         next();
-    } catch (err) {
+    } catch {
         return res.status(401).json({ error: 'Session expired or invalid. Please log in again.' });
     }
 };
@@ -364,6 +388,81 @@ app.get('/api/admin/orders', requireAdmin, async (req, res) => {
         res.json(activeOrders);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch active orders' });
+    }
+});
+
+// Route: Analytics dashboard data
+app.get('/api/admin/analytics', requireAdmin, async (req, res) => {
+    try {
+        const now = new Date();
+        const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const startOfWeek  = new Date(startOfToday);
+        startOfWeek.setDate(startOfToday.getDate() - 6); // last 7 days
+
+        // Run all queries in parallel
+        const [
+            allTimeOrders,
+            todayOrders,
+            weekOrders,
+            hourlyRaw
+        ] = await Promise.all([
+            // All-time successful orders
+            Order.find({ paymentStatus: 'SUCCESS' }).select('totalAmount items createdAt').lean(),
+            // Today's orders
+            Order.find({ paymentStatus: 'SUCCESS', createdAt: { $gte: startOfToday } }).lean(),
+            // Last 7 days
+            Order.find({ paymentStatus: 'SUCCESS', createdAt: { $gte: startOfWeek } })
+                 .select('totalAmount createdAt').lean(),
+            // Orders by hour today (for chart)
+            Order.find({ paymentStatus: 'SUCCESS', createdAt: { $gte: startOfToday } })
+                 .select('createdAt totalAmount').lean()
+        ]);
+
+        // All-time revenue
+        const totalRevenue = allTimeOrders.reduce((s, o) => s + (o.totalAmount || 0), 0);
+
+        // Today revenue
+        const todayRevenue = todayOrders.reduce((s, o) => s + (o.totalAmount || 0), 0);
+
+        // Week revenue
+        const weekRevenue = weekOrders.reduce((s, o) => s + (o.totalAmount || 0), 0);
+
+        // Top 5 products by total quantity sold (from items arrays)
+        const productTotals = {};
+        allTimeOrders.forEach(order => {
+            (order.items || []).forEach(item => {
+                if (!productTotals[item.name]) productTotals[item.name] = 0;
+                productTotals[item.name] += item.quantity || 1;
+            });
+        });
+        const topProducts = Object.entries(productTotals)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(([name, qty]) => ({ name, qty }));
+
+        // Hourly breakdown for today (0-23)
+        const hourlyOrders  = Array(24).fill(0);
+        const hourlyRevenue = Array(24).fill(0);
+        hourlyRaw.forEach(o => {
+            const h = new Date(o.createdAt).getHours();
+            hourlyOrders[h]++;
+            hourlyRevenue[h] += o.totalAmount || 0;
+        });
+
+        res.json({
+            totalRevenue,
+            totalOrders:  allTimeOrders.length,
+            todayRevenue,
+            todayOrders:  todayOrders.length,
+            weekRevenue,
+            weekOrders:   weekOrders.length,
+            topProducts,
+            hourlyOrders,
+            hourlyRevenue
+        });
+    } catch (err) {
+        console.error('Analytics error:', err);
+        res.status(500).json({ error: 'Failed to fetch analytics' });
     }
 });
 

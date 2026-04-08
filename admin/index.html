@@ -69,6 +69,7 @@
         .tab-nav-inactive { color:rgba(44,24,16,.5); border-bottom:2px solid transparent; font-weight:500; }
         .tab-nav-inactive:hover { color:#d41132; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="../assets/js/toast.js"></script>
 </head>
 
@@ -102,6 +103,10 @@
                 <button id="tab-menu" onclick="switchTab('menu')"
                     class="tab-nav-inactive uppercase tracking-widest text-[11px] pb-1 transition-all">
                     Menu Manager
+                </button>
+                <button id="tab-analytics" onclick="switchTab('analytics')"
+                    class="tab-nav-inactive uppercase tracking-widest text-[11px] pb-1 transition-all">
+                    Analytics
                 </button>
             </nav>
         </div>
@@ -193,7 +198,7 @@
 
     <!-- ── MENU MANAGER VIEW ── -->
     <main id="menu-view" class="hidden pt-24 pb-12 px-8 max-w-[1600px] mx-auto w-full">
-        <div class="flex items-center justify-between mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div>
                 <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1 block">Menu Manager</span>
                 <h2 class="text-2xl font-black text-secondary lowercase tracking-tight">
@@ -201,15 +206,69 @@
                     <span id="product-count" class="text-base font-normal text-on-surface-variant ml-1"></span>
                 </h2>
             </div>
-            <button onclick="openProductForm(null)"
-                class="flex items-center gap-2 bg-primary text-white text-[11px] font-bold px-5 py-2.5 rounded-lg shadow-sm hover:opacity-90 transition-opacity uppercase tracking-widest">
-                <span class="material-symbols-outlined text-[18px]">add</span> Add Product
-            </button>
+            <div class="flex items-center gap-3">
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+                    <input id="product-search" type="text" placeholder="Search products…"
+                        class="pl-9 pr-4 py-2 rounded-lg border border-outline text-sm bg-surface focus:ring-2 focus:ring-primary focus:border-primary outline-none transition w-48"
+                        oninput="filterProducts(this.value)">
+                </div>
+                <button onclick="openProductForm(null)"
+                    class="flex items-center gap-2 bg-primary text-white text-[11px] font-bold px-5 py-2.5 rounded-lg shadow-sm hover:opacity-90 transition-opacity uppercase tracking-widest whitespace-nowrap">
+                    <span class="material-symbols-outlined text-[18px]">add</span> Add Product
+                </button>
+            </div>
         </div>
         <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
     </main>
 
+    <!-- ── ANALYTICS VIEW ── -->
+    <main id="analytics-view" class="hidden pt-24 pb-12 px-8 max-w-[1600px] mx-auto w-full">
+        <div class="mb-8">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1 block">Admin</span>
+            <h2 class="text-2xl font-black text-secondary lowercase tracking-tight">Analytics</h2>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
+            <div class="bg-primary text-white rounded-xl p-5 col-span-2 flex flex-col justify-between shadow-sm">
+                <span class="text-[10px] font-bold uppercase tracking-widest opacity-70">All-Time Revenue</span>
+                <p id="an-total-revenue" class="text-3xl font-black mt-2">—</p>
+            </div>
+            <div class="bg-surface-container rounded-xl p-5 flex flex-col justify-between">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Today Revenue</span>
+                <p id="an-today-revenue" class="text-2xl font-black text-secondary mt-2">—</p>
+            </div>
+            <div class="bg-surface-container rounded-xl p-5 flex flex-col justify-between">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Today Orders</span>
+                <p id="an-today-orders" class="text-2xl font-black text-secondary mt-2">—</p>
+            </div>
+            <div class="bg-surface-container rounded-xl p-5 flex flex-col justify-between">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Week Revenue</span>
+                <p id="an-week-revenue" class="text-2xl font-black text-secondary mt-2">—</p>
+            </div>
+            <div class="bg-surface-container rounded-xl p-5 flex flex-col justify-between">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Total Orders</span>
+                <p id="an-total-orders" class="text-2xl font-black text-secondary mt-2">—</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Hourly Orders Chart -->
+            <div class="bg-white rounded-xl border border-outline p-6 shadow-sm">
+                <h3 class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-4">Orders by Hour — Today</h3>
+                <canvas id="chart-hourly" height="200"></canvas>
+            </div>
+            <!-- Top Products -->
+            <div class="bg-white rounded-xl border border-outline p-6 shadow-sm">
+                <h3 class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-4">Top Products (All-Time)</h3>
+                <div id="an-top-products" class="space-y-3"></div>
+            </div>
+        </div>
+    </main>
+
 </div><!-- /dashboard -->
+
 
 <!-- ═══════════════════════ PRODUCT FORM PANEL ═══════════════════════ -->
 <div id="form-overlay" class="fixed inset-0 bg-black/40 z-[110] hidden opacity-0" onclick="closeProductForm()"></div>
@@ -367,7 +426,9 @@ async function doLogin(pwd) {
     loginBtn.disabled = true; loginBtn.textContent = 'Verifying…';
     try {
         const r = await fetch(`${API}/api/admin/login`, {
-            method:'POST', headers:{'Content-Type':'application/json'},
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            credentials: 'include',
             body: JSON.stringify({ password: pwd })
         });
         if (!r.ok) { showToast((await r.json()).error || 'Incorrect password', 'error'); pwInput.value = ''; }
@@ -392,28 +453,44 @@ function showLogin(msg) {
     pwModal.classList.remove('hidden'); pwInput.value = '';
     if (msg) showToast(msg, 'warning', 6000);
 }
-function logout() { showLogin(); }
+async function logout() {
+    try { await fetch(`${API}/api/admin/logout`, { method:'POST', credentials:'include' }); } catch {}
+    showLogin();
+}
 function ah() { return { 'Authorization': 'Bearer ' + adminToken }; }
+function afetch(url, opts = {}) {
+    // Always send cookies + Bearer token for dual auth
+    return fetch(url, { ...opts, credentials: 'include',
+        headers: { ...ah(), ...(opts.headers || {}) }
+    });
+}
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
+let hourlyChart = null;
 function switchTab(tab) {
     const kView = document.getElementById('kitchen-view');
     const mView = document.getElementById('menu-view');
+    const aView = document.getElementById('analytics-view');
     const kBtn  = document.getElementById('tab-kitchen');
     const mBtn  = document.getElementById('tab-menu');
+    const aBtn  = document.getElementById('tab-analytics');
     const rfBtn = document.getElementById('kitchen-refresh-btn');
+    const ACTIVE   = 'tab-nav-active uppercase tracking-widest text-[11px] pb-1 transition-all';
+    const INACTIVE = 'tab-nav-inactive uppercase tracking-widest text-[11px] pb-1 transition-all';
+
+    [kView, mView, aView].forEach(v => v.classList.add('hidden'));
+    [kBtn, mBtn, aBtn].forEach(b => b.className = INACTIVE);
+    rfBtn.classList.add('hidden');
 
     if (tab === 'kitchen') {
-        kView.classList.remove('hidden'); mView.classList.add('hidden');
-        kBtn.className = 'tab-nav-active uppercase tracking-widest text-[11px] pb-1 transition-all';
-        mBtn.className = 'tab-nav-inactive uppercase tracking-widest text-[11px] pb-1 transition-all';
+        kView.classList.remove('hidden'); kBtn.className = ACTIVE;
         rfBtn.classList.remove('hidden');
-    } else {
-        mView.classList.remove('hidden'); kView.classList.add('hidden');
-        mBtn.className = 'tab-nav-active uppercase tracking-widest text-[11px] pb-1 transition-all';
-        kBtn.className = 'tab-nav-inactive uppercase tracking-widest text-[11px] pb-1 transition-all';
-        rfBtn.classList.add('hidden');
+    } else if (tab === 'menu') {
+        mView.classList.remove('hidden'); mBtn.className = ACTIVE;
         loadProducts();
+    } else if (tab === 'analytics') {
+        aView.classList.remove('hidden'); aBtn.className = ACTIVE;
+        loadAnalytics();
     }
 }
 
@@ -426,7 +503,7 @@ function timeSince(date) {
 
 async function fetchOrders() {
     try {
-        const r = await fetch(`${API}/api/admin/orders`, { headers: ah() });
+        const r = await afetch(`${API}/api/admin/orders`);
         if (r.status === 401) { showLogin('Session expired. Please log in again.'); return; }
         if (!r.ok) throw new Error();
         const orders = await r.json();
@@ -525,7 +602,7 @@ async function loadProducts() {
     grid.innerHTML = `<div class="col-span-full flex justify-center items-center py-16">
         <span class="material-symbols-outlined text-5xl text-outline-variant animate-spin">autorenew</span></div>`;
     try {
-        const r = await fetch(`${API}/api/admin/products`, { headers: ah() });
+        const r = await afetch(`${API}/api/admin/products`);
         if (r.status === 401) { showLogin('Session expired.'); return; }
         if (!r.ok) throw new Error();
         allProducts = await r.json();
@@ -577,6 +654,76 @@ function renderProducts(products) {
             </div>
         </div>`;
     }).join('');
+}
+
+// ─── Search Filter ───────────────────────────────────────────────────────────
+function filterProducts(query) {
+    const q = query.trim().toLowerCase();
+    const filtered = q ? allProducts.filter(p => p.name.toLowerCase().includes(q)) : allProducts;
+    renderProducts(filtered);
+}
+
+// ─── Analytics ───────────────────────────────────────────────────────────
+const fmt = v => `₹${Number(v).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+async function loadAnalytics() {
+    // Show loading dashes while fetching
+    ['an-total-revenue','an-today-revenue','an-today-orders','an-week-revenue','an-total-orders']
+        .forEach(id => { document.getElementById(id).textContent = '…'; });
+    try {
+        const r = await afetch(`${API}/api/admin/analytics`);
+        if (r.status === 401) { showLogin('Session expired.'); return; }
+        if (!r.ok) throw new Error();
+        const d = await r.json();
+
+        // Stat cards
+        document.getElementById('an-total-revenue').textContent = fmt(d.totalRevenue);
+        document.getElementById('an-today-revenue').textContent = fmt(d.todayRevenue);
+        document.getElementById('an-today-orders').textContent  = d.todayOrders;
+        document.getElementById('an-week-revenue').textContent  = fmt(d.weekRevenue);
+        document.getElementById('an-total-orders').textContent  = d.totalOrders;
+
+        // Hourly bar chart
+        const ctx = document.getElementById('chart-hourly').getContext('2d');
+        if (hourlyChart) hourlyChart.destroy();
+        hourlyChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Array.from({length:24}, (_,i) => i + ':00'),
+                datasets: [{
+                    label: 'Orders',
+                    data: d.hourlyOrders,
+                    backgroundColor: '#d41132',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#E8E1D5' } },
+                    x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+                }
+            }
+        });
+
+        // Top Products horizontal bars
+        const topEl = document.getElementById('an-top-products');
+        if (!d.topProducts || !d.topProducts.length) {
+            topEl.innerHTML = '<p class="text-sm text-on-surface-variant">No orders yet.</p>';
+        } else {
+            const max = d.topProducts[0].qty;
+            topEl.innerHTML = d.topProducts.map(p => `
+                <div>
+                    <div class="flex justify-between text-sm font-medium mb-1">
+                        <span class="text-secondary truncate max-w-[70%]">${p.name}</span>
+                        <span class="text-on-surface-variant font-bold">${p.qty} sold</span>
+                    </div>
+                    <div class="h-2 bg-surface-container rounded-full overflow-hidden">
+                        <div class="h-full bg-primary rounded-full transition-all duration-500" style="width:${Math.round(p.qty/max*100)}%"></div>
+                    </div>
+                </div>`).join('');
+        }
+    } catch { showToast('Could not load analytics.', 'error'); }
 }
 
 // ─── Product Form ─────────────────────────────────────────────────────────────
