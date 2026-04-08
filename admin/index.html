@@ -146,15 +146,15 @@
             <!-- Desktop nav only -->
             <nav class="hidden sm:flex items-center gap-8">
                 <button id="tab-kitchen" onclick="switchTab('kitchen')"
-                    class="tab-nav-active uppercase tracking-widest text-[11px] pb-1 transition-all">
+                    class="tab-nav-active whitespace-nowrap uppercase tracking-widest text-[11px] pb-1 transition-all">
                     Kitchen
                 </button>
                 <button id="tab-menu" onclick="switchTab('menu')"
-                    class="tab-nav-inactive uppercase tracking-widest text-[11px] pb-1 transition-all">
+                    class="tab-nav-inactive whitespace-nowrap uppercase tracking-widest text-[11px] pb-1 transition-all">
                     Menu Manager
                 </button>
                 <button id="tab-analytics" onclick="switchTab('analytics')"
-                    class="tab-nav-inactive uppercase tracking-widest text-[11px] pb-1 transition-all">
+                    class="tab-nav-inactive whitespace-nowrap uppercase tracking-widest text-[11px] pb-1 transition-all">
                     Analytics
                 </button>
             </nav>
@@ -546,8 +546,8 @@ function switchTab(tab) {
     const mBtn  = document.getElementById('tab-menu');
     const aBtn  = document.getElementById('tab-analytics');
     const rfBtn = document.getElementById('kitchen-refresh-btn');
-    const ACTIVE   = 'tab-nav-active uppercase tracking-widest text-[11px] pb-1 transition-all';
-    const INACTIVE = 'tab-nav-inactive uppercase tracking-widest text-[11px] pb-1 transition-all';
+    const ACTIVE   = 'tab-nav-active whitespace-nowrap uppercase tracking-widest text-[11px] pb-1 transition-all';
+    const INACTIVE = 'tab-nav-inactive whitespace-nowrap uppercase tracking-widest text-[11px] pb-1 transition-all';
 
     [kView, mView, aView].forEach(v => v.classList.add('hidden'));
     [kBtn, mBtn, aBtn].forEach(b => b.className = INACTIVE);
