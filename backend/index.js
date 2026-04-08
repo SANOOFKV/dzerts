@@ -300,6 +300,24 @@ const requireAdmin = (req, res, next) => {
     }
 };
 
+// Route: PUBLIC display endpoint — token numbers only, no PII, no auth required
+// Safe for TV screens and public displays
+app.get('/api/display/orders', async (req, res) => {
+    try {
+        const activeOrders = await Order.find({
+            paymentStatus: 'SUCCESS',
+            shopStatus: { $in: ['PREPARING', 'READY'] }
+        })
+        .select('tokenNumber shopStatus -_id')
+        .sort({ createdAt: 1 })
+        .lean();
+        res.set('Cache-Control', 'no-store');
+        res.json(activeOrders);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch display orders' });
+    }
+});
+
 // Route: Get all active orders for Dashboard
 app.get('/api/admin/orders', requireAdmin, async (req, res) => {
     try {

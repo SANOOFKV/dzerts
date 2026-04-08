@@ -54,30 +54,22 @@
 
     <!-- Fetch Logic -->
     <script>
-        const apiBase = 'https://dzerts.onrender.com/api/admin/orders';
+        const apiBase = 'https://dzerts.onrender.com/api/display/orders';
 
-        // IMPORTANT: The display screen should be setup bypassing the password, or hardcoding it for the TV browser.
-        // For security, a secure token could be used. Here we assume the shop TV can access it by hardcoding the password for convenience, or the endpoint could be made public if PII is stripped.
-        // I will use a minimal public query to the backend soon, but for now we'll mock the fetch with the admin password.
-        const TV_PASSWORD = 'admin'; // Setup device locally
-
-        const prepGrid = document.getElementById('preparing-grid');
+        const prepGrid  = document.getElementById('preparing-grid');
         const readyGrid = document.getElementById('ready-grid');
 
-        let previousReadySet = new Set(); // Track to know when to ping a sound
+        let previousReadySet = new Set();
 
         async function updateDisplay() {
             try {
-                // Fetch active orders (In production we'd create a public endpoint that only returns token numbers without customer names/phones to maintain privacy)
-                const res = await fetch(apiBase, {
-                    headers: { 'x-admin-password': TV_PASSWORD }
-                });
+                const res = await fetch(apiBase);
 
                 if (!res.ok) return;
 
                 const orders = await res.json();
 
-                prepGrid.innerHTML = '';
+                prepGrid.innerHTML  = '';
                 readyGrid.innerHTML = '';
 
                 const currentReadySet = new Set();
@@ -94,24 +86,24 @@
                     } else if (order.shopStatus === 'READY') {
                         currentReadySet.add(token);
                         readyGrid.innerHTML += `
-                            <div class="text-6xl font-black text-white bg-primary border border-primary/50 px-8 py-6 rounded-2xl min-w-[160px] text-center shadow-[0_0_30px_rgba(212,17,50,0.4)] transform hover:scale-105 transition-transform duration-500 animate-[fadeIn_0.5s_ease-out]">
+                            <div class="text-6xl font-black text-white bg-primary border border-primary/50 px-8 py-6 rounded-2xl min-w-[160px] text-center shadow-[0_0_30px_rgba(212,17,50,0.4)] transform hover:scale-105 transition-transform duration-500">
                                 ${token}
                             </div>
                         `;
                     }
                 });
 
-                // Play sound if a new order entered READY state
+                // Play sound if a new token entered READY state
                 for (let t of currentReadySet) {
                     if (!previousReadySet.has(t)) {
                         playChime();
-                        break; // play once per poll
+                        break;
                     }
                 }
                 previousReadySet = currentReadySet;
 
             } catch (err) {
-                console.error("Display loop error:", err);
+                console.error('Display loop error:', err);
             }
         }
 
