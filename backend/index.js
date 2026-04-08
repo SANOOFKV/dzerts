@@ -54,6 +54,7 @@ if (process.env.MONGODB_URI) {
             dbReady = true;
             console.log('Connected to MongoDB');
             await seedProducts();
+            await syncTokenCounter();
         })
         .catch(err => console.error('MongoDB connection error:', err));
 
@@ -78,6 +79,39 @@ async function seedProducts() {
             console.log(`Seeded ${docs.length} products into MongoDB`);
         }
     } catch (err) { console.error('Seed error:', err.message); }
+}
+
+// Sync token counter to the highest tokenNumber already in the DB.
+// Runs once on startup — prevents counter from resetting to 1 after
+// a DB migration, collection drop, or environment change.
+async function syncTokenCounter() {
+    try {
+        // Find the highest tokenNumber ever assigned across all orders
+        const highestOrder = await Order.findOne(
+            { tokenNumber: { $exists: true, $ne: null } },
+            { tokenNumber: 1 },
+            { sort: { tokenNumber: -1 } }
+        ).lean();
+
+        const highestToken = highestOrder ? highestOrder.tokenNumber : 0;
+
+        // Only update counter if it currently sits below the highest known token
+        const current = await Counter.findById('tokenCounter').lean();
+        const currentSeq = current ? current.seq : 0;
+
+        if (highestToken > currentSeq) {
+            await Counter.findOneAndUpdate(
+                { _id: 'tokenCounter' },
+                { $set: { seq: highestToken } },
+                { upsert: true }
+            );
+            console.log(`Token counter synced: ${currentSeq} → ${highestToken}`);
+        } else {
+            console.log(`Token counter OK (seq: ${currentSeq}, highest order token: ${highestToken})`);
+        }
+    } catch (err) {
+        console.error('Token counter sync error:', err.message);
+    }
 }
 
 // Helper: Atomic Token Generation
